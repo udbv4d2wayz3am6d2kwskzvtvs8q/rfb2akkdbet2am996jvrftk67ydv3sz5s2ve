@@ -10459,6 +10459,11 @@ addEventListener('message', async (event) => {
   // downloaded again until it is actually rebuilt. The Supabase shards above
   // remain the fallback whenever this path cannot answer.
   const SEARCH_POINTER_URL = "https://xoathqkggcuyoyutxwri.supabase.co/storage/v1/object/public/index/pointer.json";
+  // The public repository has a fresh, unrelated history. Until the shared
+  // pointer is rotated, it still names commits from the retired repository.
+  // Start from the verified neutral release and ignore the frozen pointer that
+  // still names the retired history. The publisher replaces it during cutover.
+  const SEARCH_RETIRED_POINTER_COMMIT = "12e049277ff02882fecfa2f5a290619f8a1523a9";
   const SEARCH_CDN_BASE = "https://cdn.jsdelivr.net/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@";
   // The same commit through rawcdn.githack, asked only once jsDelivr has failed
   // for a file — for instance the 403 it gives a commit over 50 MB. Content-
@@ -10666,7 +10671,7 @@ addEventListener('message', async (event) => {
 
   let searchPointer = null;
   try {
-    const saved = JSON.parse(localStorage.getItem("alphy.search.pointer.v1") || "null");
+    const saved = JSON.parse(localStorage.getItem("alphy.search.pointer.v2") || "null");
     if (/^[0-9a-f]{40}$/.test(saved?.c || "") && /^i\/[0-9a-f]{16}\.json$/.test(saved?.f || "")
         && Date.now() - saved.checkedAt < 7 * 86400e3) searchPointer = saved;
   } catch { /* private storage */ }
@@ -10693,18 +10698,27 @@ addEventListener('message', async (event) => {
     if (!force && !searchPointer && Date.now() - searchPointerFailedAt < 60e3) return Promise.resolve(null);
     if (searchPointerLoad) return searchPointerLoad;
     searchPointerLoad = (async () => {
+      const bootstrap = {
+        c: "391818ae7c2ea99a8b5ce758b3d8072a63f9b62c",
+        f: "i/0aef386dc32834b2.json",
+        checkedAt: Date.now(),
+      };
       try {
         const value = await cdnJson(SEARCH_POINTER_URL, 6000);
-        if (/^[0-9a-f]{40}$/.test(String(value?.c)) && /^i\/[0-9a-f]{16}\.json$/.test(String(value?.f))) {
+        if (/^[0-9a-f]{40}$/.test(String(value?.c)) && /^i\/[0-9a-f]{16}\.json$/.test(String(value?.f))
+            && value.c !== SEARCH_RETIRED_POINTER_COMMIT) {
           searchPointer = { c: value.c, f: value.f, checkedAt: Date.now() };
-          try { localStorage.setItem("alphy.search.pointer.v1", JSON.stringify(searchPointer)); } catch { /* optional */ }
+          try { localStorage.setItem("alphy.search.pointer.v2", JSON.stringify(searchPointer)); } catch { /* optional */ }
+        } else if (!searchPointer) {
+          searchPointer = bootstrap;
         } else if (searchPointer) {
           searchPointer.checkedAt = Date.now();
         }
       } catch {
         // Unreachable: keep what we have and try again in a minute, not in half an hour.
         searchPointerFailedAt = Date.now();
-        if (searchPointer) searchPointer.checkedAt = Date.now() - SEARCH_POINTER_REFRESH_MS + 60e3;
+        if (!searchPointer) searchPointer = bootstrap;
+        else searchPointer.checkedAt = Date.now() - SEARCH_POINTER_REFRESH_MS + 60e3;
       }
       return searchPointer;
     })().finally(() => { searchPointerLoad = null; });
@@ -10727,7 +10741,7 @@ addEventListener('message', async (event) => {
       // whole budget for them would only delay the reserve.
       value = await cdnJson(`${SEARCH_CDN_BASE}${commit}/${file}`, Math.min(timeoutMs, SEARCH_CDN_FIRST_TIMEOUT_MS));
     } catch (error) {
-      log("search-cdn-reserve", { file, message: error.message });
+      if (typeof log === "function") log("search-cdn-reserve", { file, message: error.message });
       value = await cdnJson(`${SEARCH_CDN_RESERVE}${commit}/${file}`, timeoutMs);
     }
     cdnFileMemory.set(key, value);
@@ -10889,7 +10903,7 @@ addEventListener('message', async (event) => {
           return cdn.rows;
         }
       } catch (error) {
-        log("search-cdn-warn", { letter: rawLetter, message: error.message });
+        if (typeof log === "function") log("search-cdn-warn", { letter: rawLetter, message: error.message });
       }
       const cached = await readShard(letter);
       if (cached && Date.now() - cached.at < TITLES_SHARD_TTL_MS) {
