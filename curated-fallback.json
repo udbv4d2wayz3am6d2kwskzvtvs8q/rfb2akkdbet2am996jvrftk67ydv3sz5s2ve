@@ -83,7 +83,12 @@
             "kind": "clps",
             "kpId": "5138994"
           },
-          "cachedAt": "2026-08-20T09:36:15.798Z"
+          "cachedAt": "2026-08-20T09:36:15.798Z",
+          "letterboxd": {
+            "r": 3.97,
+            "n": 869029,
+            "slug": "the-invite-2026"
+          }
         },
         {
           "id": "8afffb58-ff65-4a1d-a9fa-8c1e3b60a432",
@@ -101,7 +106,15 @@
             "kind": "lift",
             "liftId": "87442"
           },
-          "cachedAt": "2026-08-20T09:49:10.761Z"
+          "cachedAt": "2026-08-20T09:49:10.761Z",
+          "externalId": {
+            "imdb": "tt15047880"
+          },
+          "letterboxd": {
+            "r": 3.04,
+            "n": 1042585,
+            "slug": "disclosure-day"
+          }
         },
         {
           "id": "6cff5f7b-7b98-4f76-ae2c-e3adbd73ab71",
@@ -170,7 +183,12 @@
             "kind": "clps",
             "kpId": "6020597"
           },
-          "cachedAt": "2026-08-20T09:48:11.573Z"
+          "cachedAt": "2026-08-20T09:48:11.573Z",
+          "letterboxd": {
+            "r": 3.2,
+            "n": 502102,
+            "slug": "minions-monsters-2026"
+          }
         },
         {
           "id": "8d1ad081-5390-448c-a023-eb2315abe5b1",
@@ -237,7 +255,12 @@
             "liftId": "89630",
             "kpId": "5452841"
           },
-          "cachedAt": "2026-08-20T09:50:28.896Z"
+          "cachedAt": "2026-08-20T09:50:28.896Z",
+          "letterboxd": {
+            "r": 3.32,
+            "n": 2963392,
+            "slug": "backrooms-2026"
+          }
         },
         {
           "id": "f6f13f4e-0c69-4668-b55b-ef8aaa9b9ee9",
@@ -256,7 +279,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/88776"
           },
-          "cachedAt": "2026-07-08T09:38:31.414Z"
+          "cachedAt": "2026-07-08T09:38:31.414Z",
+          "externalId": {
+            "imdb": "tt37287335"
+          },
+          "letterboxd": {
+            "r": 3.43,
+            "n": 4950848,
+            "slug": "obsession-2025"
+          }
         },
         {
           "id": "d656d782-4d65-4850-b6fe-0255dd140225",
@@ -294,7 +325,15 @@
             "kind": "clps",
             "kpId": "6943602"
           },
-          "cachedAt": "2026-07-08T09:40:10.913Z"
+          "cachedAt": "2026-07-08T09:40:10.913Z",
+          "externalId": {
+            "imdb": "tt35309713"
+          },
+          "letterboxd": {
+            "r": 1.77,
+            "n": 23865,
+            "slug": "citizen-vigilante"
+          }
         },
         {
           "id": "b2a37d94-f036-4d15-b957-7a048feb2626",
@@ -335,7 +374,15 @@
             "kind": "zen",
             "zenithId": "90317"
           },
-          "cachedAt": "2026-06-25T17:36:22.158Z"
+          "cachedAt": "2026-06-25T17:36:22.158Z",
+          "externalId": {
+            "imdb": "tt32565993"
+          },
+          "letterboxd": {
+            "r": 3.78,
+            "n": 1036609,
+            "slug": "the-sheep-detectives"
+          }
         },
         {
           "id": "ade108f2-6b15-4ab5-9235-8cd56c25888d",
@@ -376,7 +423,15 @@
             "kind": "zen",
             "zenithId": "87181"
           },
-          "cachedAt": "2026-06-24T16:28:57.948Z"
+          "cachedAt": "2026-06-24T16:28:57.948Z",
+          "externalId": {
+            "imdb": "tt12042730"
+          },
+          "letterboxd": {
+            "r": 4.31,
+            "n": 4409646,
+            "slug": "project-hail-mary"
+          }
         },
         {
           "id": "f4fd1bcc-162d-41c5-b7c5-d893db10fad9",
@@ -551,7 +606,15 @@
             "kind": "clps",
             "kpId": "5003510"
           },
-          "cachedAt": "2026-07-08T10:04:16.222Z"
+          "cachedAt": "2026-07-08T10:04:16.222Z",
+          "externalId": {
+            "imdb": "tt16311594"
+          },
+          "letterboxd": {
+            "r": 3.65,
+            "n": 2088715,
+            "slug": "f1"
+          }
         },
         {
           "id": "e4143046-2b0e-45c2-8202-0dfa42138e21",
@@ -570,7 +633,15 @@
             "kind": "clps",
             "kpId": "409424"
           },
-          "cachedAt": "2026-07-08T10:05:11.590Z"
+          "cachedAt": "2026-07-08T10:05:11.590Z",
+          "externalId": {
+            "imdb": "tt1160419"
+          },
+          "letterboxd": {
+            "r": 3.89,
+            "n": 4440066,
+            "slug": "dune-2021"
+          }
         },
         {
           "id": "d4977ff6-6811-441e-9009-3f1ff3c9b2da",
@@ -589,7 +660,15 @@
             "kind": "clps",
             "kpId": "4540126"
           },
-          "cachedAt": "2026-07-08T10:05:36.981Z"
+          "cachedAt": "2026-07-08T10:05:36.981Z",
+          "externalId": {
+            "imdb": "tt15239678"
+          },
+          "letterboxd": {
+            "r": 4.38,
+            "n": 3633496,
+            "slug": "dune-part-two"
+          }
         },
         {
           "id": "85cc6d40-7924-4d5b-a533-cc521efec70d",
@@ -608,7 +687,15 @@
             "kind": "clps",
             "kpId": "589290"
           },
-          "cachedAt": "2026-07-08T10:06:17.247Z"
+          "cachedAt": "2026-07-08T10:06:17.247Z",
+          "externalId": {
+            "imdb": "tt1856101"
+          },
+          "letterboxd": {
+            "r": 4.1,
+            "n": 2327240,
+            "slug": "blade-runner-2049"
+          }
         },
         {
           "id": "41e806ee-aee8-4e45-b34c-bc47cef91673",
@@ -628,7 +715,15 @@
             "kind": "clps",
             "kpId": "4664634"
           },
-          "cachedAt": "2026-07-08T10:06:28.568Z"
+          "cachedAt": "2026-07-08T10:06:28.568Z",
+          "externalId": {
+            "imdb": "tt15398776"
+          },
+          "letterboxd": {
+            "r": 4.16,
+            "n": 4605354,
+            "slug": "oppenheimer-2023"
+          }
         },
         {
           "id": "36f64b71-95a2-4c75-9fdd-24ff1e098c53",
@@ -647,7 +742,15 @@
             "kind": "clps",
             "kpId": "4887347"
           },
-          "cachedAt": "2026-07-08T10:31:05.169Z"
+          "cachedAt": "2026-07-08T10:31:05.169Z",
+          "externalId": {
+            "imdb": "tt18412256"
+          },
+          "letterboxd": {
+            "r": 3.59,
+            "n": 1301976,
+            "slug": "alien-romulus"
+          }
         },
         {
           "id": "f7a7c834-af2a-4c7e-896f-b2c45318f756",
@@ -666,7 +769,15 @@
             "kind": "clps",
             "kpId": "505898"
           },
-          "cachedAt": "2026-07-08T10:10:35.438Z"
+          "cachedAt": "2026-07-08T10:10:35.438Z",
+          "externalId": {
+            "imdb": "tt1630029"
+          },
+          "letterboxd": {
+            "r": 3.65,
+            "n": 2778265,
+            "slug": "avatar-the-way-of-water"
+          }
         },
         {
           "id": "761c453c-2b58-4adb-a1d8-1fb3291fd553",
@@ -685,7 +796,15 @@
             "kind": "clps",
             "kpId": "5452393"
           },
-          "cachedAt": "2026-07-08T10:16:17.475Z"
+          "cachedAt": "2026-07-08T10:16:17.475Z",
+          "externalId": {
+            "imdb": "tt26446278"
+          },
+          "letterboxd": {
+            "r": 4.09,
+            "n": 395808,
+            "slug": "the-count-of-monte-cristo-2024"
+          }
         },
         {
           "id": "104edd67-58cb-4edf-ab29-966cdfdd8c7a",
@@ -819,7 +938,15 @@
             "kind": "clps",
             "kpId": "394"
           },
-          "cachedAt": "2026-07-22T13:51:13.426Z"
+          "cachedAt": "2026-07-22T13:51:13.426Z",
+          "externalId": {
+            "imdb": "tt0105236"
+          },
+          "letterboxd": {
+            "r": 4.14,
+            "n": 1713542,
+            "slug": "reservoir-dogs"
+          }
         },
         {
           "id": "9c2254fe-0ee0-4846-a424-f915e457bc10",
@@ -882,7 +1009,15 @@
             "kind": "clps",
             "kpId": "5437094"
           },
-          "cachedAt": "2026-07-22T13:51:32.863Z"
+          "cachedAt": "2026-07-22T13:51:32.863Z",
+          "externalId": {
+            "imdb": "tt30144839"
+          },
+          "letterboxd": {
+            "r": 4.12,
+            "n": 2850691,
+            "slug": "one-battle-after-another"
+          }
         },
         {
           "id": "c4636c5a-ea80-4d44-8dd3-08ee2a4baad2",
@@ -1017,7 +1152,15 @@
             "kind": "clps",
             "kpId": "505851"
           },
-          "cachedAt": "2026-07-22T13:53:38.299Z"
+          "cachedAt": "2026-07-22T13:53:38.299Z",
+          "externalId": {
+            "imdb": "tt1631867"
+          },
+          "letterboxd": {
+            "r": 3.78,
+            "n": 875485,
+            "slug": "edge-of-tomorrow"
+          }
         },
         {
           "id": "fb856a3c-f989-445e-bf88-7fdfa6da6d9a",
@@ -1080,7 +1223,15 @@
             "kind": "clps",
             "kpId": "1048334"
           },
-          "cachedAt": "2026-07-22T13:55:42.427Z"
+          "cachedAt": "2026-07-22T13:55:42.427Z",
+          "externalId": {
+            "imdb": "tt7286456"
+          },
+          "letterboxd": {
+            "r": 3.85,
+            "n": 4889611,
+            "slug": "joker-2019"
+          }
         },
         {
           "id": "66fb0f77-141c-4a7a-80c0-634f470c5ec9",
@@ -1142,7 +1293,15 @@
             "kind": "clps",
             "kpId": "1008444"
           },
-          "cachedAt": "2026-07-22T13:58:42.701Z"
+          "cachedAt": "2026-07-22T13:58:42.701Z",
+          "externalId": {
+            "imdb": "tt6263850"
+          },
+          "letterboxd": {
+            "r": 3.46,
+            "n": 3040647,
+            "slug": "deadpool-wolverine"
+          }
         },
         {
           "id": "133d8bcc-5ee1-47c8-905f-3a51bcf6c2fc",
@@ -1277,7 +1436,15 @@
             "kind": "clps",
             "kpId": "931677"
           },
-          "cachedAt": "2026-07-22T13:59:39.485Z"
+          "cachedAt": "2026-07-22T13:59:39.485Z",
+          "externalId": {
+            "imdb": "tt5013056"
+          },
+          "letterboxd": {
+            "r": 3.77,
+            "n": 2008911,
+            "slug": "dunkirk-2017"
+          }
         },
         {
           "id": "0e13f966-2bf3-4127-abf0-f5c2930e8522",
@@ -1411,7 +1578,15 @@
             "kind": "clps",
             "kpId": "692861"
           },
-          "cachedAt": "2026-07-22T14:01:37.181Z"
+          "cachedAt": "2026-07-22T14:01:37.181Z",
+          "externalId": {
+            "imdb": "tt2267998"
+          },
+          "letterboxd": {
+            "r": 4.07,
+            "n": 3302064,
+            "slug": "gone-girl"
+          }
         },
         {
           "id": "5090cb76-6486-4ab6-8722-3371f5510dc1",
@@ -1761,7 +1936,15 @@
             "kind": "clps",
             "kpId": "4414587"
           },
-          "cachedAt": "2026-07-22T14:05:22.219Z"
+          "cachedAt": "2026-07-22T14:05:22.219Z",
+          "externalId": {
+            "imdb": "tt5177120"
+          },
+          "letterboxd": {
+            "r": 3.22,
+            "n": 294009,
+            "slug": "the-ministry-of-ungentlemanly-warfare"
+          }
         },
         {
           "id": "60d4fe5f-f7e2-4c6f-8f26-31770cf9a653",
@@ -1902,7 +2085,15 @@
             "kind": "clps",
             "kpId": "762646"
           },
-          "cachedAt": "2026-07-22T14:07:13.662Z"
+          "cachedAt": "2026-07-22T14:07:13.662Z",
+          "externalId": {
+            "imdb": "tt2906216"
+          },
+          "letterboxd": {
+            "r": 3.53,
+            "n": 785002,
+            "slug": "dungeons-dragons-honor-among-thieves"
+          }
         },
         {
           "id": "794f601f-8131-4390-bda7-cf57420cb2de",
@@ -2036,7 +2227,15 @@
             "kind": "clps",
             "kpId": "718811"
           },
-          "cachedAt": "2026-07-22T14:08:05.509Z"
+          "cachedAt": "2026-07-22T14:08:05.509Z",
+          "externalId": {
+            "imdb": "tt2543164"
+          },
+          "letterboxd": {
+            "r": 4.14,
+            "n": 2712800,
+            "slug": "arrival-2016"
+          }
         },
         {
           "id": "f644cc48-d138-44a6-82c6-f5bfcb24cba7",
@@ -2170,7 +2369,15 @@
             "kind": "clps",
             "kpId": "1000020"
           },
-          "cachedAt": "2026-07-22T14:09:56.237Z"
+          "cachedAt": "2026-07-22T14:09:56.237Z",
+          "externalId": {
+            "imdb": "tt6019206"
+          },
+          "letterboxd": {
+            "r": 4.54,
+            "n": 315436,
+            "slug": "kill-bill-the-whole-bloody-affair"
+          }
         },
         {
           "id": "c61ace77-57c6-42bd-ace4-c83c49c31143",
@@ -2285,7 +2492,15 @@
             "kind": "zen",
             "zenithId": "65326"
           },
-          "cachedAt": "2026-06-25T16:27:47.768Z"
+          "cachedAt": "2026-06-25T16:27:47.768Z",
+          "externalId": {
+            "imdb": "tt14230458"
+          },
+          "letterboxd": {
+            "r": 3.91,
+            "n": 2656058,
+            "slug": "poor-things-2023"
+          }
         },
         {
           "id": "c415cea8-c555-4d80-ae91-b4d751805056",
@@ -2380,7 +2595,15 @@
             "kind": "zen",
             "zenithId": "86284"
           },
-          "cachedAt": "2026-06-25T16:39:12.689Z"
+          "cachedAt": "2026-06-25T16:39:12.689Z",
+          "externalId": {
+            "imdb": "tt12300742"
+          },
+          "letterboxd": {
+            "r": 3.84,
+            "n": 2077392,
+            "slug": "bugonia"
+          }
         },
         {
           "id": "751955f1-346e-42c6-986d-64717dd652f8",
@@ -2399,7 +2622,15 @@
             "kind": "zen",
             "zenithId": "13199"
           },
-          "cachedAt": "2026-06-25T16:41:47.165Z"
+          "cachedAt": "2026-06-25T16:41:47.165Z",
+          "externalId": {
+            "imdb": "tt7653254"
+          },
+          "letterboxd": {
+            "r": 4.02,
+            "n": 1445023,
+            "slug": "marriage-story-2019"
+          }
         },
         {
           "id": "0ab3e84b-a967-4f24-9f75-1f6a96371440",
@@ -2494,7 +2725,15 @@
             "kind": "zen",
             "zenithId": "813"
           },
-          "cachedAt": "2026-06-29T07:17:19.183Z"
+          "cachedAt": "2026-06-29T07:17:19.183Z",
+          "externalId": {
+            "imdb": "tt0147800"
+          },
+          "letterboxd": {
+            "r": 4.07,
+            "n": 4381481,
+            "slug": "10-things-i-hate-about-you"
+          }
         },
         {
           "id": "a41d9313-8364-4ce3-b45a-408857bd5a02",
@@ -2513,7 +2752,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/70381"
           },
-          "cachedAt": "2026-06-25T17:23:27.940Z"
+          "cachedAt": "2026-06-25T17:23:27.940Z",
+          "externalId": {
+            "imdb": "tt17351924"
+          },
+          "letterboxd": {
+            "r": 3.35,
+            "n": 3255343,
+            "slug": "saltburn"
+          }
         },
         {
           "id": "04e07909-84ce-47cb-ad2b-79a4c06cfb9a",
@@ -2532,7 +2779,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/86903"
           },
-          "cachedAt": "2026-06-29T07:31:57.322Z"
+          "cachedAt": "2026-06-29T07:31:57.322Z",
+          "externalId": {
+            "imdb": "tt14905854"
+          },
+          "letterboxd": {
+            "r": 4.2,
+            "n": 1710319,
+            "slug": "hamnet"
+          }
         },
         {
           "id": "a4264b8d-d52a-4c69-9f86-857b1958c0a1",
@@ -2551,7 +2806,15 @@
             "kind": "zen",
             "zenithId": "15534"
           },
-          "cachedAt": "2026-06-29T07:33:54.091Z"
+          "cachedAt": "2026-06-29T07:33:54.091Z",
+          "externalId": {
+            "imdb": "tt1877830"
+          },
+          "letterboxd": {
+            "r": 4.05,
+            "n": 4277218,
+            "slug": "the-batman"
+          }
         },
         {
           "id": "6e769934-704c-4fda-bbf3-3f0e93f01def",
@@ -2909,7 +3172,15 @@
             "kind": "zen",
             "zenithId": "13589"
           },
-          "cachedAt": "2026-06-25T16:41:02.275Z"
+          "cachedAt": "2026-06-25T16:41:02.275Z",
+          "externalId": {
+            "imdb": "tt5727208"
+          },
+          "letterboxd": {
+            "r": 3.96,
+            "n": 1800616,
+            "slug": "uncut-gems"
+          }
         },
         {
           "id": "a9f17faf-8b2c-4570-9cc1-0b4dcd327ed9",
@@ -2928,7 +3199,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/12218"
           },
-          "cachedAt": "2026-06-25T16:43:56.522Z"
+          "cachedAt": "2026-06-25T16:43:56.522Z",
+          "externalId": {
+            "imdb": "tt2316411"
+          },
+          "letterboxd": {
+            "r": 3.54,
+            "n": 639402,
+            "slug": "enemy"
+          }
         },
         {
           "id": "696e842b-5058-4602-b131-bec43acc779c",
@@ -2947,7 +3226,15 @@
             "kind": "zen",
             "zenithId": "5716"
           },
-          "cachedAt": "2026-06-25T16:44:42.521Z"
+          "cachedAt": "2026-06-25T16:44:42.521Z",
+          "externalId": {
+            "imdb": "tt0166924"
+          },
+          "letterboxd": {
+            "r": 4.26,
+            "n": 1383114,
+            "slug": "mulholland-drive"
+          }
         },
         {
           "id": "912a2480-96c5-4d83-b69a-a0f341c11e2a",
@@ -2966,7 +3253,15 @@
             "kind": "zen",
             "zenithId": "242"
           },
-          "cachedAt": "2026-06-25T16:45:43.168Z"
+          "cachedAt": "2026-06-25T16:45:43.168Z",
+          "externalId": {
+            "imdb": "tt2562232"
+          },
+          "letterboxd": {
+            "r": 4,
+            "n": 1255867,
+            "slug": "birdman-or-the-unexpected-virtue-of-ignorance"
+          }
         },
         {
           "id": "7adca832-fdaf-40cb-9c6f-c0c5addfe536",
@@ -2985,7 +3280,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/14687"
           },
-          "cachedAt": "2026-06-25T16:46:06.082Z"
+          "cachedAt": "2026-06-25T16:46:06.082Z",
+          "externalId": {
+            "imdb": "tt0246578"
+          },
+          "letterboxd": {
+            "r": 3.98,
+            "n": 2513270,
+            "slug": "donnie-darko"
+          }
         },
         {
           "id": "46b9d101-359b-433f-b41c-8b542bb093a0",
@@ -3004,7 +3307,15 @@
             "kind": "zen",
             "zenithId": "25161"
           },
-          "cachedAt": "2026-06-25T16:46:39.384Z"
+          "cachedAt": "2026-06-25T16:46:39.384Z",
+          "externalId": {
+            "imdb": "tt0414993"
+          },
+          "letterboxd": {
+            "r": 3.52,
+            "n": 162115,
+            "slug": "the-fountain"
+          }
         },
         {
           "id": "700a5fba-16d8-40b1-9dbe-9d87e3dfe150",
@@ -3023,7 +3334,15 @@
             "kind": "zen",
             "zenithId": "33425"
           },
-          "cachedAt": "2026-06-25T16:47:37.019Z"
+          "cachedAt": "2026-06-25T16:47:37.019Z",
+          "externalId": {
+            "imdb": "tt0175880"
+          },
+          "letterboxd": {
+            "r": 4.23,
+            "n": 635324,
+            "slug": "magnolia"
+          }
         },
         {
           "id": "32b7b97b-560f-4509-9625-034a0e32a8ae",
@@ -3042,7 +3361,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/13607"
           },
-          "cachedAt": "2026-06-25T17:11:56.775Z"
+          "cachedAt": "2026-06-25T17:11:56.775Z",
+          "externalId": {
+            "imdb": "tt8613070"
+          },
+          "letterboxd": {
+            "r": 4.43,
+            "n": 1175647,
+            "slug": "portrait-of-a-lady-on-fire"
+          }
         },
         {
           "id": "8ec2838a-de33-48c0-b558-9a8c2d558d9e",
@@ -3061,7 +3388,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/14957"
           },
-          "cachedAt": "2026-06-29T07:03:47.380Z"
+          "cachedAt": "2026-06-29T07:03:47.380Z",
+          "externalId": {
+            "imdb": "tt0259711"
+          },
+          "letterboxd": {
+            "r": 3.57,
+            "n": 412602,
+            "slug": "vanilla-sky"
+          }
         },
         {
           "id": "2a83b0d8-03d1-4f06-8f21-455a9bc63568",
@@ -3080,7 +3415,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/1609"
           },
-          "cachedAt": "2026-06-29T07:05:29.251Z"
+          "cachedAt": "2026-06-29T07:05:29.251Z",
+          "externalId": {
+            "imdb": "tt5715874"
+          },
+          "letterboxd": {
+            "r": 3.7,
+            "n": 847529,
+            "slug": "the-killing-of-a-sacred-deer"
+          }
         },
         {
           "id": "2d808535-fadd-4b46-8b37-3bd0a4a98940",
@@ -3099,7 +3442,15 @@
             "kind": "zen",
             "zenithId": "89616"
           },
-          "cachedAt": "2026-06-29T07:07:26.515Z"
+          "cachedAt": "2026-06-29T07:07:26.515Z",
+          "externalId": {
+            "imdb": "tt35672862"
+          },
+          "letterboxd": {
+            "r": 3.28,
+            "n": 533610,
+            "slug": "hokum"
+          }
         },
         {
           "id": "0f7fc42a-f260-4d40-8241-2f274b082ebd",
@@ -3118,7 +3469,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/1186"
           },
-          "cachedAt": "2026-06-29T07:09:34.372Z"
+          "cachedAt": "2026-06-29T07:09:34.372Z",
+          "externalId": {
+            "imdb": "tt0470752"
+          },
+          "letterboxd": {
+            "r": 3.96,
+            "n": 1367662,
+            "slug": "ex-machina-2015"
+          }
         },
         {
           "id": "4554c0b0-99a2-47cf-a0cb-0544594a2c80",
@@ -3137,7 +3496,15 @@
             "kind": "zen",
             "zenithId": "34234"
           },
-          "cachedAt": "2026-06-29T07:13:53.748Z"
+          "cachedAt": "2026-06-29T07:13:53.748Z",
+          "externalId": {
+            "imdb": "tt0074486"
+          },
+          "letterboxd": {
+            "r": 3.81,
+            "n": 586209,
+            "slug": "eraserhead"
+          }
         },
         {
           "id": "b808b195-77dc-4bff-8d9d-97cd5e703574",
@@ -3156,7 +3523,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/1473"
           },
-          "cachedAt": "2026-06-29T07:19:56.518Z"
+          "cachedAt": "2026-06-29T07:19:56.518Z",
+          "externalId": {
+            "imdb": "tt0947798"
+          },
+          "letterboxd": {
+            "r": 4.17,
+            "n": 3370432,
+            "slug": "black-swan"
+          }
         },
         {
           "id": "2a81666f-99ea-4686-8994-be74c7c94e92",
@@ -3175,7 +3550,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/12316"
           },
-          "cachedAt": "2026-06-29T07:21:19.046Z"
+          "cachedAt": "2026-06-29T07:21:19.046Z",
+          "externalId": {
+            "imdb": "tt0120663"
+          },
+          "letterboxd": {
+            "r": 3.98,
+            "n": 1531808,
+            "slug": "eyes-wide-shut"
+          }
         },
         {
           "id": "5de5064e-989d-48b9-8e94-b0efe8787268",
@@ -3194,7 +3577,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/5261"
           },
-          "cachedAt": "2026-06-29T07:32:44.368Z"
+          "cachedAt": "2026-06-29T07:32:44.368Z",
+          "externalId": {
+            "imdb": "tt1226837"
+          },
+          "letterboxd": {
+            "r": 4.09,
+            "n": 1819826,
+            "slug": "beautiful-boy-2018"
+          }
         },
         {
           "id": "eded56a3-bec8-4a02-ba6f-bfe23e363ed5",
@@ -3213,7 +3604,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/12391"
           },
-          "cachedAt": "2026-06-29T07:36:30.930Z"
+          "cachedAt": "2026-06-29T07:36:30.930Z",
+          "externalId": {
+            "imdb": "tt0117381"
+          },
+          "letterboxd": {
+            "r": 4.02,
+            "n": 617941,
+            "slug": "primal-fear"
+          }
         }
       ]
     },
@@ -3238,7 +3637,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/698"
           },
-          "cachedAt": "2026-06-25T17:14:25.018Z"
+          "cachedAt": "2026-06-25T17:14:25.018Z",
+          "externalId": {
+            "imdb": "tt1219289"
+          },
+          "letterboxd": {
+            "r": 3.38,
+            "n": 551331,
+            "slug": "limitless"
+          }
         },
         {
           "id": "286949ba-d392-4edb-897e-f76e0ad60b6e",
@@ -3257,7 +3664,15 @@
             "kind": "zen",
             "zenithId": "35273"
           },
-          "cachedAt": "2026-06-25T17:15:36.747Z"
+          "cachedAt": "2026-06-25T17:15:36.747Z",
+          "externalId": {
+            "imdb": "tt9484998"
+          },
+          "letterboxd": {
+            "r": 3.76,
+            "n": 919646,
+            "slug": "palm-springs-2020"
+          }
         },
         {
           "id": "6d7f8687-2cb5-4a20-9a58-7652bba8c281",
@@ -3295,7 +3710,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/58362"
           },
-          "cachedAt": "2026-06-25T17:18:16.480Z"
+          "cachedAt": "2026-06-25T17:18:16.480Z",
+          "externalId": {
+            "imdb": "tt2906216"
+          },
+          "letterboxd": {
+            "r": 3.53,
+            "n": 785002,
+            "slug": "dungeons-dragons-honor-among-thieves"
+          }
         },
         {
           "id": "41a0de6b-e822-43be-bf1d-01452fe847f1",
@@ -3314,7 +3737,15 @@
             "kind": "zen",
             "zenithId": "39593"
           },
-          "cachedAt": "2026-06-25T17:18:52.387Z"
+          "cachedAt": "2026-06-25T17:18:52.387Z",
+          "externalId": {
+            "imdb": "tt8980602"
+          },
+          "letterboxd": {
+            "r": 3.69,
+            "n": 72006,
+            "slug": "the-kid-detective"
+          }
         },
         {
           "id": "abb488e8-446c-405a-b759-3de18246316c",
@@ -3333,7 +3764,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/806"
           },
-          "cachedAt": "2026-06-25T17:19:19.201Z"
+          "cachedAt": "2026-06-25T17:19:19.201Z",
+          "externalId": {
+            "imdb": "tt1119646"
+          },
+          "letterboxd": {
+            "r": 3.76,
+            "n": 2170115,
+            "slug": "the-hangover"
+          }
         },
         {
           "id": "8e22ebfd-8591-4d53-8554-e3e3c679cb78",
@@ -3352,7 +3791,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/483"
           },
-          "cachedAt": "2026-06-25T17:20:12.291Z"
+          "cachedAt": "2026-06-25T17:20:12.291Z",
+          "externalId": {
+            "imdb": "tt0208092"
+          },
+          "letterboxd": {
+            "r": 4.05,
+            "n": 867830,
+            "slug": "snatch"
+          }
         },
         {
           "id": "c1cfa061-77f5-4a6a-8c45-4299c3d6d514",
@@ -3371,7 +3818,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/833"
           },
-          "cachedAt": "2026-06-25T17:20:32.698Z"
+          "cachedAt": "2026-06-25T17:20:32.698Z",
+          "externalId": {
+            "imdb": "tt1022603"
+          },
+          "letterboxd": {
+            "r": 3.65,
+            "n": 3388113,
+            "slug": "500-days-of-summer"
+          }
         }
       ]
     },
@@ -3443,7 +3898,12 @@
             "liftId": "91261",
             "kpId": "5580707"
           },
-          "cachedAt": "2026-08-20T10:06:49.286Z"
+          "cachedAt": "2026-08-20T10:06:49.286Z",
+          "letterboxd": {
+            "r": 3.01,
+            "n": 79587,
+            "slug": "the-death-of-robin-hood"
+          }
         },
         {
           "id": "3b9c8227-50d6-46cf-a210-3aa47b4f757b",
@@ -3510,7 +3970,12 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/85184"
           },
-          "cachedAt": "2026-08-20T10:08:07.661Z"
+          "cachedAt": "2026-08-20T10:08:07.661Z",
+          "letterboxd": {
+            "r": 3.66,
+            "n": 410240,
+            "slug": "if-i-had-legs-id-kick-you"
+          }
         },
         {
           "id": "ea42799a-c831-4818-9bbf-be867475bd6b",
@@ -3529,7 +3994,15 @@
             "kind": "zen",
             "zenithId": "85577"
           },
-          "cachedAt": "2026-06-25T17:21:04.929Z"
+          "cachedAt": "2026-06-25T17:21:04.929Z",
+          "externalId": {
+            "imdb": "tt32916440"
+          },
+          "letterboxd": {
+            "r": 4.02,
+            "n": 3089055,
+            "slug": "marty-supreme"
+          }
         },
         {
           "id": "f28a90fc-f5d9-45e6-ab84-cb7e118c6e51",
@@ -3548,7 +4021,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/57840"
           },
-          "cachedAt": "2026-06-25T17:22:07.032Z"
+          "cachedAt": "2026-06-25T17:22:07.032Z",
+          "externalId": {
+            "imdb": "tt15791034"
+          },
+          "letterboxd": {
+            "r": 3.43,
+            "n": 1635187,
+            "slug": "barbarian-2022"
+          }
         },
         {
           "id": "a3fba8fe-708d-4cc9-97bf-1d7933386048",
@@ -3567,7 +4048,15 @@
             "kind": "zen",
             "zenithId": "1595"
           },
-          "cachedAt": "2026-06-25T17:22:55.940Z"
+          "cachedAt": "2026-06-25T17:22:55.940Z",
+          "externalId": {
+            "imdb": "tt4925292"
+          },
+          "letterboxd": {
+            "r": 3.81,
+            "n": 3248910,
+            "slug": "lady-bird"
+          }
         },
         {
           "id": "b474785d-3473-4c07-b7df-5e277b0688ce",
@@ -3586,7 +4075,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/89223"
           },
-          "cachedAt": "2026-06-25T17:24:28.746Z"
+          "cachedAt": "2026-06-25T17:24:28.746Z",
+          "externalId": {
+            "imdb": "tt35892608"
+          },
+          "letterboxd": {
+            "r": 2.91,
+            "n": 388168,
+            "slug": "undertone-2025"
+          }
         },
         {
           "id": "1030a1b0-2306-415a-a3b9-b416814b9c98",
@@ -3605,7 +4102,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/87692"
           },
-          "cachedAt": "2026-06-25T17:25:51.030Z"
+          "cachedAt": "2026-06-25T17:25:51.030Z",
+          "externalId": {
+            "imdb": "tt33071426"
+          },
+          "letterboxd": {
+            "r": 3.64,
+            "n": 2805359,
+            "slug": "the-drama"
+          }
         },
         {
           "id": "f514d6bf-4955-4c47-8669-18a1e3be603b",
@@ -3624,7 +4129,15 @@
             "kind": "zen",
             "zenithId": "66287"
           },
-          "cachedAt": "2026-06-25T17:26:25.706Z"
+          "cachedAt": "2026-06-25T17:26:25.706Z",
+          "externalId": {
+            "imdb": "tt13238346"
+          },
+          "letterboxd": {
+            "r": 4.16,
+            "n": 1862816,
+            "slug": "past-lives"
+          }
         },
         {
           "id": "559aab20-a51c-45d5-962f-22c54d2dedd7",
@@ -3643,7 +4156,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/10941"
           },
-          "cachedAt": "2026-06-25T17:26:54.127Z"
+          "cachedAt": "2026-06-25T17:26:54.127Z",
+          "externalId": {
+            "imdb": "tt7984734"
+          },
+          "letterboxd": {
+            "r": 4,
+            "n": 1630690,
+            "slug": "the-lighthouse-2019"
+          }
         },
         {
           "id": "726c5380-1bdb-406a-bfe9-a3697cf4b9b7",
@@ -3662,7 +4183,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/83010"
           },
-          "cachedAt": "2026-06-25T17:27:33.542Z"
+          "cachedAt": "2026-06-25T17:27:33.542Z",
+          "externalId": {
+            "imdb": "tt32246771"
+          },
+          "letterboxd": {
+            "r": 3.68,
+            "n": 1098056,
+            "slug": "bring-her-back"
+          }
         },
         {
           "id": "753f24a3-b428-4649-bcb7-de5a8d97a1c2",
@@ -3681,7 +4210,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/79848"
           },
-          "cachedAt": "2026-06-25T17:28:08.362Z"
+          "cachedAt": "2026-06-25T17:28:08.362Z",
+          "externalId": {
+            "imdb": "tt30057084"
+          },
+          "letterboxd": {
+            "r": 2.66,
+            "n": 929032,
+            "slug": "babygirl-2024"
+          }
         },
         {
           "id": "b5d8a7c6-f9c7-48a9-afb3-1d53036d41e4",
@@ -3699,7 +4236,15 @@
             "kind": "zen",
             "zenithId": "60981"
           },
-          "cachedAt": "2026-06-29T07:26:31.920Z"
+          "cachedAt": "2026-06-29T07:26:31.920Z",
+          "externalId": {
+            "imdb": "tt13833688"
+          },
+          "letterboxd": {
+            "r": 3.67,
+            "n": 1222511,
+            "slug": "the-whale-2022"
+          }
         },
         {
           "id": "d6bd65c5-c0f1-411b-895f-8315c6a52c2f",
@@ -3718,7 +4263,15 @@
             "kind": "zen",
             "zenithId": "5000"
           },
-          "cachedAt": "2026-06-29T07:28:23.122Z"
+          "cachedAt": "2026-06-29T07:28:23.122Z",
+          "externalId": {
+            "imdb": "tt3170832"
+          },
+          "letterboxd": {
+            "r": 3.97,
+            "n": 825236,
+            "slug": "room-2015"
+          }
         },
         {
           "id": "e4dbb369-d40d-4550-9423-73d0747544e3",
@@ -3737,7 +4290,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/70651"
           },
-          "cachedAt": "2026-06-29T07:30:05.013Z"
+          "cachedAt": "2026-06-29T07:30:05.013Z",
+          "externalId": {
+            "imdb": "tt17279496"
+          },
+          "letterboxd": {
+            "r": 3.56,
+            "n": 1200456,
+            "slug": "civil-war-2024"
+          }
         },
         {
           "id": "d11cc314-5f7c-47df-a818-1f86398f1ef0",
@@ -3756,7 +4317,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/21253"
           },
-          "cachedAt": "2026-06-25T18:10:26.901Z"
+          "cachedAt": "2026-06-25T18:10:26.901Z",
+          "externalId": {
+            "imdb": "tt0371257"
+          },
+          "letterboxd": {
+            "r": 3.6,
+            "n": 171425,
+            "slug": "stay"
+          }
         },
         {
           "id": "dc0faec8-2d7c-4c68-a30b-25b00dd4f1cf",
@@ -3775,7 +4344,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/1756"
           },
-          "cachedAt": "2026-07-08T10:35:35.462Z"
+          "cachedAt": "2026-07-08T10:35:35.462Z",
+          "externalId": {
+            "imdb": "tt7784604"
+          },
+          "letterboxd": {
+            "r": 3.92,
+            "n": 2858475,
+            "slug": "hereditary"
+          }
         }
       ]
     },
@@ -3800,7 +4377,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/7572"
           },
-          "cachedAt": "2026-06-25T18:05:10.775Z"
+          "cachedAt": "2026-06-25T18:05:10.775Z",
+          "externalId": {
+            "imdb": "tt0780504"
+          },
+          "letterboxd": {
+            "r": 3.91,
+            "n": 2093017,
+            "slug": "drive-2011"
+          }
         },
         {
           "id": "0189cb3f-ac15-430f-90e4-dbd45ca79a2f",
@@ -3819,7 +4404,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/283"
           },
-          "cachedAt": "2026-06-25T18:05:35.194Z"
+          "cachedAt": "2026-06-25T18:05:35.194Z",
+          "externalId": {
+            "imdb": "tt2872718"
+          },
+          "letterboxd": {
+            "r": 4.04,
+            "n": 1925357,
+            "slug": "nightcrawler"
+          }
         },
         {
           "id": "33557167-7497-4cc5-be0c-1e08e1d920c1",
@@ -3838,7 +4431,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/4372"
           },
-          "cachedAt": "2026-06-25T18:06:06.623Z"
+          "cachedAt": "2026-06-25T18:06:06.623Z",
+          "externalId": {
+            "imdb": "tt0144084"
+          },
+          "letterboxd": {
+            "r": 3.75,
+            "n": 4107193,
+            "slug": "american-psycho"
+          }
         },
         {
           "id": "ea292d34-61c8-4728-8cf8-609112a0e4a1",
@@ -3857,7 +4458,15 @@
             "kind": "zen",
             "zenithId": "1616"
           },
-          "cachedAt": "2026-06-25T18:06:41.792Z"
+          "cachedAt": "2026-06-25T18:06:41.792Z",
+          "externalId": {
+            "imdb": "tt4846232"
+          },
+          "letterboxd": {
+            "r": 3.97,
+            "n": 824492,
+            "slug": "good-time"
+          }
         },
         {
           "id": "91b4f39b-3ff1-4a2d-a89d-83edc19ba94d",
@@ -3876,7 +4485,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/2686"
           },
-          "cachedAt": "2026-06-25T18:07:08.273Z"
+          "cachedAt": "2026-06-25T18:07:08.273Z",
+          "externalId": {
+            "imdb": "tt0075314"
+          },
+          "letterboxd": {
+            "r": 4.1,
+            "n": 2542149,
+            "slug": "taxi-driver"
+          }
         },
         {
           "id": "55323e9a-0c42-41b7-bef5-26f6081be996",
@@ -3895,7 +4512,15 @@
             "kind": "zen",
             "zenithId": "11885"
           },
-          "cachedAt": "2026-06-25T18:07:55.597Z"
+          "cachedAt": "2026-06-25T18:07:55.597Z",
+          "externalId": {
+            "imdb": "tt0106856"
+          },
+          "letterboxd": {
+            "r": 3.7,
+            "n": 226277,
+            "slug": "falling-down"
+          }
         },
         {
           "id": "4edd7884-969c-4538-bdb1-32cceb92ab25",
@@ -3914,7 +4539,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/1325"
           },
-          "cachedAt": "2026-06-25T18:09:49.956Z"
+          "cachedAt": "2026-06-25T18:09:49.956Z",
+          "externalId": {
+            "imdb": "tt0477348"
+          },
+          "letterboxd": {
+            "r": 4.3,
+            "n": 2390382,
+            "slug": "no-country-for-old-men"
+          }
         },
         {
           "id": "b9e0d4ad-b383-4988-aecd-9baf6c74ecb7",
@@ -3933,7 +4566,15 @@
             "kind": "zen",
             "zenithId": "14698"
           },
-          "cachedAt": "2026-06-25T18:12:21.703Z"
+          "cachedAt": "2026-06-25T18:12:21.703Z",
+          "externalId": {
+            "imdb": "tt0364569"
+          },
+          "letterboxd": {
+            "r": 4.36,
+            "n": 1703174,
+            "slug": "oldboy"
+          }
         }
       ]
     },
@@ -4091,7 +4732,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/78583"
           },
-          "cachedAt": "2026-06-29T08:05:26.161Z"
+          "cachedAt": "2026-06-29T08:05:26.161Z",
+          "externalId": {
+            "imdb": "tt31711040"
+          },
+          "letterboxd": {
+            "r": 4.28,
+            "n": 516011,
+            "slug": "look-back-2024"
+          }
         },
         {
           "id": "39e38cbf-cfba-49d9-9565-ceb7fcead724",
@@ -4197,7 +4846,10 @@
             "episode": 1,
             "kpId": "4870795"
           },
-          "cachedAt": "2026-08-20T09:57:09.200Z"
+          "cachedAt": "2026-08-20T09:57:09.200Z",
+          "letterboxd": {
+            "r": 0
+          }
         },
         {
           "id": "3680301e-2ce1-43a6-ac6f-d6b3b384c514",
@@ -4273,7 +4925,12 @@
             "episode": 1,
             "kpId": "8624606"
           },
-          "cachedAt": "2026-08-20T10:01:13.220Z"
+          "cachedAt": "2026-08-20T10:01:13.220Z",
+          "letterboxd": {
+            "r": 4.35,
+            "n": 42038,
+            "slug": "takopis-original-sin"
+          }
         },
         {
           "id": "68f4dac5-23e8-425d-bbfc-69d41db60ad9",
@@ -4340,7 +4997,10 @@
             "season": 1,
             "episode": 1
           },
-          "cachedAt": "2026-08-20T10:03:01.152Z"
+          "cachedAt": "2026-08-20T10:03:01.152Z",
+          "letterboxd": {
+            "r": 0
+          }
         },
         {
           "id": "f85805d3-a798-45a5-8f70-1d93cba06a2b",
@@ -4416,7 +5076,10 @@
             "episode": 1,
             "kpId": "5462015"
           },
-          "cachedAt": "2026-08-20T10:03:22.265Z"
+          "cachedAt": "2026-08-20T10:03:22.265Z",
+          "letterboxd": {
+            "r": 0
+          }
         },
         {
           "id": "6a6ca6ed-c6d6-4cf1-8d4d-6c82c5bc4845",
@@ -4484,7 +5147,10 @@
             "episode": 1,
             "kpId": "6802576"
           },
-          "cachedAt": "2026-08-20T10:04:11.719Z"
+          "cachedAt": "2026-08-20T10:04:11.719Z",
+          "letterboxd": {
+            "r": 0
+          }
         },
         {
           "id": "9eece48c-0703-4b6d-8a12-f189726cfc71",
@@ -4663,7 +5329,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/325"
           },
-          "cachedAt": "2026-06-25T18:21:34.378Z"
+          "cachedAt": "2026-06-25T18:21:34.378Z",
+          "externalId": {
+            "imdb": "tt1408101"
+          },
+          "letterboxd": {
+            "r": 3.4,
+            "n": 306352,
+            "slug": "star-trek-into-darkness"
+          }
         },
         {
           "id": "8a334e7e-b341-4907-b6ad-400b4b93acdc",
@@ -4801,7 +5475,12 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/65462"
           },
-          "cachedAt": "2026-08-20T10:11:39.922Z"
+          "cachedAt": "2026-08-20T10:11:39.922Z",
+          "letterboxd": {
+            "r": 3.3,
+            "n": 502552,
+            "slug": "the-creator-2023"
+          }
         },
         {
           "id": "631951d8-b40a-4388-b0f0-bebbc2ff9042",
@@ -4869,7 +5548,12 @@
             "liftId": "3006",
             "kpId": "467099"
           },
-          "cachedAt": "2026-08-20T10:13:55.217Z"
+          "cachedAt": "2026-08-20T10:13:55.217Z",
+          "letterboxd": {
+            "r": 3.32,
+            "n": 778811,
+            "slug": "prometheus"
+          }
         },
         {
           "id": "cf0eb52b-e2b6-4999-9abd-12644172c862",
@@ -4936,7 +5620,12 @@
             "liftId": "4169",
             "kpId": "422882"
           },
-          "cachedAt": "2026-08-20T10:16:14.867Z"
+          "cachedAt": "2026-08-20T10:16:14.867Z",
+          "letterboxd": {
+            "r": 3.05,
+            "n": 64588,
+            "slug": "pandorum"
+          }
         }
       ]
     },
@@ -5120,7 +5809,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/73954"
           },
-          "cachedAt": "2026-06-25T17:40:56.943Z"
+          "cachedAt": "2026-06-25T17:40:56.943Z",
+          "externalId": {
+            "imdb": "tt8864596"
+          },
+          "letterboxd": {
+            "r": 3.86,
+            "n": 370227,
+            "slug": "transformers-one"
+          }
         },
         {
           "id": "0be1378c-249a-43c6-8f56-1a2598388b09",
@@ -5272,7 +5969,15 @@
             "kind": "zen",
             "zenithId": "66353"
           },
-          "cachedAt": "2026-06-29T06:52:21.481Z"
+          "cachedAt": "2026-06-29T06:52:21.481Z",
+          "externalId": {
+            "imdb": "tt19500164"
+          },
+          "letterboxd": {
+            "r": 3.96,
+            "n": 444377,
+            "slug": "nimona-2023"
+          }
         },
         {
           "id": "ca8890fb-559b-4578-8cfa-e9672b7382fa",
@@ -5309,7 +6014,15 @@
             "kind": "clps",
             "kpId": "8043830"
           },
-          "cachedAt": "2026-07-08T10:58:26.571Z"
+          "cachedAt": "2026-07-08T10:58:26.571Z",
+          "externalId": {
+            "imdb": "tt14205554"
+          },
+          "letterboxd": {
+            "r": 3.53,
+            "n": 1933779,
+            "slug": "kpop-demon-hunters"
+          }
         },
         {
           "id": "2610fb10-f333-49cd-817f-e4f924815767",
@@ -5347,7 +6060,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/11505"
           },
-          "cachedAt": "2026-06-29T06:50:28.413Z"
+          "cachedAt": "2026-06-29T06:50:28.413Z",
+          "externalId": {
+            "imdb": "tt4729430"
+          },
+          "letterboxd": {
+            "r": 4.19,
+            "n": 701175,
+            "slug": "klaus"
+          }
         },
         {
           "id": "8e38ed4a-3386-4fe1-8d1c-987185d0efac",
@@ -5366,7 +6087,15 @@
             "kind": "zen",
             "zenithId": "15783"
           },
-          "cachedAt": "2026-06-29T06:55:45.956Z"
+          "cachedAt": "2026-06-29T06:55:45.956Z",
+          "externalId": {
+            "imdb": "tt7979580"
+          },
+          "letterboxd": {
+            "r": 3.82,
+            "n": 678499,
+            "slug": "the-mitchells-vs-the-machines"
+          }
         },
         {
           "id": "b51dde6b-f45f-4f10-8010-595a726c53c3",
@@ -5385,7 +6114,15 @@
             "kind": "zen",
             "zenithId": "1805"
           },
-          "cachedAt": "2026-06-29T06:59:52.691Z"
+          "cachedAt": "2026-06-29T06:59:52.691Z",
+          "externalId": {
+            "imdb": "tt4116284"
+          },
+          "letterboxd": {
+            "r": 4,
+            "n": 1208472,
+            "slug": "the-lego-batman-movie"
+          }
         },
         {
           "id": "b5a2d945-2090-4af0-a35b-c79680a84ba8",
@@ -5404,7 +6141,15 @@
             "kind": "zen",
             "zenithId": "2228"
           },
-          "cachedAt": "2026-06-29T07:52:48.541Z"
+          "cachedAt": "2026-06-29T07:52:48.541Z",
+          "externalId": {
+            "imdb": "tt0844471"
+          },
+          "letterboxd": {
+            "r": 3.42,
+            "n": 876445,
+            "slug": "cloudy-with-a-chance-of-meatballs"
+          }
         },
         {
           "id": "377b7859-cd55-4610-ae4e-d7bce4ab3b0e",
@@ -5442,7 +6187,15 @@
             "kind": "ort",
             "embedUrl": "https://api.ortified.ws/embed/movie/2321"
           },
-          "cachedAt": "2026-06-29T07:55:34.138Z"
+          "cachedAt": "2026-06-29T07:55:34.138Z",
+          "externalId": {
+            "imdb": "tt1192628"
+          },
+          "letterboxd": {
+            "r": 3.76,
+            "n": 965579,
+            "slug": "rango"
+          }
         },
         {
           "id": "09ed69e9-567f-4826-a316-402ac3ea9565",
@@ -5461,9 +6214,18 @@
             "kind": "zen",
             "zenithId": "4940"
           },
-          "cachedAt": "2026-06-29T07:57:22.985Z"
+          "cachedAt": "2026-06-29T07:57:22.985Z",
+          "externalId": {
+            "imdb": "tt4633694"
+          },
+          "letterboxd": {
+            "r": 4.4,
+            "n": 4979992,
+            "slug": "spider-man-into-the-spider-verse"
+          }
         }
       ]
     }
-  ]
+  ],
+  "enrichmentVersion": "2026-09-21T12:31:29.769Z"
 }
