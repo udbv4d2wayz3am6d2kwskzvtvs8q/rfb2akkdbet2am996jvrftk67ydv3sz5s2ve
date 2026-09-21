@@ -1,0 +1,26 @@
+name: Warm shared metadata and external recommendations
+on:
+  schedule:
+    - cron: "29 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: kp-prewarm
+  cancel-in-progress: false
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Fetch current catalogue
+        run: curl --fail --silent --show-error https://cdn.jsdelivr.net/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@catalog-cdn/curated-fallback.json -o /tmp/catalog.json
+      - name: Warm missing objects within the shared quota
+        env:
+          KP_BROKER_TOKEN: ${{ secrets.KP_BROKER_TOKEN }}
+          KP_PREWARM_MAX: "120"
+        run: node scripts/prewarm-kp.mjs /tmp/catalog.json

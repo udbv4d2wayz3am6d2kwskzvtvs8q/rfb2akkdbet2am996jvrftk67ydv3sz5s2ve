@@ -1,0 +1,35 @@
+<!doctype html><html><head><title>LiftW</title></head><body>
+<div id="player"></div>
+<script data-name="mk">
+		makePlayer({
+			blocked: false ,
+			title: "Человек-паук: Нет пути домой",
+			id: 858423 ,
+			poster: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+            
+			source: {
+				dash: "https://hye1eaipby4w.interkh.com/07_26/28/10/5XDKG4GL/1267317.mpd?fckz2=000000000000000&ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&hui=000000000000000&t=1800000000",
+                dasha: "https://hye1eaipby4w.interkh.com/07_26/28/10/TA4SIZVZ/1267317.mpd?fckz2=000000000000000&ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&hui=000000000000000&t=1800000000",
+				hls: "https://hye1eaipby4w.interkh.com/07_28_26/07/28/10/VCXA2UYR/Z7A4ODTZ.mp4/master.m3u8?fckz2=000000000000000&ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&hui=000000000000000&t=1800000000",
+				audio: {"names":["Рус. Дублированный","HDRezka Studio","JASKIER","LeDoyen (укр)","Eng.Original"],"order":[0,1,2,3,4]},
+				cc: [{"url":"https://hye1eaipby4w.interkh.com/07_28_26/07/28/10/4WWRN34Q/2JYV3KLG/15ce3dd8d1.vtt?ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&t=1800000000","name":"Eng. full - 1"},{"url":"https://hye1eaipby4w.interkh.com/07_28_26/07/28/10/4WWRN34Q/2JYV3KLG/4b3fafd0e1.vtt?ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&t=1800000000","name":"Укр. повні - 2"},{"url":"https://hye1eaipby4w.interkh.com/07_28_26/07/28/10/4WWRN34Q/2JYV3KLG/38863d1849.vtt?ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&t=1800000000","name":"Укр. форсовані - 3"},{"url":"https://hye1eaipby4w.interkh.com/07_28_26/07/28/10/4WWRN34Q/2JYV3KLG/10d4e8c570.vtt?ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&t=1800000000","name":"Рус. полные - 4"},{"url":"https://hye1eaipby4w.interkh.com/07_28_26/07/28/10/4WWRN34Q/2JYV3KLG/d70c46316d.vtt?ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&t=1800000000","name":"Рус. форсированные - 5"},{"url":"https://hye1eaipby4w.interkh.com/07_28_26/07/28/10/4WWRN34Q/2JYV3KLG/e041ee0a84.vtt?ha=000000000000000&hc=000000000000000&hi=000000000000000&ht=000000000000000&hu=000000000000000&t=1800000000","name":"Eng. SDH - 6"}]
+
+			},
+			sections: [],
+			qualityByWidth: {"864":480},
+			p2p: {
+				geo: ["US","","AS23470"],
+				tolerance:  4 ,
+				tracker: function () {
+					var now = Date.now();
+					if (lastTracker + 3e5 < now) tracker = false; 
+					lastTracker = now;
+					return (tracker= !tracker) ?"wss://t1.zcvh.net/v1/ws" :"wss://t1.zcvh.net/v1/ws"
+				},
+				longDownload: 300 * 1000
+			}
+		});
+
+		var videoKey = 1267317 ;
+    </script>
+</body></html>

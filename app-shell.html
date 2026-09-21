@@ -1,0 +1,193 @@
+<div id="bookmarkBanner" class="bookmark-banner hidden">Добавьте сайт в закладки</div>
+
+<button id="quickListsToggle" class="quick-lists-toggle hidden" type="button"
+        aria-controls="quickListsDrawer" aria-expanded="false">Списки</button>
+<button id="quickListsBackdrop" class="quick-lists-backdrop" type="button"
+        aria-label="Закрыть списки" tabindex="-1"></button>
+<aside id="quickListsDrawer" class="quick-lists-drawer" aria-hidden="true">
+  <div class="quick-lists-head">
+    <strong>Списки</strong>
+    <button id="quickListsClose" type="button">закрыть</button>
+  </div>
+  <nav id="quickListsNav" class="quick-lists-nav" aria-label="Подборки"></nav>
+</aside>
+
+<div class="container">
+  <header>
+    <div class="brand">
+      <a class="logo-btn" id="logoBtn" href="/" aria-label="На главную">
+        <img class="logo-image" data-alphy-asset="Logo.png" alt="alphy">
+      </a>
+    </div>
+    <div class="search-box">
+      <div class="search-field">
+        <input type="text" id="searchInput" spellcheck="false" autocomplete="off"
+               placeholder="Поиск фильмов, сериалов, мультфильмов и аниме"
+               role="combobox" aria-expanded="false" aria-controls="searchSuggest">
+        <div id="searchSuggest" class="search-suggest hidden" role="listbox" aria-label="Подсказки"></div>
+      </div>
+      <button class="search-button" id="searchBtn" type="button" aria-label="Поиск">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+        </svg>
+      </button>
+      <button class="icon-btn bookmark-nav-btn" id="bookmarksToggle" type="button" aria-label="Закладки">
+        <svg viewBox="0 0 24 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 1h18v27l-9-7-9 7z"></path>
+        </svg>
+        <span id="bookmarksNavCount" class="bookmark-nav-count hidden">0</span>
+      </button>
+    </div>
+  </header>
+
+  <section id="settingsPanel" class="settings hidden">
+    <label for="resolverInput">Resolver URL</label>
+    <input id="resolverInput" spellcheck="false" autocomplete="off" placeholder="https://alphytv.alphy.deno.net">
+    <button id="saveResolverBtn" type="button">Сохранить</button>
+    <button id="healthBtn" type="button">Проверить</button>
+    <span id="resolverState" class="muted">—</span>
+  </section>
+
+  <section id="homeView" class="view">
+    <div id="continueSection" class="row continue-section hidden">
+      <h3 id="continueHeader">Продолжить просмотр</h3>
+      <div id="continueGrid" class="card-grid"></div>
+    </div>
+    <section id="curatedSection" class="curated-section hidden" aria-label="Подборки">
+      <div class="curated-toolbar">
+        <span id="catalogState" class="catalog-state"></span>
+        <div id="adminCatalogActions" class="admin-catalog-actions hidden">
+          <label class="banner-admin-toggle">
+            <input id="bookmarkBannerToggle" type="checkbox">
+            <span>баннер</span>
+          </label>
+          <label class="banner-admin-text">
+            <span>Текст баннера</span>
+            <input id="bookmarkBannerText" type="text" maxlength="120"
+                   placeholder="Добавьте сайт в закладки">
+          </label>
+          <button id="createListBtn" type="button">+ список</button>
+          <button id="soapBrowseBtn" type="button">🎬 soap</button>
+          <button id="keyPoolBtn" type="button">API keys</button>
+          <button id="saveCatalogBtn" type="button">Сохранить</button>
+        </div>
+      </div>
+      <div id="curatedLists" class="curated-lists"></div>
+    </section>
+  </section>
+
+  <section id="bookmarksView" class="view hidden">
+    <h2 class="results-title bookmarks-title">
+      Закладки
+      <span id="bookmarksCount" class="continue-count hidden">0</span>
+    </h2>
+    <div id="bookmarksGrid" class="card-grid"></div>
+    <div id="bookmarksEmpty" class="home-empty hidden">
+      <strong>Закладок пока нет</strong>
+      <span>Наведи курсор на карточку и нажми на белую закладку.</span>
+    </div>
+  </section>
+
+  <section id="searchView" class="view hidden">
+    <h2 id="resultsTitle" class="results-title">Результаты</h2>
+    <div id="resultsGrid" class="card-grid"></div>
+  </section>
+
+  <section id="soapView" class="view hidden">
+    <div class="soap-head">
+      <h2 class="results-title">Фильмы soap <span id="soapCount" class="continue-count">0</span></h2>
+      <div class="soap-controls">
+        <input type="text" id="soapFilter" spellcheck="false" autocomplete="off" placeholder="Фильтр по названию">
+        <button id="soapToggle" type="button">Показать все</button>
+      </div>
+    </div>
+    <div id="soapGrid" class="card-grid"></div>
+  </section>
+
+  <section id="watchView" class="view hidden">
+    <div class="watch-head">
+      <h2 id="watchTitle" class="watch-title"></h2>
+      <div class="watch-actions">
+        <button class="add-list-btn hidden" id="addToListBtn" type="button">+ В подборку</button>
+      </div>
+    </div>
+    <div class="watch-layout">
+      <div class="watch-main">
+        <div id="serialPanel" class="serial-panel hidden"></div>
+        <div id="playerHost" class="player-host">
+          <div class="placeholder"><div class="spinner"></div><span>Загрузка плеера…</span></div>
+        </div>
+        <div id="trackPanel" class="track-panel hidden"></div>
+      </div>
+      <aside id="metaPanel" class="meta-panel hidden"></aside>
+      <section id="similarSection" class="similar-section hidden" aria-label="Похожее">
+        <div class="similar-head">
+          <h3>Похожее</h3>
+          <button id="similarToggle" class="similar-toggle" type="button" aria-expanded="true">Скрыть</button>
+        </div>
+        <div id="similarRow" class="similar-row"></div>
+      </section>
+      <section id="reviewsSection" class="reviews-section hidden" aria-label="Отзывы">
+        <div class="similar-head">
+          <h3><a id="reviewsLink" class="reviews-title">Отзывы</a></h3>
+          <button id="reviewsToggle" class="similar-toggle" type="button" aria-expanded="true">Скрыть</button>
+        </div>
+        <ul id="reviewsList" class="reviews-list"></ul>
+      </section>
+    </div>
+  </section>
+
+  <div id="loading" class="loading hidden"><div class="spinner"></div><div>Загрузка…</div></div>
+  <div id="error" class="error hidden"></div>
+
+  <footer class="site-footer">
+    <div class="footer-contact">По всем вопросам: <a href="mailto:info@alphy.tv">info@alphy.tv</a></div>
+    <button id="adminEntry" class="admin-entry" type="button">admin</button>
+  </footer>
+</div>
+
+<dialog id="itemMetaDialog" class="compact-dialog item-meta-dialog">
+  <form method="dialog">
+    <div class="dialog-head">
+      <strong>Метаданные</strong>
+      <button class="dialog-close" type="button" data-close-dialog aria-label="Закрыть">×</button>
+    </div>
+    <div id="itemMetaBody" class="item-meta-body"></div>
+    <div class="item-meta-actions">
+      <button id="itemMetaRefresh" type="button">Обновить с Кинопоиска</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="listPickerDialog" class="compact-dialog">
+  <form method="dialog">
+    <div class="dialog-head">
+      <strong>Добавить в подборку</strong>
+      <button class="dialog-close" type="button" data-close-dialog aria-label="Закрыть">×</button>
+    </div>
+    <div id="listPickerOptions" class="list-picker-options"></div>
+  </form>
+</dialog>
+
+<dialog id="keyPoolDialog" class="compact-dialog key-pool-dialog">
+  <form method="dialog">
+    <div class="dialog-head">
+      <strong>Ключи Кинопоиска</strong>
+      <button class="dialog-close" type="button" data-key-pool-close aria-label="Закрыть">×</button>
+    </div>
+    <div id="keyPoolSummary" class="key-pool-summary"></div>
+    <div id="keyPoolSync" class="key-pool-sync"></div>
+    <div class="key-pool-tools">
+      <button id="keyPoolAdd" type="button">+ ключ</button>
+      <button id="keyPoolTestAll" type="button">Проверить все</button>
+      <button id="keyPoolReveal" type="button">Показать все</button>
+    </div>
+    <div id="keyPoolRows" class="key-pool-rows"></div>
+    <div class="key-pool-actions">
+      <span id="keyPoolState" class="catalog-state"></span>
+      <button id="keyPoolReload" type="button">Обновить</button>
+      <button id="keyPoolSave" type="button">Сохранить</button>
+    </div>
+  </form>
+</dialog>

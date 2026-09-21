@@ -1,0 +1,73 @@
+{
+  "buildCommand": "node scripts/build-web.mjs",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "git": {
+    "deploymentEnabled": {
+      "catalog-cdn": false,
+      "search-cdn": false,
+      "search-cdn-parts": false
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/curated-live.json",
+      "destination": "/api/catalog-snapshot"
+    },
+    {
+      "source": "/:id(\\d+)",
+      "destination": "/"
+    },
+    {
+      "source": "/k/:id(\\d+)",
+      "destination": "/"
+    },
+    {
+      "source": "/m/:id(\\d+)",
+      "destination": "/"
+    },
+    {
+      "source": "/l/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/r/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/c/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/o/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/n/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/search/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/bookmarks",
+      "destination": "/"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
+      ]
+    }
+  ]
+}

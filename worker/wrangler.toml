@@ -1,0 +1,7 @@
+name = "alphy-resolver"
+main = "src/index.js"
+compatibility_date = "2026-06-14"
+
+[vars]
+ALLOWED_ORIGIN = "https://alphytv.vercel.app,https://alphy.tv,https://www.alphy.tv,http://127.0.0.1:5177,http://localhost:5177"
+POISKKINO_BASE_URL = "https://api.poiskkino.dev"

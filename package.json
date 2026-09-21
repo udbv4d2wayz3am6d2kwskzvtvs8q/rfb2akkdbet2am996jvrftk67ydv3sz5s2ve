@@ -1,0 +1,30 @@
+{
+  "name": "alphytv-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Static AlphyTV MVP with Newdeaf/Ortified and Zona/Zenith playback flow.",
+  "scripts": {
+    "build": "node scripts/build-web.mjs",
+    "check": "node --check app.js && node --check identity.js && node --check catalog.js && node --check foryou.js && node --check keypool.js && node --check scripts/build-web.mjs && node --check scripts/collaps-4k-pipeline.mjs && node --check scripts/collaps-discover-candidates.mjs && node --check scripts/collaps-merge-results.mjs && node --check scripts/deploy-letterboxd-schema.mjs && node --check scripts/deploy-zona-schema.mjs && node --check api/_admin-auth.js && node --check api/_catalog-store.js && node --check api/_key-pool-store.js && node --check api/client-key-pool.js && node --check api/admin/check.js && node --check api/admin/catalog.js && node --check api/admin/key-pool.js && node --check api/admin/login.js && node --check api/admin/logout.js && node --check api/key-pool/runtime.js && deno check --no-config supabase/functions/zona/index.ts && deno check resolver-deno/main.js && deno check resolver-deno/kinopub-main.js && node scripts/build-imdb-map.mjs --check",
+    "check:soap": "python3 scripts/check-soap-catalog.py",
+    "check:soap:node": "node scripts/check-soap-catalog.mjs",
+    "check:soap:priority": "SOAP_CHECK_SCOPE=priority python3 scripts/check-soap-catalog.py",
+    "check:soap:all": "SOAP_CHECK_SCOPE=all python3 scripts/check-soap-catalog.py",
+    "probe:soap": "python3 scripts/probe-soap-delivery.py",
+    "refresh:soap": "python3 scripts/soap-refresh-catalog.py --scope full",
+    "collaps4k:plan": "node scripts/collaps-4k-pipeline.mjs plan",
+    "collaps4k:status": "node scripts/collaps-4k-pipeline.mjs status",
+    "collaps4k:export": "node scripts/collaps-4k-pipeline.mjs export",
+    "collaps4k:run": "node scripts/collaps-4k-pipeline.mjs run",
+    "collaps4k:merge": "node scripts/collaps-merge-results.mjs",
+    "collaps4k:discover:plan": "node scripts/collaps-discover-candidates.mjs plan",
+    "collaps4k:discover:status": "node scripts/collaps-discover-candidates.mjs status",
+    "collaps4k:discover:run": "node scripts/collaps-discover-candidates.mjs run",
+    "sync:catalog": "node scripts/sync-curated-fallback.mjs",
+    "refresh:identity": "npm run sync:catalog && node scripts/build-imdb-map.mjs",
+    "check:identity": "node scripts/build-imdb-map.mjs --check",
+    "test": "node --test tests/*.test.js",
+    "deploy": "npx vercel@latest --prod"
+  }
+}

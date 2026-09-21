@@ -1,0 +1,37 @@
+name: Benchmark catalog delivery
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "catalog-cache.js"
+      - ".github/workflows/catalog-bench.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bench:
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
+    steps:
+      - name: Compare catalog endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          endpoints=(
+            "jsdelivr|https://cdn.jsdelivr.net/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@catalog-cdn/curated-fallback.json"
+            "vercel|https://alphy.tv/curated-fallback.json"
+            "github_raw|https://raw.githubusercontent.com/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve/catalog-cdn/curated-fallback.json"
+          )
+          for entry in "${endpoints[@]}"; do
+            name="${entry%%|*}"
+            url="${entry#*|}"
+            echo "== $name =="
+            for run in 1 2 3 4 5; do
+              curl --location --compressed --silent --show-error --output /dev/null \
+                --write-out "run=$run code=%{http_code} dns=%{time_namelookup}s connect=%{time_connect}s ttfb=%{time_starttransfer}s total=%{time_total}s bytes=%{size_download}\n" \
+                "$url"
+            done
+          done

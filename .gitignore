@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.vercel/
+.DS_Store
+.dev.vars
+worker/node_modules/
+worker/.wrangler/
+worker/package-lock.json
+.vercel
+.env*
+scripts/fixed-catalog.json
+soap-movies.json.tmp
+var/collaps-4k*/
+supabase/.temp/

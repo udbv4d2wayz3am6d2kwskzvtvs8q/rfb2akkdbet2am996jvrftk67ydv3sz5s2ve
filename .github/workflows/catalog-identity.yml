@@ -1,0 +1,38 @@
+name: Refresh catalog identity
+
+on:
+  schedule:
+    - cron: "37 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: catalog-identity
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Snapshot catalog and resolve new identities
+        run: npm run refresh:identity
+      - name: Verify exact offline coverage
+        run: npm run check:identity
+      - name: Commit a changed snapshot
+        run: |
+          if git diff --quiet -- curated-fallback.json imdb-map.json docs/catalog-backups; then
+            echo "Catalog identity is already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add curated-fallback.json imdb-map.json docs/catalog-backups
+          git commit -m "Refresh catalog identity snapshot"
+          git push

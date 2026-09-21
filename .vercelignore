@@ -1,0 +1,16 @@
+# Vercel serves the static frontend plus /api/resolve-zona. That control-plane
+# function imports worker/src, but video bytes never cross Vercel.
+.env*
+supabase/.temp/
+resolver-deno/
+docs/
+node_modules/
+*.md
+package.json
+package-lock.json
+worker/node_modules/
+worker/.wrangler/
+worker/README.md
+worker/package.json
+worker/wrangler.toml
+worker/package-lock.json

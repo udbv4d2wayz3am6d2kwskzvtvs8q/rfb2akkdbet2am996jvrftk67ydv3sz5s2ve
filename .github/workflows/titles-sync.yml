@@ -1,0 +1,60 @@
+name: Sync the title index with the source
+
+# Hourly: the newest pages of the source's listing, then the titles still
+# missing their player or Kinopoisk id, newest first. Every four hours,
+# the whole listing, for older additions and episode markers. The search publisher
+# (search-cdn.yml, at :41) ships whatever this wrote within the same hour.
+# See scripts/sync-titles.mjs; it paces itself at one request every two seconds.
+
+on:
+  schedule:
+    - cron: "5 * * * *"
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "Read the whole listing, not just the newest pages"
+        type: boolean
+        default: false
+      budget_min:
+        description: "Run budget in minutes (1–45)"
+        type: number
+        default: 45
+      fill_limit:
+        description: "Maximum title-detail checks (1–300)"
+        type: number
+        default: 300
+
+permissions:
+  contents: read
+
+concurrency:
+  group: titles-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            scripts/sync-titles.mjs
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Sync
+        env:
+          PUBLISH_TOKEN: ${{ secrets.SEARCH_PUBLISH_TOKEN }}
+          FULL_INPUT: ${{ inputs.full }}
+          EVENT: ${{ github.event_name }}
+          BUDGET_MIN: ${{ inputs.budget_min || 45 }}
+          FILL_LIMIT: ${{ inputs.fill_limit || 300 }}
+        run: |
+          full=""
+          if [ "$FULL_INPUT" = "true" ]; then full="--full"; fi
+          node scripts/sync-titles.mjs --auto $full --fill "$FILL_LIMIT" --budget-min "$BUDGET_MIN"

@@ -1,0 +1,51 @@
+name: Deploy Letterboxd shards
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-letterboxd
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: icmjgvlsyfqwyewvsuje
+            token_secret: SUPABASE_ACCESS_TOKEN_ICM
+          - project: gzwynsvcydynqidwxjru
+            token_secret: SUPABASE_ACCESS_TOKEN_GZW
+          - project: cuyofxgofmhdugauoqzt
+            token_secret: SUPABASE_ACCESS_TOKEN_CUY
+          - project: hrtnvhafwzimjstvegno
+            token_secret: SUPABASE_ACCESS_TOKEN_HRT
+          - project: pvwrwsnzqaldyuvlttlv
+            token_secret: SUPABASE_ACCESS_TOKEN_PVW
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 2.113.0
+      - name: Ensure cache schema
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets[matrix.token_secret] }}
+          SUPABASE_PROJECT_REF: ${{ matrix.project }}
+        run: node scripts/deploy-letterboxd-schema.mjs
+      - name: Deploy cache-only batch contract
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets[matrix.token_secret] }}
+        run: supabase functions deploy letterboxd --project-ref "${{ matrix.project }}" --no-verify-jwt
+      - name: Deploy Lift relay with refreshed playlist caching
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets[matrix.token_secret] }}
+        run: supabase functions deploy liftw --project-ref "${{ matrix.project }}" --no-verify-jwt

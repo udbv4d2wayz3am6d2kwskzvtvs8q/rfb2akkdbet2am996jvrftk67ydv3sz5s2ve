@@ -1,0 +1,91 @@
+name: Publish curated catalog CDN snapshot
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: curated-catalog-cdn
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-slim
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: catalog-cdn
+          fetch-depth: 1
+
+      # The bake script and the identity map live on main. Only those two files
+      # are needed, so only those two are checked out, beside the snapshot.
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          path: app
+          fetch-depth: 1
+          sparse-checkout: |
+            scripts/bake-curated-letterboxd.mjs
+            imdb-map.json
+          sparse-checkout-cone-mode: false
+
+      - name: Keep the published snapshot for comparison
+        shell: bash
+        run: cp curated-fallback.json "$RUNNER_TEMP/previous.json" || echo '{}' > "$RUNNER_TEMP/previous.json"
+
+      - name: Fetch authoritative catalog snapshot
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { writeFile } from "node:fs/promises";
+          const url = "https://alphy.tv/api/catalog-snapshot";
+          const response = await fetch(`${url}?cdn-sync=${Date.now()}`, { cache: "no-store" });
+          if (!response.ok) throw new Error(`catalog download failed: ${response.status}`);
+          const catalog = await response.json();
+          if (Number(catalog?.schema) !== 1 || !Number.isInteger(Number(catalog?.revision)) || !Array.isArray(catalog?.lists)) {
+            throw new Error("catalog payload is invalid");
+          }
+          await writeFile("curated-fallback.json", `${JSON.stringify(catalog, null, 2)}\n`);
+          console.log(`catalog revision ${catalog.revision}`);
+          NODE
+
+      # Every visitor sees the same home rows, so their Letterboxd scores ride in
+      # the snapshot instead of costing each visit a function call per shard.
+      # A failed bake must not hold back a catalogue edit, so it cannot fail
+      # the job; a shard it cannot reach keeps the previously published score.
+      - name: Bake Letterboxd scores into the snapshot
+        continue-on-error: true
+        shell: bash
+        run: |
+          node app/scripts/bake-curated-letterboxd.mjs \
+            --catalog curated-fallback.json \
+            --map app/imdb-map.json \
+            --previous "$RUNNER_TEMP/previous.json"
+
+      - name: Publish changed snapshot
+        id: publish
+        shell: bash
+        run: |
+          if git diff --quiet -- curated-fallback.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "CDN snapshot is already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add curated-fallback.json
+          git commit -m "Refresh jsDelivr catalog snapshot"
+          git push origin HEAD:catalog-cdn
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Purge jsDelivr branch alias
+        if: steps.publish.outputs.changed == 'true'
+        shell: bash
+        run: |
+          curl --fail --silent --show-error \
+            "https://purge.jsdelivr.net/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@catalog-cdn/curated-fallback.json"

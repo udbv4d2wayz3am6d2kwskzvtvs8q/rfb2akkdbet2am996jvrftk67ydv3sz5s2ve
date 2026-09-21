@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" profiles="urn:mpeg:dash:profile:isoff-live:2011" type="static" mediaPresentationDuration="PT2H35M25.8S" minBufferTime="PT20.0S">
+  <BaseURL>https://cdn.example/av1/07_26/29/01/TJ4DKVUJ/</BaseURL>
+  <BaseURL>https://cdn.example/av1/07_26/29/01/TJ4DKVUJ/</BaseURL>
+  <Period id="0" start="PT0S">
+    <AdaptationSet startWithSAP="1" id="0" segmentAlignment="true" lang="rus0" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="115506" codecs="opus" id="0">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267438-2ch-0/init.webm?ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403" media="4.1267438-2ch-0/$Number$.webm?rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="0" d="10001"></S>
+            <S d="10000" r="930"></S>
+            <S d="5812"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet startWithSAP="1" id="1" segmentAlignment="true" lang="rus1" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="114724" codecs="opus" id="1">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267438-2ch-1/init.webm?t=1800000000&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd" media="4.1267438-2ch-1/$Number$.webm?fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="0" d="10001"></S>
+            <S d="10000" r="929"></S>
+            <S d="8612"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet startWithSAP="1" id="2" segmentAlignment="true" lang="rus2" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="113397" codecs="opus" id="2">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267438-2ch-2/init.webm?t=1800000000&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd" media="4.1267438-2ch-2/$Number$.webm?ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="0" d="10001"></S>
+            <S d="10000" r="930"></S>
+            <S d="6716"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet startWithSAP="1" id="3" segmentAlignment="true" lang="rus3" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="115806" codecs="opus" id="3">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267438-2ch-3/init.webm?fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000" media="4.1267438-2ch-3/$Number$.webm?rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="0" d="10001"></S>
+            <S d="10000" r="930"></S>
+            <S d="6716"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet startWithSAP="1" id="4" segmentAlignment="true" lang="ukr4" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="115429" codecs="opus" id="4">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267438-2ch-4/init.webm?hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254" media="4.1267438-2ch-4/$Number$.webm?t=1800000000&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="0" d="10001"></S>
+            <S d="10000" r="930"></S>
+            <S d="5612"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet startWithSAP="1" id="5" segmentAlignment="true" lang="ukr5" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="115656" codecs="opus" id="5">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267438-2ch-5/init.webm?hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528" media="4.1267438-2ch-5/$Number$.webm?ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="0" d="10001"></S>
+            <S d="10000" r="930"></S>
+            <S d="5812"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet startWithSAP="1" id="6" segmentAlignment="true" lang="eng6" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="114496" codecs="opus" id="6">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267438-2ch-6/init.webm?t=1800000000&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd" media="4.1267438-2ch-6/$Number$.webm?rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="0" d="10001"></S>
+            <S d="10000" r="930"></S>
+            <S d="5716"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet frameRate="24000/1001" startWithSAP="1" id="7" segmentAlignment="true" par="12:5" maxWidth="1920" maxHeight="800" contentType="video">
+      <Representation sar="1:1" mimeType="video/webm" bandwidth="73349" codecs="av01.0.04M.08.0.110.01.01.01.0" height="360" id="7" width="864">
+        <SegmentTemplate initialization="20.1267438/init.webm?rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281" media="20.1267438/$Number$.webm?ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="7" d="10009"></S>
+            <S d="10010" r="929"></S>
+            <S d="7299"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+      <Representation sar="1:1" mimeType="video/webm" bandwidth="198044" codecs="av01.0.05M.08.0.110.01.01.01.0" height="530" id="8" width="1272">
+        <SegmentTemplate initialization="21.1267438/init.webm?t=1800000000&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd" media="21.1267438/$Number$.webm?fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="7" d="10009"></S>
+            <S d="10010" r="929"></S>
+            <S d="7299"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+      <Representation sar="1:1" mimeType="video/webm" bandwidth="362053" codecs="av01.0.08M.08.0.110.01.01.01.0" height="800" id="9" width="1920">
+        <SegmentTemplate initialization="22.1267438/init.webm?x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254&amp;hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239" media="22.1267438/$Number$.webm?hc=729cf507d8010f4&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=3a63888171484bd&amp;t=1787229239&amp;x-cdn=10551403&amp;ha=dee248cd27dc413&amp;ht=5a356867c517281&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=f8b607c4f2e3254" startNumber="1" timescale="1000">
+          <SegmentTimeline>
+            <S t="7" d="10009"></S>
+            <S d="10010" r="929"></S>
+            <S d="7299"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>

@@ -1,0 +1,1492 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #000;
+  --panel: #0f0f0f;
+  --panel-strong: #141414;
+  --stroke: #1d1d1d;
+  --stroke-strong: #2a2a2a;
+  --text: #f5f5f5;
+  --muted: #6f6f6f;
+  --muted-strong: #8a8a8a;
+  --accent: #ffff00;
+  --card-min: 121px;
+  --card-gap: 15px;
+}
+
+body {
+  /* A real stack, not a one-word fallback: the web font now loads without
+     blocking paint, so these are what the first frame is actually drawn in. */
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+.bookmark-banner {
+  width: 100%; min-height: 25px; padding: 4px 16px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent); color: #000;
+  font-size: 12px; font-weight: 600; line-height: 1.15; text-align: center;
+}
+
+.quick-lists-toggle {
+  position: fixed; z-index: 30; left: 0; top: 75%;
+  width: 38px; min-height: 190px; padding: 14px 8px;
+  border: 1px solid #2b2b2b; border-left: 0;
+  border-radius: 0 6px 6px 0; background: rgba(8,8,8,.94); color: #a9a9a9;
+  font: inherit; font-size: 13px; font-weight: 500; letter-spacing: 0;
+  writing-mode: vertical-rl; cursor: pointer;
+  transform: translateY(-50%);
+  transition: color .15s, border-color .15s, background .15s;
+}
+.quick-lists-toggle:hover,
+.quick-lists-toggle:focus-visible { color: var(--accent); border-color: #525200; outline: 0; }
+.quick-lists-backdrop {
+  position: fixed; z-index: 38; inset: 0; border: 0;
+  background: rgba(0,0,0,.46); opacity: 0; pointer-events: none;
+  transition: opacity .18s;
+}
+.quick-lists-drawer {
+  position: fixed; z-index: 40; inset: 0 auto 0 0;
+  width: min(280px, 82vw); padding: 22px 18px;
+  border-right: 1px solid #292929; background: rgba(7,7,7,.98);
+  transform: translateX(-101%); transition: transform .2s cubic-bezier(.2,.8,.2,1);
+  overflow-y: auto;
+}
+.quick-lists-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 19px; color: #d8d8d8;
+}
+.quick-lists-head strong { font-size: 13px; font-weight: 600; }
+.quick-lists-head button {
+  border: 0; background: transparent; color: #666; font: inherit;
+  font-size: 10px; cursor: pointer;
+}
+.quick-lists-head button:hover { color: #aaa; }
+.quick-lists-nav { display: grid; gap: 2px; }
+.quick-lists-nav button {
+  width: 100%; padding: 10px 9px; border: 0; border-left: 2px solid transparent;
+  border-radius: 0; background: transparent; color: #c7c7c7;
+  font: inherit; font-size: 13px; line-height: 1.25; text-align: left; cursor: pointer;
+}
+.quick-lists-nav button:hover,
+.quick-lists-nav button:focus-visible {
+  border-left-color: var(--accent); color: #fff; outline: 0;
+}
+body.quick-lists-open { overflow: hidden; }
+body.quick-lists-open .quick-lists-backdrop { opacity: 1; pointer-events: auto; }
+body.quick-lists-open .quick-lists-drawer { transform: translateX(0); }
+
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.search-note { grid-column: 1 / -1; margin: 4px 0 0; }
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 27px 51px;
+}
+
+/* ---------- header ---------- */
+header {
+  position: sticky;
+  z-index: 26;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: -10px 0 17px;
+  padding: 10px 0;
+  background: #000;
+  box-shadow: 0 1px 0 #101010;
+}
+
+/* Samsung's browser is more likely to keep video on its hardware plane when no
+   clipped compositing layer or sticky surface overlaps it. This class is set from the
+   Tizen UA and only while the watch view is active; every other device keeps the
+   regular sticky header and rounded player. */
+html.tizen-video-mode.view-watch header {
+  position: relative;
+  top: auto;
+  box-shadow: none;
+}
+html.tizen-video-mode.view-watch .player-host {
+  border-radius: 0;
+  overflow: visible;
+}
+html.tizen-video-mode.view-watch .quick-lists-toggle,
+html.tizen-video-mode.view-watch .quick-lists-backdrop,
+html.tizen-video-mode.view-watch .quick-lists-drawer {
+  display: none !important;
+}
+.brand { min-width: 128px; }
+.logo-btn { display: inline-flex; align-items: center; padding: 0; background: transparent; border: none; cursor: pointer; text-decoration: none; }
+.logo-image {
+  height: 54px; width: auto; max-width: 170px; object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.6));
+}
+.search-box { flex: 1; display: flex; align-items: center; gap: 10px; }
+/* The dropdown anchors to this, not to .search-box: that row also holds the
+   search and bookmark buttons, so a full-width list overhung the input by 108px
+   and read as misaligned. */
+.search-field { flex: 1; min-width: 0; position: relative; }
+.search-box input {
+  width: 100%; height: 44px; min-width: 0; padding: 0 15px; border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background: linear-gradient(180deg, #111 0%, #0b0b0b 100%);
+  color: var(--text); font-size: 15px; font-weight: 500; line-height: 1;
+}
+.search-box input::placeholder { color: #555; }
+.search-box input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(255, 255, 0, 0.14); }
+.search-button, .icon-btn {
+  width: 44px; height: 44px; border-radius: 12px;
+  border: 1px solid var(--stroke-strong); background: var(--panel);
+  color: var(--accent); display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color .2s, box-shadow .2s, transform .2s; flex: none;
+}
+.icon-btn { color: var(--muted); font-size: 20px; }
+.bookmark-nav-btn { position: relative; color: var(--accent); }
+.bookmark-nav-btn > svg {
+  width: 17px; height: 22px;
+  overflow: visible;
+  fill: transparent;
+  transition: fill .16s, color .16s;
+}
+.bookmark-nav-btn.active { color: var(--accent); border-color: var(--accent); }
+.bookmark-nav-btn.active > svg { fill: currentColor; }
+.bookmark-nav-count {
+  position: absolute; right: -4px; top: -4px;
+  min-width: 16px; height: 16px; padding: 0 3px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 2px solid var(--bg); border-radius: 999px;
+  background: var(--accent); color: #000;
+  font-size: 8px; font-weight: 600; line-height: 1;
+}
+.search-button:hover, .icon-btn:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255, 255, 0, 0.12), 0 8px 20px rgba(0, 0, 0, 0.55);
+  transform: translateY(-1px);
+}
+.search-button svg { width: 20px; height: 20px; }
+
+/* ---------- settings ---------- */
+.settings {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  background: var(--panel); border: 1px solid var(--stroke); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 24px;
+}
+.settings label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.settings input {
+  flex: 1; min-width: 220px; padding: 10px 12px; border-radius: 10px;
+  border: 1px solid var(--stroke); background: #0b0b0b; color: var(--text);
+}
+.settings button {
+  padding: 10px 14px; border-radius: 10px; border: 1px solid var(--stroke-strong);
+  background: var(--panel-strong); color: var(--text); cursor: pointer;
+}
+.settings button:hover { border-color: var(--accent); }
+
+/* ---------- rows / grids ---------- */
+.row { margin-bottom: 29px; }
+.row h3 {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 18px; margin-bottom: 14px; letter-spacing: .02em;
+}
+.continue-count {
+  min-width: 19px; height: 19px; padding: 0 6px;
+  border: 1px solid #333; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--muted-strong); font-size: 10px; font-weight: 500;
+}
+.results-title { font-size: 17px; margin: 3px 0 15px; letter-spacing: .02em; }
+.bookmarks-title { display: flex; align-items: center; gap: 9px; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-min), 1fr));
+  gap: var(--card-gap);
+  align-items: start;
+}
+
+.card {
+  cursor: pointer; text-align: left; position: relative; min-width: 0;
+  transition: transform .18s cubic-bezier(.2,.8,.2,1); outline: none;
+}
+.card:hover { transform: translateY(-3px); }
+.card-media {
+  position: relative; overflow: hidden; border-radius: 11px;
+  border: 1px solid var(--stroke);
+  background: #101010;
+  transition: border-color .18s, box-shadow .18s;
+}
+.card-native-link {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border-radius: inherit;
+}
+.card-native-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+.card-resolving { pointer-events: none; }
+.card-resolving .card-media::after {
+  content: ""; position: absolute; z-index: 8; inset: 50% auto auto 50%;
+  width: 24px; height: 24px; margin: -14px 0 0 -14px;
+  border: 3px solid rgba(255,255,255,.34); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin .8s linear infinite;
+}
+.card .poster {
+  width: 100%; aspect-ratio: 2 / 3; background: #111;
+  border: 0; object-fit: cover; display: block;
+  transition: filter .18s, transform .25s;
+}
+.card.square .poster { aspect-ratio: 1 / 1; }
+.card .ctitle {
+  font-size: 12px; font-weight: 600; line-height: 1.22; margin: 8px 2px 3px;
+  text-align: left;
+  white-space: normal; overflow-wrap: anywhere;
+}
+.card .cmeta {
+  font-size: 9px; color: var(--muted-strong); margin: 0 2px;
+  text-align: left;
+}
+.card-hover-meta {
+  position: absolute; inset: 0; z-index: 1;
+  display: grid; place-content: center; justify-items: center; gap: 12px;
+  padding: 10px 8px;
+  background: rgba(0,0,0,.38);
+  color: #fff; opacity: 0;
+  transition: opacity .18s;
+  backdrop-filter: blur(.35px);
+}
+.hover-ratings {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 1px minmax(0,1fr);
+  align-items: center;
+  column-gap: 8px;
+  width: 100%;
+  max-width: 117px;
+}
+.hover-rating {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  min-width: 0;
+}
+.hover-rating-name {
+  color: #fff;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.hover-rating-value {
+  color: var(--accent);
+  max-width: 100%;
+  font-size: clamp(18px, 1.8vw, 25px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -.03em;
+  white-space: nowrap;
+}
+.hover-rating-divider {
+  display: block;
+  width: 1px;
+  height: 37px;
+  background: rgba(255,255,255,.62);
+}
+.hover-duration {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .015em;
+  text-align: center;
+  white-space: nowrap;
+}
+.card:hover .card-media,
+.card:focus-visible .card-media {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 2px var(--accent),
+    0 10px 24px rgba(0,0,0,.55);
+}
+.card:hover .poster,
+.card:focus-visible .poster { filter: brightness(.66); transform: scale(1.015); }
+.card:hover .card-hover-meta,
+.card:focus-visible .card-hover-meta { opacity: 1; }
+.card-bookmark {
+  position: absolute; z-index: 4; top: -1px; right: 7px;
+  width: 30px; height: 38px; padding: 0;
+  border: 0; background: transparent; color: #fff;
+  display: inline-flex; align-items: flex-start; justify-content: center;
+  cursor: pointer; opacity: 0;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,.75));
+  transform: translateY(-2px);
+  transition: opacity .15s, transform .15s, color .15s;
+}
+.card-bookmark svg {
+  width: 27px; height: 35px;
+  fill: transparent;
+  stroke: currentColor;
+  transition: fill .15s, color .15s, transform .15s;
+}
+.card:hover .card-bookmark,
+.card:focus-within .card-bookmark,
+.card-bookmark.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+.card-bookmark:hover svg { transform: scale(1.06); }
+.card-bookmark.on { color: var(--accent); }
+.card-bookmark.on svg { fill: currentColor; }
+.card-bookmark:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* «Для вас»: dismiss cross, mirrors the bookmark control on the left */
+.fy-hide {
+  position: absolute; z-index: 4; top: 5px; left: 7px;
+  width: 24px; height: 24px; padding: 0;
+  border: 0; border-radius: 50%;
+  background: rgba(0, 0, 0, .6); color: #fff;
+  font-size: 12px; line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,.75));
+  transform: translateY(-2px);
+  transition: opacity .15s, transform .15s, background .15s;
+}
+.card:hover .fy-hide,
+.card:focus-within .fy-hide {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fy-hide:hover { background: rgba(0, 0, 0, .88); transform: scale(1.08); }
+.fy-hide:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+/* Release warning (TS cam rip and friends). Small on purpose — it flags the
+   card, it does not label it; the source name lives in the caption below. */
+.card .card-flag {
+  position: absolute; top: 6px; left: 6px; padding: 1px 5px; border-radius: 5px;
+  z-index: 2; font-size: 8.5px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
+  background: var(--accent); color: #0a0a0a;
+}
+.curated-label {
+  position: absolute; top: 7px; left: 7px; z-index: 4;
+  max-width: calc(100% - 14px); min-height: 22px; padding: 4px 7px;
+  border: 1px solid rgba(220, 220, 70, .86); border-radius: 7px;
+  background: rgba(0,0,0,.76); color: var(--accent);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; line-height: 1.05; letter-spacing: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  box-shadow: 0 8px 22px rgba(0,0,0,.28);
+  transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
+}
+.curated-label[data-tone="season"] { font-size: 9.5px; padding-inline: 6px; }
+.curated-card:hover .curated-label,
+.curated-card:focus-within .curated-label {
+  background: var(--accent); color: #050505; border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(215, 215, 42, .22);
+}
+.card-remove {
+  position: absolute; top: 5px; right: 5px; width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(18,18,18,.86); border: 1px solid #454545; color: #bdbdbd; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; line-height: 1; z-index: 4; opacity: 0;
+  transition: opacity .15s, background .15s, color .15s, border-color .15s;
+}
+.card-remove-glyph {
+  display: block;
+  font: 400 15px/1 Arial, sans-serif;
+  transform: translateY(-1px);
+}
+.card:hover .card-remove { opacity: 1; }
+.card-remove:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 2px; }
+.card-remove:hover { background: #1b1b1b; border-color: #5b5b5b; color: #dedede; }
+.continue-card .card-remove { left: 5px; right: auto; }
+
+/* Admin-only "add to curated list" button on a card (soap browser + search). */
+.card-add-list {
+  position: absolute; top: 5px; left: 5px; width: 21px; height: 21px; border-radius: 50%;
+  background: rgba(18,18,18,.86); border: 1px solid #454545; color: #d8d84a; cursor: pointer;
+  display: none; align-items: center; justify-content: center; line-height: 1; z-index: 5; padding: 0;
+  font: 400 16px/1 Arial, sans-serif;
+  transition: background .15s, color .15s, border-color .15s;
+}
+body.admin-mode .card-add-list { display: flex; }
+.card-add-list:hover { background: #1b1b1b; border-color: var(--accent); color: #fff; }
+
+/* soap admin browser header + controls */
+.soap-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.soap-controls { display: flex; gap: 8px; align-items: center; }
+.soap-controls input {
+  background: #141414; border: 1px solid #333; border-radius: 8px; color: #e6e6e6;
+  padding: 7px 11px; font-size: 13px; min-width: 220px; outline: none;
+}
+.soap-controls input:focus { border-color: #5b5b5b; }
+.soap-controls button {
+  background: #141414; border: 1px solid #333; border-radius: 8px; color: #cfcfcf;
+  padding: 7px 12px; font-size: 13px; cursor: pointer; white-space: nowrap;
+}
+.soap-controls button:hover { border-color: #5b5b5b; color: #fff; }
+.continue-section .card-grid {
+  --continue-media-height: clamp(189px, 17.8vw, 219px);
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 7px 3px 12px;
+  scroll-snap-type: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.continue-section .card-grid::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.continue-card {
+  flex: 0 0 clamp(126px, 11.9vw, 146px);
+  scroll-snap-align: start;
+}
+.continue-featured {
+  flex-basis: clamp(306px, 33vw, 388px);
+}
+.continue-card .continue-media {
+  height: var(--continue-media-height);
+  border-radius: 12px;
+}
+.continue-card .poster {
+  width: 100%; height: 100%; aspect-ratio: auto;
+  object-fit: cover;
+  filter: none;
+}
+.continue-featured .poster { filter: none; }
+.continue-card:hover .poster,
+.continue-card:focus-visible .poster {
+  filter: none;
+  transform: none;
+}
+.continue-card .ctitle {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.22;
+}
+.continue-featured .ctitle { font-size: 14px; }
+.continue-card .cmeta { font-size: 9px; }
+.continue-overlay {
+  position: absolute; z-index: 2; left: 0; right: 0; bottom: 0;
+  padding: 24px 9px 9px;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,.78));
+  pointer-events: none;
+}
+.continue-status {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.continue-featured .continue-status { font-size: 11px; }
+.continue-progress {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(40,0,0,.82);
+}
+.continue-progress-bar {
+  height: 100%;
+  min-width: 0;
+  border-radius: inherit;
+  background: var(--accent);
+}
+.continue-play {
+  position: absolute; z-index: 2; left: 50%; top: 46%;
+  width: 0; height: 0;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-left: 26px solid var(--accent);
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
+  opacity: 0;
+  transform: translate(-42%, -50%) scale(.86);
+  transition: opacity .16s, transform .16s;
+  pointer-events: none;
+}
+.continue-play-image {
+  width: 52px; height: 52px;
+  border: 0;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
+}
+.continue-play-image img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+.continue-featured .continue-play,
+.continue-card:hover .continue-play,
+.continue-card:focus-visible .continue-play {
+  opacity: .96;
+  transform: translate(-42%, -50%) scale(1);
+}
+.continue-card:hover .card-media,
+.continue-card:focus-visible .card-media {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 2px var(--accent),
+    0 10px 24px rgba(0,0,0,.48);
+}
+
+.home-empty {
+  display: flex; flex-direction: column; gap: 8px; padding: 60px 20px; text-align: center;
+  color: var(--muted);
+}
+.home-empty strong { color: var(--text); font-size: 18px; }
+
+/* ---------- watch ---------- */
+.watch-head { display: flex; align-items: center; gap: 8px; margin-bottom: 11px; }
+.watch-title { font-size: 18px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.watch-actions { display: flex; gap: 10px; }
+.add-list-btn {
+  padding: 9px 16px; border: 1px solid var(--stroke-strong); border-radius: 10px;
+  background: var(--panel); color: var(--text); cursor: pointer; font-size: 14px;
+}
+.add-list-btn:hover { border-color: var(--accent); }
+
+/* ---------- curated lists / compact admin ---------- */
+.curated-section { margin: 7px 0 32px; }
+.curated-toolbar {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 14px; margin-bottom: 0;
+}
+.catalog-state {
+  display: inline-block; min-height: 14px; margin-top: 3px;
+  color: var(--muted); font-size: 10px; letter-spacing: .06em;
+}
+.catalog-state[data-mode="dirty"], .catalog-state[data-mode="saving"] { color: #d9d966; }
+.catalog-state[data-mode="error"] { color: #e28f8f; }
+.admin-catalog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.banner-admin-toggle {
+  min-height: 30px; padding: 0 9px; border: 1px solid var(--stroke-strong);
+  border-radius: 8px; background: #0e0e0e; color: #cfcfcf;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; cursor: pointer;
+}
+.banner-admin-toggle input { width: 13px; height: 13px; accent-color: var(--accent); }
+.banner-admin-toggle:has(input:checked) { color: var(--accent); border-color: #5a5a1a; }
+.banner-admin-text {
+  height: 30px; min-width: min(260px, 100%);
+  display: flex; align-items: center; gap: 7px;
+  color: #777; font-size: 9px;
+}
+.banner-admin-text > span { white-space: nowrap; }
+.banner-admin-text input {
+  width: 210px; height: 30px; min-width: 0; padding: 0 8px;
+  border: 1px solid var(--stroke-strong); border-radius: 8px;
+  background: #0e0e0e; color: #ddd; font: inherit; font-size: 11px;
+}
+.banner-admin-text input:focus { outline: 0; border-color: var(--accent); }
+.admin-catalog-actions button,
+.curated-list-controls button {
+  min-height: 30px; padding: 0 10px; border-radius: 8px;
+  border: 1px solid var(--stroke-strong); background: #0e0e0e;
+  color: #cfcfcf; cursor: pointer; font-size: 11px;
+}
+.admin-catalog-actions button:hover,
+.curated-list-controls button:hover { color: var(--accent); border-color: var(--accent); }
+.admin-catalog-actions button:disabled,
+.curated-list-controls button:disabled { opacity: .35; cursor: default; }
+.curated-lists { display: grid; gap: 22px; }
+.curated-list { min-width: 0; scroll-margin-top: 76px; }
+.curated-list-head {
+  min-height: 31px; display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; margin-bottom: 7px;
+}
+.curated-list-head h3 { font-size: 18px; font-weight: 600; }
+.curated-title-input {
+  width: min(460px, 100%); min-width: 0; padding: 7px 9px;
+  border: 1px solid var(--stroke-strong); border-radius: 8px;
+  background: #0b0b0b; color: var(--text); font: inherit; font-weight: 600;
+}
+.curated-title-input:focus { outline: 0; border-color: var(--accent); }
+.curated-list-controls { display: flex; gap: 5px; flex: none; }
+.curated-list-controls button { width: 30px; padding: 0; font-size: 15px; }
+.foryou-controls select {
+  min-height: 30px; padding: 0 8px; border-radius: 8px;
+  border: 1px solid var(--stroke-strong); background: #0e0e0e;
+  color: #cfcfcf; cursor: pointer; font: inherit; font-size: 11px;
+}
+.foryou-controls select:hover { color: var(--accent); border-color: var(--accent); }
+/* Category shelves use one or two balanced rows. JS calculates the row split
+   from the actual viewport, so an overflow never leaves a long 5+1 tail. */
+.curated-row-wrap { position: relative; }
+.curated-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(var(--curated-rows, 2), max-content);
+  grid-auto-columns: var(--curated-col, clamp(117px, 11.9vw, 138px));
+  align-content: start;
+  gap: 18px 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 7px 5px 14px;
+  scroll-padding-inline: 5px;
+  /* Desktop shelves stay exactly where the user leaves them. Arrow clicks
+     request smooth scrolling explicitly in JS. */
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.curated-row::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.curated-row > .card {
+  width: 100%;
+  grid-row: var(--curated-r, auto);
+  grid-column: var(--curated-c, auto);
+}
+.curated-row > .card.page-lead { scroll-snap-align: start; }
+
+/* Plain arrows only: no edge gradients or dark hover curtains. */
+.curated-nav {
+  position: absolute; top: calc(50% - 7px); width: 50px; height: 74px;
+  display: grid; place-items: center; padding: 0;
+  border: 0; background: transparent; cursor: pointer; z-index: 6;
+  opacity: .72; transform: translateY(-50%); transition: opacity .16s;
+}
+.curated-nav-prev { left: 1px; }
+.curated-nav-next { right: 1px; }
+.curated-nav .glyph {
+  width: 46px; height: 68px;
+  display: grid; place-items: center;
+  background: transparent; border: 0;
+  color: #f1f1f1; font-size: 52px; line-height: 1; padding-bottom: 6px;
+  text-shadow: 0 1px 4px #000, 0 0 10px #000;
+  transition: color .16s, transform .16s;
+}
+.curated-row-wrap:hover .curated-nav { opacity: 1; }
+.curated-nav:hover .glyph { color: var(--accent); transform: scale(1.08); }
+.curated-nav:disabled { opacity: 0; pointer-events: none; }
+.curated-scroll-track {
+  position: relative; width: min(180px, 36%); height: 12px;
+  margin: 0 auto; opacity: .86;
+}
+.curated-scroll-track::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 5px;
+  height: 2px; border-radius: 2px; background: #252525;
+}
+.curated-scroll-thumb {
+  position: absolute; top: 4px; left: 0; min-width: 18px; height: 4px;
+  border-radius: 4px; background: #777;
+  transition: left .12s linear, width .12s linear, background .16s;
+}
+.curated-row-wrap:hover .curated-scroll-thumb { background: var(--accent); }
+.curated-empty {
+  padding: 16px; border: 1px dashed var(--stroke-strong); border-radius: 10px;
+  color: var(--muted); font-size: 12px;
+}
+.admin-label-controls {
+  position: absolute; z-index: 6; left: 6px; right: 6px; bottom: 36px;
+  display: grid; grid-template-columns: 25px minmax(0, 1fr) 25px; gap: 4px;
+}
+.admin-item-controls {
+  position: absolute; z-index: 5; bottom: 6px; left: 6px; right: 6px;
+  display: grid; grid-template-columns: 25px 25px minmax(0, 1fr) 25px 25px; gap: 4px;
+}
+.admin-label-controls button,
+.admin-label-controls input,
+.admin-item-controls button,
+.admin-item-controls select {
+  min-width: 0; height: 25px; border: 1px solid #4a4a4a; border-radius: 6px;
+  background: rgba(0,0,0,.88); color: #fff; font-size: 11px;
+}
+.admin-label-controls button,
+.admin-item-controls button { cursor: pointer; }
+.admin-label-controls button:hover,
+.admin-item-controls button:hover { color: var(--accent); border-color: var(--accent); }
+.admin-item-controls button:disabled { opacity: .3; }
+.admin-label-controls input { padding: 0 6px; outline: none; }
+.admin-label-controls input:focus { border-color: var(--accent); }
+.admin-label-controls .season-preset { grid-column: 1 / -1; }
+.admin-item-controls select { padding: 0 3px; }
+.admin-mode .curated-card .poster { filter: brightness(.7); }
+
+/* Metadata inspector badge. Amber while the item still has no genres/credits,
+   so an unfilled title is visible without opening anything. */
+.meta-info {
+  position: absolute; top: 5px; left: 31px; width: 21px; height: 21px; border-radius: 50%;
+  background: rgba(18,18,18,.86); border: 1px solid #454545; color: #cfcfcf; cursor: pointer;
+  display: none; align-items: center; justify-content: center; line-height: 1; z-index: 5; padding: 0;
+  font: 600 12px/1 Georgia, serif;
+  transition: background .15s, color .15s, border-color .15s;
+}
+body.admin-mode .meta-info { display: flex; }
+.meta-info:hover { background: #1b1b1b; border-color: var(--accent); color: #fff; }
+.meta-info.needs-meta { color: #d8a84a; border-color: #6b5424; }
+.meta-fill {
+  width: auto !important; min-width: 58px; padding: 0 8px !important;
+  font-size: 11px !important; white-space: nowrap;
+}
+
+.item-meta-body { display: flex; flex-direction: column; gap: 7px; overflow-y: auto; }
+.item-meta-dialog .im-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.item-meta-dialog .im-row { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; align-items: baseline; }
+.item-meta-dialog .im-label {
+  font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+}
+.item-meta-dialog .im-value { font-size: 12px; line-height: 1.4; color: #d6d6d6; word-break: break-word; }
+.item-meta-dialog .im-value.im-missing { color: #6a6a6a; }
+.item-meta-actions button {
+  width: 100%; min-height: 44px; border: 1px solid var(--stroke-strong); border-radius: 11px;
+  background: #151515; color: #fff; cursor: pointer; font: inherit; font-size: 13px;
+}
+.item-meta-actions button:hover { border-color: var(--accent); }
+.item-meta-actions button:disabled { opacity: .55; cursor: wait; }
+
+/* ---------- login / list picker ---------- */
+.compact-dialog {
+  width: min(420px, calc(100vw - 28px)); max-height: min(620px, calc(100dvh - 28px));
+  margin: auto; padding: 0; border: 1px solid #353535; border-radius: 20px;
+  background: #0d0d0d; color: var(--text); box-shadow: 0 24px 70px rgba(0,0,0,.75);
+}
+.compact-dialog::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(3px); }
+.compact-dialog form { display: grid; gap: 16px; padding: 24px; }
+.dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.dialog-head strong { font-size: 20px; }
+.dialog-close {
+  width: 38px; height: 38px; border: 0; border-radius: 10px;
+  background: #171717; color: #aaa; cursor: pointer; font-size: 24px;
+}
+.compact-dialog label {
+  display: grid; gap: 7px; color: var(--muted-strong);
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+}
+.compact-dialog input {
+  width: 100%; padding: 13px 14px; border: 1px solid var(--stroke-strong);
+  border-radius: 11px; background: #080808; color: #fff; font-size: 16px;
+}
+.compact-dialog input:focus { outline: 0; border-color: var(--accent); }
+.dialog-primary,
+.list-picker-options button {
+  width: 100%; min-height: 48px; padding: 10px 12px;
+  border: 1px solid var(--stroke-strong); border-radius: 11px;
+  background: #151515; color: #fff; cursor: pointer; text-align: left;
+}
+.dialog-primary { text-align: center; color: #000; background: var(--accent); border-color: var(--accent); }
+.dialog-primary:disabled { opacity: .55; cursor: wait; }
+.dialog-error { color: #f1a1a1; font-size: 13px; line-height: 1.35; }
+.list-picker-options { display: grid; gap: 7px; overflow-y: auto; }
+.list-picker-options button:hover { border-color: var(--accent); }
+.list-picker-options .list-picker-create { color: var(--accent); }
+
+.site-footer {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  justify-content: center; padding: 48px 0 0;
+}
+.footer-contact { color: #4d4d4d; font-size: 10px; line-height: 1.3; }
+.footer-contact a { color: inherit; text-decoration: none; }
+.footer-contact a:hover { color: #777; }
+.admin-entry {
+  border: 0; background: transparent; color: #242424; cursor: pointer;
+  font-size: 8px; letter-spacing: 0; text-transform: lowercase;
+}
+.admin-entry:hover { color: #555; }
+
+.watch-layout {
+  display: grid; grid-template-columns: minmax(0, 1fr) 260px;
+  column-gap: 20px; row-gap: 0; align-items: start;
+}
+.watch-main { min-width: 0; grid-column: 1; grid-row: 1; }
+.player-host {
+  position: relative;
+  width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.player-host iframe, .player-host video { width: 100%; height: 100%; border: 0; display: block; background: #000; }
+
+/* Collaps uses two progressive-MP4 elements so a new signed URL can decode
+   behind the current picture. display:none prevented a reliable compositor
+   handoff on some browsers; both layers now stay renderable and the spare is
+   merely transparent until requestVideoFrameCallback confirms a real frame. */
+.player-host.collaps-host { display: block; }
+.player-host.collaps-host > video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: contain;
+  opacity: 0; pointer-events: none;
+}
+.player-host.collaps-host > video[data-collaps-active="1"] {
+  z-index: 1; opacity: 1; pointer-events: auto;
+}
+.collaps-fullscreen-btn {
+  position: absolute; z-index: 6; top: 9px; right: 9px;
+  width: 36px; height: 32px; padding: 0;
+  border: 1px solid rgba(255,255,255,.34); border-radius: 7px;
+  background: rgba(0,0,0,.62); color: #fff;
+  display: grid; place-items: center;
+  font: 600 20px/1 system-ui, sans-serif; cursor: pointer;
+  opacity: .72; transition: opacity .15s, border-color .15s;
+}
+.collaps-fullscreen-btn:hover,
+.collaps-fullscreen-btn:focus-visible { opacity: 1; border-color: var(--accent); outline: 0; }
+.player-host:fullscreen,
+.player-host:-webkit-full-screen {
+  width: 100vw; height: 100vh; max-width: none; max-height: none;
+  aspect-ratio: auto; border-radius: 0; background: #000;
+}
+.player-host:fullscreen > video,
+.player-host:-webkit-full-screen > video { width: 100%; height: 100%; object-fit: contain; }
+.player-host::backdrop { background: #000; }
+.player-host .placeholder { display: flex; flex-direction: column; gap: 12px; align-items: center; color: var(--muted); }
+
+.meta-panel {
+  grid-column: 2; grid-row: 1 / span 2;
+  background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px;
+  padding: 13px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px;
+  align-content: start;
+}
+.meta-poster { width: 100%; align-self: start; }
+.meta-body { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.meta-poster { position: relative; overflow: hidden; border-radius: 9px; }
+.meta-panel img { width: 100%; display: block; border-radius: 9px; border: 1px solid var(--stroke); object-fit: cover; }
+.meta-poster .card-bookmark {
+  top: -1px; right: 10px; width: 45px; height: 57px;
+  opacity: 1;
+}
+.meta-poster .card-bookmark svg { width: 39px; height: 52px; stroke-width: 1.8; }
+.meta-headline { display: flex; flex-direction: column; gap: 4px; }
+.meta-panel .mp-title { font-size: 14px; font-weight: 600; line-height: 1.25; }
+.meta-panel .mp-sub {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  font-size: 10px; color: var(--muted-strong);
+}
+.meta-panel .mp-age {
+  border: 1px solid var(--stroke-strong); border-radius: 4px;
+  padding: 1px 4px; font-size: 9px; font-weight: 600; letter-spacing: .04em;
+  color: var(--muted-strong); white-space: nowrap;
+}
+/* Each figure is centred over its own label. Left-aligned, the numbers sat at
+   the left edge of labels of very different widths — КИНОПОИСК is twice IMDB —
+   so IMDb and Letterboxd clumped together while Кинопоиск drifted away from
+   them, and the row read as two groups instead of three. */
+.meta-ratings { display: flex; gap: 18px; }
+.meta-ratings .rt { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.meta-ratings .rt b { font-size: 18px; color: var(--accent); }
+.meta-ratings .rt span { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.meta-desc {
+  font-size: 11px; line-height: 1.45; color: #cfcfcf;
+  display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;
+  /* A count, never a height: clipping to a pixel height cuts a line through the
+     middle of its letters. The narrow layout works out how many lines actually
+     fit and sets this; everything else keeps the default. */
+  -webkit-line-clamp: var(--desc-lines, 6);
+}
+.meta-desc.open { -webkit-line-clamp: unset; overflow: visible; }
+.meta-desc-toggle {
+  align-self: flex-start; margin-top: -6px; padding: 0; border: 0; background: none;
+  color: var(--muted-strong); cursor: pointer; font: inherit; font-size: 10px;
+}
+.meta-desc-toggle:hover { color: var(--accent); }
+
+.meta-panel .mp-dot { color: var(--muted); }
+
+/* Жанр / страна / режиссёр / в ролях. A label column keeps the rows scannable
+   at a glance; values wrap freely because casts are long.
+   Spans the panel: on desktop that is the only column anyway, and on a phone it
+   is what lets the credits run under the poster instead of being squeezed into
+   the text column beside it. */
+.meta-facts {
+  grid-column: 1 / -1;
+  display: flex; flex-direction: column; gap: 6px; margin: 0;
+  padding-top: 11px; border-top: 1px solid var(--stroke);
+}
+.meta-facts .mf-row { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 8px; align-items: baseline; }
+.meta-facts dt {
+  font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); line-height: 1.5;
+}
+.meta-facts dd { margin: 0; font-size: 11px; line-height: 1.45; color: #cfcfcf; }
+
+/* ---------- «Похожее» shelf directly under the player ---------- */
+.similar-section { grid-column: 1; grid-row: 2; min-width: 0; margin-top: 17px; }
+.similar-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 7px; }
+.similar-head h3 { margin: 0; font-size: 16px; font-weight: 600; }
+.similar-toggle {
+  min-height: 28px; padding: 0 8px; border: 0; border-radius: 6px;
+  background: transparent; color: var(--muted-strong); cursor: pointer;
+  font: inherit; font-size: 10px;
+}
+.similar-toggle:hover,
+.similar-toggle:focus-visible { color: var(--accent); outline: 0; }
+.similar-section.collapsed { margin-top: 12px; }
+.similar-section.collapsed .similar-head { margin-bottom: 0; }
+.similar-section.collapsed .similar-row { display: none; }
+.similar-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: max-content;
+  grid-auto-columns: clamp(104px, 9vw, 118px);
+  justify-content: start;
+  align-content: start;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 7px 5px 12px;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.similar-row::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.similar-row > .card { width: 100%; }
+
+/* Отзывы. Popular reviews from Letterboxd, under «Похожее». Deliberately not
+   boxed: rules between entries are enough to separate them, and a panel per
+   review would out-shout the covers above. */
+.reviews-section { grid-column: 1; grid-row: 3; min-width: 0; margin-top: 17px; }
+.reviews-section.collapsed .reviews-list { display: none; }
+.reviews-list {
+  list-style: none; margin: 0; padding: 2px 0 10px;
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 32%);
+  gap: 16px; overflow-x: auto; overscroll-behavior-inline: contain;
+  scrollbar-width: thin; scrollbar-color: #343434 transparent;
+}
+.review { min-width: 0; padding: 0 16px 0 0; border-right: 1px solid var(--stroke); }
+.review:last-child { border-right: 0; }
+.review-top { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+.review-author {
+  font-size: 11px; font-weight: 600; color: #cfcfcf;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 60%;
+}
+.review-score { font-size: 10px; color: var(--muted); white-space: nowrap; }
+/* The column is as wide as the player, which is far past a comfortable measure
+   for prose; the covers above fill it, a paragraph should not. */
+.review-text { margin: 0; max-width: 74ch; font-size: 12px; line-height: 1.5; color: #cfcfcf; overflow-wrap: anywhere; }
+.review-text .review-cut { color: var(--muted); }
+.review-spoiler {
+  align-self: flex-start; padding: 0; border: 0; background: none;
+  color: var(--muted-strong); cursor: pointer; font: inherit; font-size: 11px;
+  text-align: left;
+}
+.review-spoiler:hover { color: var(--accent); }
+.reviews-title { color: inherit; text-decoration: none; }
+.reviews-title[href]:hover { color: var(--accent); }
+.similar-row .card-remove { left: 7px; right: auto; }
+
+/* ---------- track / quality controls (Shaka) ---------- */
+.serial-panel {
+  display: flex; flex-direction: column; gap: 7px;
+  margin: 0 0 10px;
+}
+.track-panel { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+.track-group { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.track-group > strong { min-width: 86px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.track-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.track-buttons button {
+  padding: 7px 12px; border: 1px solid var(--stroke-strong); border-radius: 9px;
+  background: var(--panel); color: var(--text); cursor: pointer; font-size: 13px;
+}
+.track-buttons button:hover { border-color: var(--accent); }
+.track-buttons button.active {
+  background: var(--panel); color: var(--accent); border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.track-buttons .subtitle-note {
+  align-self: center;
+  max-width: 320px;
+  font-size: 12px;
+  line-height: 1.25;
+}
+.serial-panel .track-group { gap: 0; }
+.serial-panel .track-buttons {
+  gap: 6px; flex-wrap: nowrap; overflow-x: auto; padding: 1px 1px 3px;
+  scrollbar-width: thin; scrollbar-color: #292929 transparent;
+}
+.serial-panel .track-buttons button {
+  flex: none; padding: 6px 10px; font-size: 12px;
+}
+.serial-panel .serial-episodes .track-buttons button {
+  min-width: 30px; padding-inline: 8px;
+}
+
+/* ---------- loading / error ---------- */
+.loading { text-align: center; padding: 40px; color: #888; }
+.spinner {
+  border: 3px solid #333; border-top: 3px solid var(--accent); border-radius: 50%;
+  width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 10px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.error { color: var(--accent); padding: 20px; text-align: center; }
+
+@media (max-width: 900px) {
+  .container { padding: 20px 16px 48px; }
+  header { flex-direction: row; align-items: center; gap: 12px; }
+  .brand { min-width: 100px; display: flex; justify-content: flex-start; }
+  .logo-image { height: 44px; max-width: 110px; }
+  .watch-layout { display: flex; flex-direction: column; gap: 0; }
+  .watch-main, .meta-panel, .similar-section, .reviews-section { width: 100%; }
+  .meta-panel { margin-top: 20px; }
+  /* Below the player the panel is wide rather than tall, so the poster moves
+     beside the text instead of on top of it. */
+  .meta-panel { grid-template-columns: 110px minmax(0, 1fr); column-gap: 14px; }
+  .meta-poster { width: 110px; align-self: start; }
+  .meta-panel img { width: 100%; }
+  .watch-head { align-items: flex-start; flex-wrap: wrap; }
+  .watch-title { white-space: normal; }
+  .watch-actions { margin-left: auto; }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --mobile-card-width: calc((100vw - 42px) / 3.5);
+    --card-gap: 6px;
+  }
+  .container { padding: 14px 12px 42px; }
+  header {
+    flex-direction: row; align-items: center; gap: 8px;
+    margin: -8px 0 12px; padding: 8px 0;
+  }
+  .brand { min-width: 0; flex: 0 0 auto; justify-content: flex-start; }
+  .logo-image { height: 40px; max-width: 92px; }
+  .search-box { min-width: 0; gap: 5px; }
+  .search-box input { height: 40px; min-width: 0; padding: 0 10px; font-size: 16px; }
+  .search-button, .icon-btn { width: 40px; height: 40px; border-radius: 10px; }
+  .search-button svg { width: 20px; height: 20px; }
+  .bookmark-nav-btn > svg { width: 17px; height: 21px; }
+  .bookmark-nav-count {
+    right: -4px; top: -5px; min-width: 16px; height: 16px;
+    border-width: 1px; font-size: 8px;
+  }
+  .row { margin-bottom: 24px; }
+  .row h3, .results-title { font-size: 16px; margin-bottom: 10px; }
+  .continue-count { min-width: 18px; height: 18px; padding: 0 5px; font-size: 9px; }
+  .card-grid,
+  .curated-row {
+    display: grid;
+    grid-template-columns: none;
+    grid-template-rows: max-content;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--mobile-card-width);
+    justify-content: start;
+    align-items: start;
+    gap: 13px 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 7px 5px 10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .curated-row {
+    scroll-snap-type: x proximity;
+    scroll-behavior: smooth;
+  }
+  .continue-section .card-grid { scroll-snap-type: x proximity; }
+  .card-grid::-webkit-scrollbar,
+  .curated-row::-webkit-scrollbar { width: 0; height: 0; display: none; }
+  .card-grid.mobile-two-row,
+  .curated-row.mobile-two-row {
+    grid-template-rows: repeat(2, max-content);
+  }
+  .card-grid > .card {
+    grid-row: var(--mobile-row);
+    grid-column: var(--mobile-column);
+  }
+  #resultsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    overflow: visible;
+    padding: 7px 0 10px;
+  }
+  #resultsGrid > .card {
+    width: 100%;
+    grid-row: auto;
+    grid-column: auto;
+  }
+  #resultsGrid > .muted {
+    grid-column: 1 / -1;
+  }
+  .curated-row > .card {
+    grid-row: var(--curated-r);
+    grid-column: var(--curated-c);
+  }
+  .card { width: var(--mobile-card-width); }
+  .card-media { border-radius: 7px; }
+  .card .ctitle {
+    margin: 7px 1px 2px; font-size: 11.5px; line-height: 1.18;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .card .cmeta { margin: 0 1px; font-size: 8px; }
+  .card .card-flag { top: 4px; left: 4px; padding: 1px 4px; font-size: 7.5px; }
+  .card-bookmark {
+    top: -1px; right: 4px; width: 27px; height: 35px;
+  }
+  .card-bookmark svg { width: 24px; height: 32px; stroke-width: 2.1; }
+  .card-hover-meta {
+    gap: 6px;
+    padding: 5px 4px;
+    backdrop-filter: blur(.2px);
+  }
+  .hover-ratings {
+    column-gap: 4px;
+    max-width: 76px;
+  }
+  .hover-rating { gap: 2px; }
+  .hover-rating-name { font-size: 6.5px; letter-spacing: .02em; }
+  .hover-rating-value { font-size: 14.5px; letter-spacing: -.02em; }
+  .hover-rating-divider { height: 26px; }
+  .hover-duration { font-size: 8px; }
+  .card-remove {
+    top: 3px; width: 18px; height: 18px; font-size: 11px;
+  }
+  .card-remove-glyph { font-size: 11px; transform: translateY(-.5px); }
+  .continue-section .card-grid {
+    --continue-media-height: calc(var(--mobile-card-width) * 1.5);
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 7px 2px 10px;
+  }
+  .continue-card {
+    width: var(--mobile-card-width);
+    flex: 0 0 var(--mobile-card-width);
+  }
+  .continue-featured {
+    width: calc(var(--mobile-card-width) * 2.6667);
+    flex-basis: calc(var(--mobile-card-width) * 2.6667);
+  }
+  .continue-card .continue-media {
+    height: var(--continue-media-height);
+    aspect-ratio: auto;
+    border-radius: 7px;
+  }
+  .continue-card .poster { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
+  .continue-card .ctitle,
+  .continue-featured .ctitle { font-size: 10.5px; }
+  .continue-card .cmeta { font-size: 8px; }
+  .continue-overlay { padding: 18px 4px 5px; }
+  .continue-status,
+  .continue-featured .continue-status {
+    margin-bottom: 4px; font-size: 7.5px;
+  }
+  .continue-progress { height: 3px; }
+  .continue-play {
+    display: none;
+  }
+  .curated-section { margin-bottom: 26px; }
+  .curated-lists { gap: 18px; }
+  .curated-list-head { min-height: 26px; margin-bottom: 3px; }
+  .curated-list-head h3 { font-size: 17px; }
+  .curated-toolbar { align-items: center; }
+  .curated-list-head { align-items: stretch; }
+  .curated-title-input { font-size: 13px; }
+  .admin-catalog-actions button { padding: 0 8px; }
+  .watch-head { gap: 5px; }
+  .watch-title { font-size: 16px; }
+  .watch-actions { width: 100%; justify-content: flex-end; }
+  .add-list-btn { padding: 9px 12px; font-size: 12px; }
+  .track-group { gap: 7px; }
+  .track-group > strong { width: 100%; min-width: 0; }
+  /* The poster is the only picture on the page and it was thumbnail-sized, so it
+     takes about a third of the panel and the text column runs beside it.
+     A fixed 2:3 — the ratio the cards already use — is what makes its height
+     computable from the column width, which the text column then borrows. */
+  .meta-panel {
+    --meta-poster-w: clamp(100px, 34vw, 148px);
+    grid-template-columns: var(--meta-poster-w) minmax(0, 1fr); column-gap: 13px;
+  }
+  .meta-poster { width: 100%; aspect-ratio: 2 / 3; }
+  .meta-panel img { width: 100%; height: 100%; }
+  /* The text column ends where the poster ends. Left to itself it ran past the
+     bottom of the poster and left a ragged notch of empty space beside the last
+     couple of lines, before the credits started. The synopsis is the only part
+     that gives, so it is the only flexible one; the toggle never shrinks, or a
+     long synopsis would push "ещё" out of reach. */
+  /* No height cap here. Capping the column clipped the synopsis mid-line — half
+     a row of letters, with "ещё" under it. fitMetaSynopsis() sets --desc-lines
+     from the space the poster actually leaves, so the cut always lands between
+     lines and the ellipsis appears where it should. 4 is the fallback for the
+     moment before it runs. */
+  .meta-desc { font-size: 12px; --desc-lines: 4; }
+  /* "ещё" goes at the end of the synopsis, not on a line of its own. A row plus
+     the column gap cost a line and a half of text, which is most of why the
+     synopsis was closing so far above the bottom of the poster. Out of flow, so
+     it takes nothing from the line count; the fade keeps it off the words it
+     ends up beside. */
+  /* Its own height, not the row's. The grid stretches a cell to the height of
+     the tallest thing in it — the poster — and the line count can only ever be
+     a whole number, so up to one line of that height is left over below the
+     text. Stretched, the toggle's `bottom: 0` landed in that leftover and read
+     as a stray word in the corner; unstretched, the column ends where the last
+     line does and the toggle sits on it. */
+  .meta-body { position: relative; align-self: start; }
+  .meta-desc-toggle {
+    position: absolute; right: 0; bottom: 0; margin: 0; padding: 0 0 0 30px;
+    font-size: 11px; line-height: 1.45;
+    background: linear-gradient(to right, rgba(15, 15, 15, 0), var(--panel) 40%);
+  }
+  /* Expanded, there is no last line to sit beside — back into the flow. */
+  .meta-body:has(.meta-desc.open) .meta-desc-toggle {
+    position: static; padding: 0; background: none; margin-top: -6px;
+  }
+  .meta-panel .mp-title { font-size: 18px; line-height: 1.2; }
+  .meta-panel .mp-sub { font-size: 12px; gap: 5px; }
+  .meta-panel .mp-age { font-size: 10px; padding: 1px 5px; }
+  /* One rule per figure, divided rather than merely spaced. Sized so that three
+     of them — a film with a Letterboxd score — still sit on one line in the
+     narrowest column this layout produces; wrapping put the third figure on a
+     row of its own and broke the row into two unequal halves. */
+  /* Equal shares of the column rather than a huddle in the middle of it. Centred
+     with no gap, two figures sat almost touching and three read as one braid;
+     giving each the same width spaces them by the count, whatever it is. */
+  .meta-ratings { flex-wrap: nowrap; gap: 0; }
+  .meta-ratings .rt { flex: 1 1 0; min-width: 0; padding: 0 4px; }
+  .meta-ratings .rt + .rt { border-left: 1px solid var(--stroke); }
+  .meta-ratings .rt b { font-size: 20px; }
+  .meta-ratings .rt span { font-size: 8px; letter-spacing: 0; white-space: nowrap; }
+  /* Full-width rows under the poster. A rule between them does the work the
+     label column used to do alone, so the labels can stop shouting. */
+  .meta-facts { gap: 0; padding-top: 4px; border-top: 0; }
+  .meta-facts .mf-row {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 12px; padding: 9px 0; border-top: 1px solid var(--stroke);
+  }
+  .meta-facts dt { font-size: 12px; text-transform: none; letter-spacing: 0; color: var(--muted-strong); }
+  .meta-facts dd { font-size: 12px; }
+  .similar-section { margin-top: 16px; }
+  .similar-head h3 { font-size: 15px; }
+  .similar-row { grid-auto-columns: var(--mobile-card-width); gap: 6px; }
+  .similar-row > .card { width: var(--mobile-card-width); }
+  .similar-row .card-remove { opacity: .82; }
+  .reviews-list { grid-auto-columns: minmax(230px, 82vw); gap: 12px; }
+  .meta-poster .card-bookmark {
+    right: 5px; width: 30px; height: 39px;
+  }
+  .meta-poster .card-bookmark svg { width: 27px; height: 36px; }
+  .serial-panel .track-buttons button { padding: 5px 8px; font-size: 11px; }
+  .curated-list { scroll-margin-top: 66px; }
+  .quick-lists-toggle {
+    top: 75%; width: 34px; min-height: 116px;
+    padding: 12px 7px; font-size: 11px;
+  }
+  .quick-lists-drawer { padding: 19px 16px; }
+  .quick-lists-nav button { padding-block: 11px; font-size: 14px; }
+  .bookmark-banner { min-height: 23px; padding-block: 3px; font-size: 11px; }
+  .banner-admin-text { order: 5; width: 100%; justify-content: flex-end; }
+  .banner-admin-text input { width: min(230px, 62vw); font-size: 12px; }
+}
+
+@media (hover: none) {
+  .curated-nav { display: none; }
+  .card-hover-meta { display: none; }
+  .card-bookmark { opacity: .82; transform: none; }
+  .card-bookmark.on { opacity: 1; }
+  .card:hover { transform: none; }
+  .card:hover .poster { filter: none; transform: none; }
+  .continue-card:hover .poster,
+  .continue-featured:hover .poster { filter: none; }
+  .continue-card:hover .card-media { border-color: var(--stroke); box-shadow: none; }
+  .continue-card:not(.continue-featured) .continue-play { display: none; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .search-box input { font-size: 16px; }
+}
+
+/* ---------- Kinopoisk links + admin key pool ---------- */
+.kp-meta-link {
+  color: inherit; text-decoration: none;
+  text-decoration-color: transparent; text-underline-offset: 2px;
+  transition: color .15s, text-decoration-color .15s;
+}
+.kp-meta-link:hover { color: var(--accent); text-decoration: underline; text-decoration-color: currentColor; }
+/* Doubled to a 0-10 scale for display, so it needs no size concession to sit
+   beside the Кинопоиск and IMDb badges. */
+/* Letterboxd sits on its own centred line under IMDb and КП. Three figures
+   across one row crowded the cover and shrank all of them; stacking keeps every
+   number at the size a two-rating card uses. The gap is tighter than the one
+   above the runtime so the three scores still read as one group. */
+.hover-rating-lb { margin-top: 6px; }
+.meta-ratings .kp-rating-link { color: inherit; text-decoration: none; }
+.meta-ratings .kp-rating-link:hover span { color: var(--accent); }
+
+.key-pool-dialog { width: min(980px, calc(100vw - 28px)); max-height: calc(100dvh - 28px); }
+.key-pool-dialog form { gap: 13px; }
+.key-pool-summary {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block: 1px solid var(--stroke); padding-block: 11px;
+}
+.key-pool-stat { display: flex; flex-direction: column; gap: 2px; padding-inline: 13px; border-right: 1px solid var(--stroke); }
+.key-pool-stat:first-child { padding-left: 0; }
+.key-pool-stat:last-child { border-right: 0; }
+.key-pool-stat strong { font-size: 18px; font-weight: 600; }
+.key-pool-stat span { color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: 0; }
+.key-pool-sync { display: grid; gap: 8px; }
+.key-pool-sync-line { display: flex; align-items: center; gap: 8px; min-width: 0; color: #bcbcbc; font-size: 12px; }
+.key-pool-sync-dot { width: 8px; height: 8px; flex: none; border-radius: 50%; background: #b24f4f; }
+.key-pool-sync-dot[data-ok="1"] { background: #5fa66b; }
+.key-pool-setup { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px; }
+.key-pool-dialog .key-pool-setup input,
+.key-pool-dialog .key-pool-secret input,
+.key-pool-dialog .key-pool-label,
+.key-pool-dialog .key-pool-provider {
+  min-width: 0; height: 34px; padding: 0 9px; border: 1px solid var(--stroke-strong);
+  border-radius: 7px; background: #080808; color: #eee; font: inherit; font-size: 12px;
+}
+.key-pool-dialog .key-pool-setup input { padding-inline: 10px; color: #aaa; }
+.key-pool-tools,
+.key-pool-actions,
+.key-pool-row-actions { display: flex; align-items: center; gap: 7px; }
+.key-pool-tools button,
+.key-pool-actions button,
+.key-pool-row-actions button,
+.key-pool-setup button,
+.key-pool-secret button {
+  min-height: 34px; padding: 0 10px; border: 1px solid var(--stroke-strong);
+  border-radius: 7px; background: #141414; color: #d2d2d2; cursor: pointer; font: inherit; font-size: 11px;
+}
+.key-pool-tools button:hover,
+.key-pool-actions button:hover,
+.key-pool-row-actions button:hover,
+.key-pool-setup button:hover,
+.key-pool-secret button:hover { color: var(--accent); border-color: var(--accent); }
+.key-pool-row-actions .danger:hover { color: #f09a9a; border-color: #8e4444; }
+.key-pool-tools button:disabled,
+.key-pool-actions button:disabled,
+.key-pool-row-actions button:disabled { opacity: .42; cursor: default; }
+.key-pool-actions { justify-content: flex-end; }
+.key-pool-actions .catalog-state { margin-right: auto; }
+.key-pool-rows { display: grid; gap: 8px; max-height: min(460px, 48dvh); overflow-y: auto; padding-right: 3px; }
+.key-pool-row {
+  display: grid; grid-template-columns: 118px minmax(120px, 170px) minmax(210px, 1fr) minmax(240px, auto);
+  gap: 8px; align-items: center; padding: 10px; border: 1px solid #292929; border-radius: 8px; background: #101010;
+}
+.key-pool-provider { cursor: pointer; }
+.key-pool-secret { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px; }
+.key-pool-dialog .key-pool-secret input { width: 100%; }
+.key-pool-scopes { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.compact-dialog .key-pool-check {
+  display: inline-flex; flex-direction: row; align-items: center; gap: 5px;
+  color: #aaa; font-size: 10px; letter-spacing: 0; text-transform: none; white-space: nowrap; cursor: pointer;
+}
+.compact-dialog .key-pool-check input { width: 14px; height: 14px; padding: 0; accent-color: var(--accent); }
+.compact-dialog .key-pool-check:has(input:disabled) { opacity: .35; cursor: default; }
+.key-pool-key-status { grid-column: 1 / 4; min-width: 0; color: #888; font-size: 10px; overflow-wrap: anywhere; }
+.key-pool-key-status[data-mode="ok"] { color: #78b986; }
+.key-pool-key-status[data-mode="error"] { color: #dc8585; }
+.key-pool-key-status[data-mode="pending"] { color: #d9d966; }
+.key-pool-row-actions { justify-content: flex-end; }
+.key-pool-empty { padding: 28px; color: var(--muted); text-align: center; border: 1px dashed var(--stroke-strong); border-radius: 8px; }
+
+@media (max-width: 760px) {
+  .key-pool-dialog form { padding: 18px; }
+  .key-pool-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 10px; }
+  .key-pool-stat:nth-child(2) { border-right: 0; }
+  .key-pool-stat:nth-child(3) { padding-left: 0; }
+  .key-pool-setup { grid-template-columns: minmax(0, 1fr); }
+  .key-pool-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .key-pool-secret,
+  .key-pool-scopes,
+  .key-pool-key-status { grid-column: 1 / -1; }
+  .key-pool-scopes { justify-content: flex-start; flex-wrap: wrap; }
+  .key-pool-row-actions { grid-column: 1 / -1; }
+  .key-pool-tools { flex-wrap: wrap; }
+}
+
+/* Ordering a curated list is done by dragging the card. The handle only
+   advertises that — the whole card is the drag surface, so a small target is
+   never the thing standing between an admin and the order they want. */
+.admin-item-controls .grip {
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: grab; user-select: none;
+  color: var(--muted-strong); font-size: 12px; line-height: 1;
+}
+.admin-item-controls .grip:active { cursor: grabbing; }
+body.admin-mode .curated-row .card[draggable="true"] { cursor: grab; }
+body.admin-mode .curated-row .card.dragging {
+  opacity: .4;
+  /* Keeps the lifted card from also reading as a drop target. */
+  pointer-events: none;
+}
+/* The insertion point, drawn on the neighbour rather than as a floating element
+   so it stays correct when the row wraps onto two rows. */
+body.admin-mode .curated-row .card.drop-before .card-media,
+body.admin-mode .curated-row .card.drop-after .card-media {
+  box-shadow: -3px 0 0 0 var(--accent);
+}
+body.admin-mode .curated-row .card.drop-after .card-media {
+  box-shadow: 3px 0 0 0 var(--accent);
+}
+
+/* Suggestions. Anchored to the search box rather than the page so it tracks the
+   input on every layout, and above the player, which is the only thing tall
+   enough to overlap it. */
+.search-suggest {
+  position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 6px);
+  max-height: min(60vh, 420px); overflow-y: auto;
+  display: flex; flex-direction: column;
+  background: #101010; border: 1px solid var(--stroke); border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.6);
+}
+.search-suggest.hidden { display: none; }
+.suggest-row {
+  display: flex; align-items: baseline; gap: 9px;
+  padding: 9px 13px; border: 0; background: none; color: #fff;
+  font: inherit; font-size: 14px; text-align: left; cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.suggest-row:last-child { border-bottom: 0; }
+.suggest-row:hover, .suggest-row.active { background: rgba(255,255,255,.07); }
+.suggest-title {
+  flex: 0 1 auto; min-width: 0; max-width: 72%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* The year sits immediately after the title rather than pinned to the right
+   edge: at the far end it read as a separate column and the eye had to travel
+   for it. Lighter than the title, but not as quiet as the original name. */
+.suggest-year { flex: none; color: #9a9a9a; font-size: 12px; }
+.suggest-origin {
+  flex: 1; min-width: 0; color: var(--muted); font-size: 12px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* Titles already watched or saved are the likeliest pick, so they read as
+   knowns rather than as another row of search results. */
+.suggest-history .suggest-title, .suggest-bookmark .suggest-title { color: var(--accent); }
+/* Just a heavier version of the line between rows. The negative margin eats the
+   1px border of the row above so the two do not stack into a 3px band. */
+.suggest-rule {
+  height: 2px; margin-top: -1px; flex: none;
+  background: rgba(255,255,255,.18);
+}
+
+/* On a phone the field itself is only ~170px — logo, search and bookmark
+   buttons take the rest of the row — so matching its width left titles cut to
+   four words. The list is anchored by its right edge to the container instead
+   and spans the full content width; 90px is the two 40px buttons and the two
+   5px gaps between them and the field. */
+@media (max-width: 560px) {
+  .search-suggest { left: auto; right: -90px; width: calc(100vw - 24px); }
+  /* Two lines rather than one: a title, its year beside it, and the original
+     name under both. Everything fits at a readable size, and nothing but a
+     genuinely long title is ever clipped. */
+  .suggest-row {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline; column-gap: 8px; row-gap: 1px;
+    padding: 8px 12px; font-size: 13.5px;
+  }
+  .suggest-title { grid-column: 1; max-width: none; }
+  .suggest-year { grid-column: 2; }
+  .suggest-origin { grid-column: 1 / -1; font-size: 11.5px; }
+}

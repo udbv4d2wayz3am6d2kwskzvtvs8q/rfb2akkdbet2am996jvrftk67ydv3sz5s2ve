@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" profiles="urn:mpeg:dash:profile:isoff-live:2011" type="static" mediaPresentationDuration="PT8888.294922S" minBufferTime="PT2S">
+  <BaseURL>https://cdn.example/av1/07_26/30/12/QF6Q2OPQ/</BaseURL>
+  <BaseURL>https://cdn.example/av1/07_26/30/12/QF6Q2OPQ/</BaseURL>
+  <Period id="0">
+    <AdaptationSet id="5" segmentAlignment="true" lang="ru0" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="104310" codecs="opus" id="0">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267651-2ch-0/init.webm?hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413" media="4.1267651-2ch-0/$Number$.webm?ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="7000" d="6001000"></S>
+            <S t="6008000" d="6000000" r="1478"></S>
+            <S t="8880008000" d="5992000"></S>
+            <S t="8886000000" d="2332000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="1" segmentAlignment="true" lang="ru1" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="110508" codecs="opus" id="1">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267651-2ch-1/init.webm?ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407" media="4.1267651-2ch-1/$Number$.webm?t=1800000000&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="7000" d="6001000"></S>
+            <S t="6008000" d="6000000" r="1478"></S>
+            <S t="8880008000" d="5992000"></S>
+            <S t="8886000000" d="2052000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="6" segmentAlignment="true" lang="ru2" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="103150" codecs="opus" id="2">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267651-2ch-2/init.webm?rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403" media="4.1267651-2ch-2/$Number$.webm?fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="7000" d="6001000"></S>
+            <S t="6008000" d="6000000" r="1478"></S>
+            <S t="8880008000" d="5992000"></S>
+            <S t="8886000000" d="2052000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="0" segmentAlignment="true" lang="ru3" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="107035" codecs="opus" id="3">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267651-2ch-3/init.webm?fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000" media="4.1267651-2ch-3/$Number$.webm?ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="7000" d="6001000"></S>
+            <S t="6008000" d="6000000" r="1478"></S>
+            <S t="8880008000" d="6004000"></S>
+            <S t="8886012000" d="2084000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="8" segmentAlignment="true" lang="ru4" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="106283" codecs="opus" id="4">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267651-2ch-4/init.webm?x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240" media="4.1267651-2ch-4/$Number$.webm?ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="7000" d="6001000"></S>
+            <S t="6008000" d="6000000" r="1478"></S>
+            <S t="8880008000" d="5992000"></S>
+            <S t="8886000000" d="2052000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="4" segmentAlignment="true" lang="ru5" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="111164" codecs="opus" id="5">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267651-2ch-5/init.webm?ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4" media="4.1267651-2ch-5/$Number$.webm?hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="7000" d="6001000"></S>
+            <S t="6008000" d="6000000" r="1478"></S>
+            <S t="8880008000" d="5992000"></S>
+            <S t="8886000000" d="2052000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="7" segmentAlignment="true" lang="ru6" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="100679" codecs="opus" id="6">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267651-2ch-6/init.webm?hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027" media="4.1267651-2ch-6/$Number$.webm?ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="7000" d="6001000"></S>
+            <S t="6008000" d="6000000" r="1478"></S>
+            <S t="8880008000" d="5996000"></S>
+            <S t="8886004000" d="2116000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="2" segmentAlignment="true" lang="ru7" contentType="audio">
+      <Representation mimeType="audio/webm" audioSamplingRate="48000" bandwidth="105196" codecs="opus" id="7">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"></AudioChannelConfiguration>
+        <SegmentTemplate initialization="4.1267651-2ch-7/init.webm?hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413" media="4.1267651-2ch-7/$Number$.webm?hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="7000" d="6001000"></S>
+            <S t="6008000" d="6000000" r="1479"></S>
+            <S t="8886008000" d="2500000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet frameRate="24000/1001" id="3" segmentAlignment="true" par="12:5" maxWidth="1920" maxHeight="800" contentType="video">
+      <Representation sar="1:1" mimeType="video/webm" bandwidth="1346531" codecs="av01.0.04M.08" height="360" id="8" width="864">
+        <SegmentTemplate initialization="20.1267651/init.webm?ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407" media="20.1267651/$Number$.webm?rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="0" d="10010000" r="886"></S>
+            <S t="8878870000" d="9425000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+      <Representation sar="1:1" mimeType="video/webm" bandwidth="4562078" codecs="av01.0.05M.08" height="530" id="9" width="1272">
+        <SegmentTemplate initialization="21.1267651/init.webm?hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413&amp;hi=6afb00685511027" media="21.1267651/$Number$.webm?ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="0" d="10010000" r="886"></S>
+            <S t="8878870000" d="9425000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+      <Representation sar="1:1" mimeType="video/webm" bandwidth="8858115" codecs="av01.0.08M.08" height="800" id="10" width="1920">
+        <SegmentTemplate initialization="22.1267651/init.webm?ha=dee248cd27dc413&amp;hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407" media="22.1267651/$Number$.webm?hi=6afb00685511027&amp;hu=7e787f9c09a8528&amp;hui=9206b3f18c08f79&amp;t=1787229240&amp;x-cdn=10551403&amp;rt=0000000000000000000000000000000000000000000000000000000000000000&amp;fckz2=b9c0a42edf3e837&amp;hc=729cf507d8010f4&amp;ht=ebe61f0e5f08407&amp;ha=dee248cd27dc413" startNumber="1" timescale="1000000">
+          <SegmentTimeline>
+            <S t="0" d="10010000" r="886"></S>
+            <S t="8878870000" d="9425000"></S>
+          </SegmentTimeline>
+        </SegmentTemplate>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>

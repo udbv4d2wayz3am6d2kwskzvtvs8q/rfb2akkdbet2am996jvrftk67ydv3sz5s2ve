@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" type="image/x-icon"
+        href="https://cdn.jsdelivr.net/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@__ALPHY_ASSET_REV__/favicon.ico">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://raw.esm.sh">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <title>Alphy TV — каталог фильмов и сериалов.</title>
+  <style>
+    html,body{margin:0;min-height:100%;background:#000;color:#fff;font-family:Arial,sans-serif}
+    #bootStatus{min-height:100svh;display:grid;place-items:center;color:#777;font-size:14px}
+  </style>
+</head>
+<body>
+  <div id="appRoot"><div id="bootStatus">Загрузка…</div></div>
+  <script>
+    (() => {
+      "use strict";
+
+      const revision = "__ALPHY_ASSET_REV__";
+      const integrity = __ALPHY_ASSET_INTEGRITY__;
+      const isRevision = /^[0-9a-f]{40}$/i.test(revision);
+      const origins = isRevision ? [
+        `https://cdn.jsdelivr.net/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@${revision}`,
+        `https://raw.esm.sh/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@${revision}`,
+        "",
+      ] : [""];
+      let base = origins[0];
+      const scripts = [
+        "identity.js",
+        "foryou.js",
+        "catalog-cache.js",
+        "shaka-smooth.js",
+        "app.js",
+        "catalog.js",
+        "keypool.js",
+      ];
+
+      const localUrl = (path) => `/${String(path).replace(/^\/+/, "")}`;
+      const urlAt = (origin, path) => origin
+        ? `${origin}/${String(path).replace(/^\/+/, "")}` : localUrl(path);
+      const assetUrl = (path) => urlAt(base, path);
+
+      async function valid(path, body) {
+        if (!integrity[path] || !globalThis.crypto?.subtle) return true;
+        const bytes = new TextEncoder().encode(body);
+        const hash = [...new Uint8Array(await globalThis.crypto.subtle.digest("SHA-256", bytes))]
+          .map((byte) => byte.toString(16).padStart(2, "0")).join("");
+        return hash === integrity[path];
+      }
+
+      async function fetchAt(origin, path, timeoutMs = 8000) {
+        const url = urlAt(origin, path);
+        const controller = typeof AbortController === "function" ? new AbortController() : null;
+        const timer = controller ? setTimeout(() => controller.abort(), timeoutMs) : null;
+        try {
+          const response = await fetch(url, {
+            cache: origin ? "force-cache" : "no-cache",
+            credentials: "omit",
+            mode: origin ? "cors" : "same-origin",
+            referrerPolicy: "no-referrer",
+            signal: controller?.signal,
+          });
+          if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+          const body = await response.text();
+          if (!(await valid(path, body))) throw new Error(`${path}: integrity mismatch`);
+          return { body, url, origin };
+        } finally {
+          if (timer) clearTimeout(timer);
+        }
+      }
+
+      function preferredOrigins() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(`alphy.asset-origin.${revision}`) || "null");
+          if (saved?.until > Date.now() && origins.includes(saved.base)) {
+            return [saved.base, ...origins.filter((origin) => origin !== saved.base)];
+          }
+        } catch {}
+        return origins;
+      }
+
+      function selectOrigin() {
+        const candidates = preferredOrigins();
+        const delays = [0, 700, 2000];
+        return new Promise((resolve, reject) => {
+          let done = false;
+          let failed = 0;
+          let lastError;
+          candidates.forEach((origin, index) => setTimeout(async () => {
+            if (done) return;
+            try {
+              const shell = await fetchAt(origin, "app-shell.html", origin ? 5000 : 6000);
+              if (done) return;
+              done = true;
+              base = origin;
+              try {
+                localStorage.setItem(`alphy.asset-origin.${revision}`, JSON.stringify({
+                  base, until: Date.now() + (base ? 6 * 3600e3 : 10 * 60e3),
+                }));
+              } catch {}
+              resolve(shell);
+            } catch (error) {
+              lastError = error;
+              failed += 1;
+              if (failed === candidates.length) reject(lastError);
+            }
+          }, delays[index] || 0));
+        });
+      }
+
+      async function fetchText(path) {
+        let lastError;
+        for (const origin of [base, ...origins.filter((item) => item !== base)]) {
+          try { return await fetchAt(origin, path); }
+          catch (error) { lastError = error; }
+        }
+        throw lastError || new Error(`${path}: загрузка не удалась`);
+      }
+
+      function showError(error) {
+        console.error("Alphy bootstrap failed", error);
+        document.getElementById("appRoot").innerHTML =
+          '<div id="bootStatus">Не удалось загрузить сайт. Обновите страницу.</div>';
+      }
+
+      function runScript(source) {
+        const script = document.createElement("script");
+        script.textContent = `${source.body}\n//# sourceURL=${source.url}`;
+        document.body.appendChild(script);
+      }
+
+      async function boot() {
+        const shellSource = await selectOrigin();
+        window.__ALPHY_ASSET_BASE__ = base;
+        window.__alphyAssetUrl = assetUrl;
+        const favicon = document.querySelector('link[rel="icon"]');
+        if (favicon) favicon.href = assetUrl("favicon.ico");
+        const scriptSourcesPromise = Promise.all(scripts.map(fetchText));
+        const styleSource = await fetchText("styles.css");
+        const style = document.createElement("style");
+        style.textContent = styleSource.body;
+        document.head.appendChild(style);
+        document.getElementById("appRoot").innerHTML = shellSource.body;
+        document.querySelectorAll("[data-alphy-asset]").forEach((element) => {
+          element.src = assetUrl(element.dataset.alphyAsset);
+        });
+        const scriptSources = await scriptSourcesPromise;
+        for (const source of scriptSources) runScript(source);
+        document.documentElement.dataset.alphyReady = "true";
+      }
+
+      boot().catch(showError);
+    })();
+  </script>
+</body>
+</html>

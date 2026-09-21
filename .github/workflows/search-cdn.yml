@@ -1,0 +1,120 @@
+name: Publish search index to jsDelivr
+
+# The browser reads the search index from jsDelivr: a base file per letter and
+# a small delta on top, content-addressed and pinned to a commit on the
+# `search-cdn` branch. Supabase keeps a pointer of a few hundred bytes naming
+# the current index, plus its own shards as the fallback. See
+# scripts/publish-search-cdn.mjs.
+#
+# Hourly: a new title reaches search within the hour after the crawler has
+# written it. History on the branch is only ever appended, so every commit a
+# browser might still be reading stays fetchable.
+
+on:
+  schedule:
+    - cron: "41 * * * *"
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Sync the title index with the source"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: search-cdn
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # A failed detail fill may still have committed new catalogue rows. Publish
+    # those rows without hiding the sync failure itself. Cancelled runs stay out.
+    if: github.event_name != 'workflow_run' || contains(fromJSON('["success","failure"]'), github.event.workflow_run.conclusion)
+    runs-on: ubuntu-latest
+    # A layout change re-pins every file once: about 8,000 to warm.
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          path: app
+          fetch-depth: 1
+          sparse-checkout: |
+            scripts/publish-search-cdn.mjs
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      # Two branches, because jsDelivr refuses a commit whose tree is over 50 MB:
+      # `search-cdn` holds bases, deltas and indexes; `search-cdn-parts` the
+      # prefix parts of the big letters.
+      - name: Check out the data branches, or start them
+        shell: bash
+        env:
+          REPO: ${{ github.repository }}
+          TOKEN: ${{ github.token }}
+        run: |
+          remote="https://x-access-token:${TOKEN}@github.com/${REPO}.git"
+          for pair in "search-cdn data" "search-cdn-parts parts"; do
+            set -- $pair
+            if git ls-remote --exit-code --heads "$remote" "$1" >/dev/null; then
+              git clone -q --depth 2 --branch "$1" "$remote" "$2"
+            else
+              git init -q -b "$1" "$2"
+              git -C "$2" remote add origin "$remote"
+            fi
+            git -C "$2" config user.name "github-actions[bot]"
+            git -C "$2" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          done
+
+      - name: Finish any interrupted publication before reading new data
+        env:
+          PUBLISH_TOKEN: ${{ secrets.SEARCH_PUBLISH_TOKEN }}
+        run: |
+          if git -C data rev-parse --verify HEAD >/dev/null 2>&1; then
+            index_commit=$(git -C data rev-parse HEAD)
+            data_commit=$(git -C data rev-parse HEAD^ 2>/dev/null || git -C data rev-parse HEAD)
+            node app/scripts/publish-search-cdn.mjs resume --dir data \
+              --commit "$index_commit" --data-commit "$data_commit"
+          fi
+
+      - name: Write the changed data files
+        env:
+          PUBLISH_TOKEN: ${{ secrets.SEARCH_PUBLISH_TOKEN }}
+        run: node app/scripts/publish-search-cdn.mjs data --dir data --parts-dir parts
+
+      # Parts and data first, then the index that names their commits, then the
+      # pointer that names the index commit — each only once the thing it names exists.
+      - name: Commit, index, warm and point
+        shell: bash
+        env:
+          PUBLISH_TOKEN: ${{ secrets.SEARCH_PUBLISH_TOKEN }}
+        run: |
+          # Vercel reads vercel.json from the pushed commit, not from main, so
+          # without this every data commit was built as a preview deployment.
+          for dir in data parts; do
+            [ -f "$dir/vercel.json" ] || echo '{"git":{"deploymentEnabled":false}}' > "$dir/vercel.json"
+          done
+          git -C parts add -A
+          if ! git -C parts diff --cached --quiet; then
+            git -C parts commit -q -m "Search parts $(date -u +%Y-%m-%dT%H:%MZ)"
+            git -C parts push -q origin HEAD:search-cdn-parts
+          fi
+          parts_commit=$(git -C parts rev-parse --verify -q HEAD || true)
+          cd data
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing changed since the last publish"
+            exit 0
+          fi
+          git commit -q -m "Search data $(date -u +%Y-%m-%dT%H:%MZ)"
+          data_commit=$(git rev-parse HEAD)
+          node ../app/scripts/publish-search-cdn.mjs index --dir . --commit "$data_commit" --parts-commit "$parts_commit"
+          git add -A
+          git commit -q -m "Search index $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q origin HEAD:search-cdn
+          node ../app/scripts/publish-search-cdn.mjs pointer --dir . \
+            --commit "$(git rev-parse HEAD)" --data-commit "$data_commit"
