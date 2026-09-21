@@ -3359,7 +3359,7 @@
    "s": "2026-09-16T05:23:17.654Z",
    "rebased": "2026-09-16T05:25:17.654Z",
    "d": "d/63.4b7d37d4aaf61bd8.json",
-   "dc": "pending",
+   "dc": "2a26f2979b2318f560e1e0f68d7e903654f7495a",
    "parts": {
     "cha": [
      "p/d0a5a13c0eaca9ee.json",
@@ -10833,7 +10833,7 @@
    "s": "2026-09-16T12:48:11.932Z",
    "rebased": "2026-09-16T12:50:11.932Z",
    "d": "d/70.b264acbf73481f08.json",
-   "dc": "pending",
+   "dc": "2a26f2979b2318f560e1e0f68d7e903654f7495a",
    "parts": {
     "pil": [
      "p/d7ba790eb85203c3.json",
@@ -25012,7 +25012,7 @@
    "s": "2026-09-17T06:36:58.142Z",
    "rebased": "2026-09-17T06:38:58.142Z",
    "d": "d/440.91413ef70f101277.json",
-   "dc": "pending",
+   "dc": "2a26f2979b2318f560e1e0f68d7e903654f7495a",
    "parts": {
     "ран": [
      "p/603751248c333407.json",
@@ -27076,7 +27076,7 @@
    "s": "2026-09-16T21:40:56.533Z",
    "rebased": "2026-09-16T21:42:56.533Z",
    "d": "d/442.5d8c01bbb1bec648.json",
-   "dc": "pending",
+   "dc": "2a26f2979b2318f560e1e0f68d7e903654f7495a",
    "parts": {
     "тер": [
      "p/a04f0faae5829435.json",
@@ -29810,7 +29810,7 @@
    "s": "2026-09-16T19:19:24.078Z",
    "rebased": "2026-09-16T19:21:24.078Z",
    "d": "d/447.2f1354954391b594.json",
-   "dc": "pending",
+   "dc": "2a26f2979b2318f560e1e0f68d7e903654f7495a",
    "parts": {
     "час": [
      "p/05f669a8c9521a08.json",
@@ -33884,7 +33884,7 @@
    "s": "2026-09-16T19:19:27.323Z",
    "rebased": "2026-09-16T19:21:27.323Z",
    "d": "d/43f.9f503e6d216d06eb.json",
-   "dc": "pending",
+   "dc": "2a26f2979b2318f560e1e0f68d7e903654f7495a",
    "parts": {
     "при": [
      "p/7bb8b1d988cf6f7d.json",
@@ -43699,15 +43699,15 @@
   "after_at": "2026-09-21T15:49:07.445Z",
   "after_id": 124456
  },
- "index": "i/c855f101d2d75f4b.json",
+ "index": "i/b0c627b9d867bd57.json",
  "indexes": [
-  "i/e8e76dcde79acd00.json",
   "i/ee3670574abea253.json",
   "i/1ba09001dddc9e4e.json",
-  "i/c855f101d2d75f4b.json"
+  "i/c855f101d2d75f4b.json",
+  "i/b0c627b9d867bd57.json"
  ],
  "updated": "2026-09-21T15:51:56.076Z",
- "dataCommit": "d7cc03c2ed42f2ebc81b947106653351316129a9",
+ "dataCommit": "2a26f2979b2318f560e1e0f68d7e903654f7495a",
  "layout": 2,
  "partsCommit": null
 }
