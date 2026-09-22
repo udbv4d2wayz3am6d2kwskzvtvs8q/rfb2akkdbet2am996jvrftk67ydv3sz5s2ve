@@ -317,8 +317,8 @@
    "n": 871,
    "s": "2026-09-15T14:02:14.632Z",
    "rebased": "2026-09-15T14:04:14.632Z",
-   "d": "d/33.2aeabb58cb561f13.json",
-   "dc": "cadeaf9025f4346a4ac31ed5fd439d993ef76efe",
+   "d": "d/33.15e2766a549b46da.json",
+   "dc": "pending",
    "parts": null
   },
   "34": {
@@ -394,8 +394,8 @@
    "n": 11308,
    "s": "2026-09-16T05:23:24.947Z",
    "rebased": "2026-09-16T05:25:24.947Z",
-   "d": "d/61.6749f0dd263f3a99.json",
-   "dc": "6e9fe6f5b15ac19546682247e481a99568d99d57",
+   "d": "d/61.d1bb2dab27d19398.json",
+   "dc": "pending",
    "parts": {
     "and": [
      "p/7bbf96f17d3b3a71.json",
@@ -7761,8 +7761,8 @@
    "n": 6162,
    "s": "2026-09-16T22:41:49.328Z",
    "rebased": "2026-09-16T22:43:49.328Z",
-   "d": "d/67.83e33c9cd490f404.json",
-   "dc": "ec25b28d91ca2659f97f469cb73eab4aa311b8da",
+   "d": "d/67.dbf554d9d4afeff4.json",
+   "dc": "pending",
    "parts": {
     "gho": [
      "p/6812b5a1e1bf0d12.json",
@@ -29186,8 +29186,8 @@
    "n": 2507,
    "s": "2026-09-16T22:41:46.923Z",
    "rebased": "2026-09-16T22:43:46.923Z",
-   "d": "d/445.d4d988e2aa510785.json",
-   "dc": "b7f9aad07def9329ea56c1795499699a617c9859",
+   "d": "d/445.c6df722a080f1781.json",
+   "dc": "pending",
    "parts": {
     "хра": [
      "p/2a1f5a9a9b7c7afa.json",
@@ -29809,8 +29809,8 @@
    "n": 3848,
    "s": "2026-09-16T19:19:24.078Z",
    "rebased": "2026-09-16T19:21:24.078Z",
-   "d": "d/447.2f1354954391b594.json",
-   "dc": "2a26f2979b2318f560e1e0f68d7e903654f7495a",
+   "d": "d/447.10b5ffc214e2f3d3.json",
+   "dc": "pending",
    "parts": {
     "час": [
      "p/05f669a8c9521a08.json",
@@ -35987,8 +35987,8 @@
    "n": 11011,
    "s": "2026-09-16T17:42:31.682Z",
    "rebased": "2026-09-16T17:44:31.682Z",
-   "d": "d/6d.0a029b065c24ef58.json",
-   "dc": "6e9fe6f5b15ac19546682247e481a99568d99d57",
+   "d": "d/6d.06c4b2071534f017.json",
+   "dc": "pending",
    "parts": {
     "m4m": [
      "p/b65f545b6839e641.json",
@@ -43696,8 +43696,8 @@
   }
  },
  "cursor": {
-  "after_at": "2026-09-22T11:20:05.065Z",
-  "after_id": 124516
+  "after_at": "2026-09-22T12:24:10.200Z",
+  "after_id": 124511
  },
  "index": "i/b162ddebe0e02536.json",
  "indexes": [
@@ -43706,7 +43706,7 @@
   "i/c2ed52eaee3def2b.json",
   "i/b162ddebe0e02536.json"
  ],
- "updated": "2026-09-22T11:45:35.116Z",
+ "updated": "2026-09-22T12:24:30.126Z",
  "dataCommit": "61b985d4b20a76431a4ec2bb56e8cded36269a37",
  "layout": 2,
  "partsCommit": null
