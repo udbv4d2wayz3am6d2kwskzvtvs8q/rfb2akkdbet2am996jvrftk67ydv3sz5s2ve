@@ -318,7 +318,7 @@
    "s": "2026-09-15T14:02:14.632Z",
    "rebased": "2026-09-15T14:04:14.632Z",
    "d": "d/33.15e2766a549b46da.json",
-   "dc": "pending",
+   "dc": "531f35386fe56d8b18a7d380df0dcc5cf91f5cd7",
    "parts": null
   },
   "34": {
@@ -395,7 +395,7 @@
    "s": "2026-09-16T05:23:24.947Z",
    "rebased": "2026-09-16T05:25:24.947Z",
    "d": "d/61.d1bb2dab27d19398.json",
-   "dc": "pending",
+   "dc": "531f35386fe56d8b18a7d380df0dcc5cf91f5cd7",
    "parts": {
     "and": [
      "p/7bbf96f17d3b3a71.json",
@@ -7762,7 +7762,7 @@
    "s": "2026-09-16T22:41:49.328Z",
    "rebased": "2026-09-16T22:43:49.328Z",
    "d": "d/67.dbf554d9d4afeff4.json",
-   "dc": "pending",
+   "dc": "531f35386fe56d8b18a7d380df0dcc5cf91f5cd7",
    "parts": {
     "gho": [
      "p/6812b5a1e1bf0d12.json",
@@ -29187,7 +29187,7 @@
    "s": "2026-09-16T22:41:46.923Z",
    "rebased": "2026-09-16T22:43:46.923Z",
    "d": "d/445.c6df722a080f1781.json",
-   "dc": "pending",
+   "dc": "531f35386fe56d8b18a7d380df0dcc5cf91f5cd7",
    "parts": {
     "хра": [
      "p/2a1f5a9a9b7c7afa.json",
@@ -29810,7 +29810,7 @@
    "s": "2026-09-16T19:19:24.078Z",
    "rebased": "2026-09-16T19:21:24.078Z",
    "d": "d/447.10b5ffc214e2f3d3.json",
-   "dc": "pending",
+   "dc": "531f35386fe56d8b18a7d380df0dcc5cf91f5cd7",
    "parts": {
     "час": [
      "p/05f669a8c9521a08.json",
@@ -35988,7 +35988,7 @@
    "s": "2026-09-16T17:42:31.682Z",
    "rebased": "2026-09-16T17:44:31.682Z",
    "d": "d/6d.06c4b2071534f017.json",
-   "dc": "pending",
+   "dc": "531f35386fe56d8b18a7d380df0dcc5cf91f5cd7",
    "parts": {
     "m4m": [
      "p/b65f545b6839e641.json",
@@ -43699,15 +43699,15 @@
   "after_at": "2026-09-22T12:24:10.200Z",
   "after_id": 124511
  },
- "index": "i/b162ddebe0e02536.json",
+ "index": "i/5ef4ddcabb575fd0.json",
  "indexes": [
-  "i/e9d509dc49d4be00.json",
   "i/cece7f02156f324a.json",
   "i/c2ed52eaee3def2b.json",
-  "i/b162ddebe0e02536.json"
+  "i/b162ddebe0e02536.json",
+  "i/5ef4ddcabb575fd0.json"
  ],
  "updated": "2026-09-22T12:24:30.126Z",
- "dataCommit": "61b985d4b20a76431a4ec2bb56e8cded36269a37",
+ "dataCommit": "531f35386fe56d8b18a7d380df0dcc5cf91f5cd7",
  "layout": 2,
  "partsCommit": null
 }
