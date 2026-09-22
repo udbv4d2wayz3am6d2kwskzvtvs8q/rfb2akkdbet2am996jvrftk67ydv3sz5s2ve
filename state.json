@@ -33933,8 +33933,8 @@
    "n": 19239,
    "s": "2026-09-16T19:19:27.323Z",
    "rebased": "2026-09-16T19:21:27.323Z",
-   "d": "d/43f.591b0feeb47550df.json",
-   "dc": "ec25b28d91ca2659f97f469cb73eab4aa311b8da",
+   "d": "d/43f.bc6c32571ebcfda6.json",
+   "dc": "pending",
    "parts": {
     "при": [
      "p/7bb8b1d988cf6f7d.json",
@@ -43746,8 +43746,8 @@
   }
  },
  "cursor": {
-  "after_at": "2026-09-22T18:53:37.346Z",
-  "after_id": 124519
+  "after_at": "2026-09-22T20:17:33.227Z",
+  "after_id": 124450
  },
  "index": "i/2eae8e9de39df041.json",
  "indexes": [
@@ -43756,7 +43756,7 @@
   "i/fe6e59f55d1983d2.json",
   "i/2eae8e9de39df041.json"
  ],
- "updated": "2026-09-22T19:45:17.020Z",
+ "updated": "2026-09-22T20:17:50.427Z",
  "dataCommit": "6a814bf377753bbf17d4202fbc76a30825262e9b",
  "layout": 2,
  "partsCommit": null
