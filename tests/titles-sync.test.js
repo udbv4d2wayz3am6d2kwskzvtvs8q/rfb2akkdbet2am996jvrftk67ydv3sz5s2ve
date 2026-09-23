@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { catalogRow, fillPending, fillRow, fullScanDue, net, syncCatalog, runSync, SoftError, SPACING_MS, UA } from "../scripts/sync-titles.mjs";
+import { catalogRow, fillPending, fillRow, net, syncCatalog, runSync, SoftError, SPACING_MS, UA } from "../scripts/sync-titles.mjs";
 
 // The scheduled job that replaces the Cloudflare crawler's frozen catalogue. These
 // pin how it treats the source — one request at a time, paced, stopping at the
@@ -54,7 +54,16 @@ test("the full read stops where the listing repeats its last page", async () => 
   assert.deepEqual(calls.titles.map((call) => call.route), ["/catalog", "/catalog"]);
 });
 
-test("a partial full scan saves progress and leaves time to fill new titles", async () => {
+test("a reconciliation slice never reads more than its page budget", async () => {
+  const calls = fake({ pages: Array.from({ length: 200 }, (_, i) => [item(1000 - i)]) });
+  const stats = await syncCatalog({ full: true, startPage: 20, maxPages: 80 });
+  assert.equal(stats.pages, 80);
+  assert.equal(stats.nextPage, 100);
+  assert.equal(calls.source.length, 80);
+  assert.equal(stats.reachedEnd, false);
+});
+
+test("a scheduled run scans the head and one bounded reconciliation slice", async () => {
   const calls = fake({ pages: Array.from({ length: 200 }, (_, i) => [item(1000 - i)]),
     pending: [{ id: 1, slug: "film" }], views: { "film|": { view: { kpId: 301, video: { embedUrl: "https://x/embed/movie/77" } } } } });
   const original = net.titles;
@@ -66,6 +75,7 @@ test("a partial full scan saves progress and leaves time to fill new titles", as
   };
   const result = await runSync({ budgetMin: 1, fillLimit: 1 });
   assert.equal(result.catalog.reachedEnd, false);
+  assert.ok(result.head.pages >= 3);
   assert.equal(result.fill.filled, 1, "catalogue scanning cannot consume the fill budget");
   assert.ok(checkpoint.next_full_page > 1);
   assert.ok(checkpoint.full_started_at);
@@ -131,25 +141,13 @@ test("the resolved row is shaped exactly as the table expects", () => {
   assert.deepEqual(fillRow(9, {}), { id: 9, kp: "", embed_id: null, origin_name: "", is_series: false });
 });
 
-test("the job announces itself and checks the durable full-scan checkpoint", async () => {
+test("the job announces itself and uses the durable reconciliation checkpoint", async () => {
   assert.match(UA, /alphy\.tv; contact:/);
   const workflow = await readFile(new URL("../.github/workflows/titles-sync.yml", import.meta.url), "utf8");
   assert.match(workflow, /cron: "5 \*\/2 \* \* \*"/);
   assert.match(workflow, /--auto/);
   assert.match(workflow, /SEARCH_PUBLISH_TOKEN/);
 });
-
-test("a delayed scheduled run still detects an overdue full scan", async () => {
-  const now = Date.parse("2026-09-12T08:48:00Z");
-  net.now = () => now;
-  net.titles = async () => ({ last_full_at: new Date(now - 5 * 3600e3).toISOString() });
-  assert.equal(await fullScanDue(), true);
-  net.titles = async () => ({ last_full_at: new Date(now - 3 * 3600e3).toISOString() });
-  assert.equal(await fullScanDue(), false);
-  net.titles = async () => ({ last_full_at: null });
-  assert.equal(await fullScanDue(), true);
-});
-
 
 test("empty optional season preserves the real series card instead of stopping the run", async () => {
   const calls = fake({ views: {

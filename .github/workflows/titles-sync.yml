@@ -1,10 +1,10 @@
 name: Sync the title index with the source
 
 # Every two hours: the newest pages of the source's listing, then the titles
-# still missing their player or Kinopoisk id, newest first. The durable state
-# makes every second run a full listing read, preserving the four-hour check
-# for older additions and episode markers. The search publisher starts as soon
-# as this workflow finishes.
+# still missing their player or Kinopoisk id, newest first. Each run also reads
+# one bounded reconciliation slice; the durable cursor covers the full listing
+# roughly once a day without repeatedly downloading all 82k rows in one burst.
+# The search publisher starts as soon as this workflow finishes.
 # See scripts/sync-titles.mjs; it paces itself at one request every two seconds.
 
 on:
