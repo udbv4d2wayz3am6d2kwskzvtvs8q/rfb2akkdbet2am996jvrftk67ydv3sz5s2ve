@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { catalogRow, fillPending, fillRow, fullScanDue, net, syncCatalog, runSync, SoftError, SPACING_MS, UA } from "../scripts/sync-titles.mjs";
 
-// The hourly job that replaces the Cloudflare crawler's frozen catalogue. These
+// The scheduled job that replaces the Cloudflare crawler's frozen catalogue. These
 // pin how it treats the source — one request at a time, paced, stopping at the
 // first 429 — and that it recognises the end of a listing that never ends.
 
@@ -78,7 +78,7 @@ test("a partial full scan saves progress and leaves time to fill new titles", as
   assert.ok(calls.titles.some((x) => x.route === "/fill"));
 });
 
-test("the hourly read stops after three pages in a row that change nothing", async () => {
+test("the head read stops after three pages in a row that change nothing", async () => {
   const pages = Array.from({ length: 30 }, (_, i) => [item(1000 - i)]);
   let page = 0;
   const calls = fake({ pages, writes: () => (++page <= 2 ? { inserted: 1, updated: 0 } : { inserted: 0, updated: 0 }) });
@@ -134,7 +134,7 @@ test("the resolved row is shaped exactly as the table expects", () => {
 test("the job announces itself and checks the durable full-scan checkpoint", async () => {
   assert.match(UA, /alphy\.tv; contact:/);
   const workflow = await readFile(new URL("../.github/workflows/titles-sync.yml", import.meta.url), "utf8");
-  assert.match(workflow, /cron: "5 \* \* \* \*"/);
+  assert.match(workflow, /cron: "5 \*\/2 \* \* \*"/);
   assert.match(workflow, /--auto/);
   assert.match(workflow, /SEARCH_PUBLISH_TOKEN/);
 });

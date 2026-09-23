@@ -5,7 +5,8 @@ import os from "node:os";
 import path from "node:path";
 import { makeSandbox, sleep } from "./helpers/app-sandbox.js";
 import {
-  buildData, buildIndex, mergeDelta, needsRebase, net, codepoint, partitionRows, warmAndPoint, resumePublication,
+  buildData, buildIndex, mergeDelta, needsRebase, net, codepoint, partitionRows, readJsonWithRetry,
+  warmAndPoint, resumePublication,
 } from "../scripts/publish-search-cdn.mjs";
 
 // The search index moved from Supabase Storage to jsDelivr: a tiny pointer on
@@ -19,6 +20,22 @@ const ok = (body) => ({ ok: true, status: 200, headers: { get: () => "" }, json:
 const missing = () => ({ ok: false, status: 404, headers: { get: () => "" }, json: async () => ({}) });
 const C1 = "a".repeat(40);
 const C2 = "b".repeat(40);
+
+test("publisher retries transient Supabase gateways but fails permanent misses immediately", async () => {
+  let attempts = 0;
+  const transient = await readJsonWithRetry("https://example.test/letters", {
+    waits: [0], sleep: async () => {},
+    fetcher: async () => ++attempts === 1 ? { ok: false, status: 502 } : ok({ letters: ["a"] }),
+  });
+  assert.deepEqual(transient, { letters: ["a"] });
+  assert.equal(attempts, 2);
+  attempts = 0;
+  await assert.rejects(readJsonWithRetry("https://example.test/missing", {
+    waits: [0, 0], sleep: async () => {},
+    fetcher: async () => { attempts += 1; return { ok: false, status: 404 }; },
+  }), /\/missing 404/);
+  assert.equal(attempts, 1);
+});
 
 // [name, year, slug, isSeries, embedId, kp, originName]
 const row = (name, year, slug, kp = "") => [name, year, slug, 0, 1, kp, ""];
@@ -398,7 +415,7 @@ test("a failed CDN warm resumes the same release before a new snapshot can repla
       fetcher: async (url) => { tried.push(url); return new Response("Package size exceeded", { status: 403 }); },
       log: () => {}, sleep: async () => {},
     }), /not on jsDelivr yet; first failure: 403 Package size exceeded/);
-    assert.equal(tried.length, 3 * new Set(tried).size, "every failed file is tried three times, not more");
+    assert.equal(tried.length, 5 * new Set(tried).size, "every failed file gets the bounded propagation retries");
     assert.equal(pointed, 0, "failed files are never announced");
     net.get = async () => published;
     const asked = [];

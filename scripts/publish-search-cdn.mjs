@@ -67,22 +67,44 @@ export const LAYOUT = 2;
 // jsDelivr's limit is 50 MB a commit; the margin is for a catalogue that grows.
 export const PACKAGE_LIMIT_BYTES = 45 * 1024 * 1024;
 const WARM_CONCURRENCY = 16;
-const WARM_RETRY_MS = [10_000, 30_000];
+const WARM_RETRY_MS = [10_000, 30_000, 60_000, 120_000];
+const READ_RETRY_MS = [5_000, 15_000, 30_000];
 
 export const hash16 = (text) => createHash("sha256").update(text).digest("hex").slice(0, 16);
 export const codepoint = (letter) => letter.codePointAt(0).toString(16);
 const single = (letter) => typeof letter === "string" && [...letter].length === 1;
 
+export async function readJsonWithRetry(url, { auth = false, token = "", fetcher = fetch,
+  sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), waits = READ_RETRY_MS } = {}) {
+  let failure;
+  for (let attempt = 0; attempt <= waits.length; attempt += 1) {
+    let response;
+    try {
+      response = await fetcher(url, {
+        headers: auth ? { "x-publish-token": token } : {},
+        signal: AbortSignal.timeout(60_000),
+      });
+    } catch (error) {
+      failure = error;
+    }
+    if (response?.ok) {
+      try { return await response.json(); }
+      catch (error) { failure = error; }
+    } else if (response) {
+      failure = new Error(`${new URL(url).pathname} ${response.status}`);
+      if (![502, 503, 504].includes(response.status)) throw failure;
+    }
+    if (attempt === waits.length) throw failure;
+    await sleep(waits[attempt]);
+  }
+  throw failure;
+}
+
 // Network, replaced in tests.
 export const net = {
   token: process.env.PUBLISH_TOKEN || "",
   async get(url, { auth = false } = {}) {
-    const response = await fetch(url, {
-      headers: auth ? { "x-publish-token": net.token } : {},
-      signal: AbortSignal.timeout(60_000),
-    });
-    if (!response.ok) throw new Error(`${new URL(url).pathname} ${response.status}`);
-    return response.json();
+    return readJsonWithRetry(url, { auth, token: net.token });
   },
   async post(url, body) {
     const response = await fetch(url, {

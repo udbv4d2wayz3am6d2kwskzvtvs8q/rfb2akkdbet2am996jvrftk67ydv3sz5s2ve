@@ -6,13 +6,13 @@ name: Publish search index to jsDelivr
 # the current index, plus its own shards as the fallback. See
 # scripts/publish-search-cdn.mjs.
 #
-# Hourly: a new title reaches search within the hour after the crawler has
-# written it. History on the branch is only ever appended, so every commit a
-# browser might still be reading stays fetchable.
+# Event-driven: a new title is published as soon as the title sync finishes.
+# A separate hourly schedule used to run the same publication a second time;
+# the next two-hour title sync already provides bounded recovery if a run fails.
+# History on the branch is only ever appended, so every commit a browser might
+# still be reading stays fetchable.
 
 on:
-  schedule:
-    - cron: "41 * * * *"
   workflow_dispatch:
   workflow_run:
     workflows: ["Sync the title index with the source"]

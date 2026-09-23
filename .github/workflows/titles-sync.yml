@@ -1,14 +1,15 @@
 name: Sync the title index with the source
 
-# Hourly: the newest pages of the source's listing, then the titles still
-# missing their player or Kinopoisk id, newest first. Every four hours,
-# the whole listing, for older additions and episode markers. The search publisher
-# (search-cdn.yml, at :41) ships whatever this wrote within the same hour.
+# Every two hours: the newest pages of the source's listing, then the titles
+# still missing their player or Kinopoisk id, newest first. The durable state
+# makes every second run a full listing read, preserving the four-hour check
+# for older additions and episode markers. The search publisher starts as soon
+# as this workflow finishes.
 # See scripts/sync-titles.mjs; it paces itself at one request every two seconds.
 
 on:
   schedule:
-    - cron: "5 * * * *"
+    - cron: "5 */2 * * *"
   workflow_dispatch:
     inputs:
       full:

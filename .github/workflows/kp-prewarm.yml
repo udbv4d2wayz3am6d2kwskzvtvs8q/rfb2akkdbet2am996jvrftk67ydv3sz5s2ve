@@ -1,7 +1,9 @@
 name: Warm shared metadata and external recommendations
 on:
   schedule:
-    - cron: "29 * * * *"
+    # Film objects live for a week and staff/similars for a month. Four passes
+    # per day catch new catalogue rows without re-reading every fresh object hourly.
+    - cron: "29 */6 * * *"
   workflow_dispatch:
 permissions:
   contents: read

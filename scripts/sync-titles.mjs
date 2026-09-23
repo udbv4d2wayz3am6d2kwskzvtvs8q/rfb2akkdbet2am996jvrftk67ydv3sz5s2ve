@@ -4,11 +4,11 @@
 // The Cloudflare crawler read the catalogue once and then stopped for good —
 // `catalog_done_at` is never cleared — so every title listed since was missing
 // from search (the source had 81,953, the index 81,702). It also runs on a plan
-// that kills an invocation after 10 ms of CPU. This job runs hourly instead:
+// that kills an invocation after 10 ms of CPU. This job runs every two hours:
 //
 //  - the first pages of the listing, which is newest first (by year, then
 //    release), until three pages in a row bring nothing new — a new release is
-//    in search within the hour;
+//    in search within two hours;
 //  - every four hours, the whole listing, including episode revision markers;
 //  - then the titles still missing their player or Kinopoisk id, newest first.
 //

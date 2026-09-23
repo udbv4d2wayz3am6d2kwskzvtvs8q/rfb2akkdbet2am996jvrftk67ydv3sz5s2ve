@@ -44,9 +44,26 @@ jobs:
           node --input-type=module <<'NODE'
           import { writeFile } from "node:fs/promises";
           const url = "https://alphy.tv/api/catalog-snapshot";
-          const response = await fetch(`${url}?cdn-sync=${Date.now()}`, { cache: "no-store" });
-          if (!response.ok) throw new Error(`catalog download failed: ${response.status}`);
-          const catalog = await response.json();
+          const waits = [5_000, 15_000, 30_000];
+          let catalog, failure;
+          for (let attempt = 0; attempt <= waits.length; attempt += 1) {
+            try {
+              const response = await fetch(`${url}?cdn-sync=${Date.now()}`, {
+                cache: "no-store",
+                signal: AbortSignal.timeout(60_000),
+              });
+              if (response.ok) {
+                catalog = await response.json();
+                break;
+              }
+              failure = new Error(`catalog download failed: ${response.status}`);
+              if (![502, 503, 504].includes(response.status)) throw failure;
+            } catch (error) {
+              failure = error;
+            }
+            if (attempt === waits.length) throw failure;
+            await new Promise((resolve) => setTimeout(resolve, waits[attempt]));
+          }
           if (Number(catalog?.schema) !== 1 || !Number.isInteger(Number(catalog?.revision)) || !Array.isArray(catalog?.lists)) {
             throw new Error("catalog payload is invalid");
           }
