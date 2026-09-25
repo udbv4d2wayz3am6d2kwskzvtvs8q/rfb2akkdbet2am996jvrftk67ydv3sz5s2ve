@@ -3642,8 +3642,8 @@
             "imdb": "tt1219289"
           },
           "letterboxd": {
-            "r": 3.38,
-            "n": 551331,
+            "r": 3.39,
+            "n": 565809,
             "slug": "limitless"
           }
         },
@@ -6227,5 +6227,5 @@
       ]
     }
   ],
-  "enrichmentVersion": "2026-09-21T12:31:29.769Z"
+  "enrichmentVersion": "2026-09-25T22:27:19.142Z"
 }
