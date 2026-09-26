@@ -4561,7 +4561,7 @@
    "s": "2026-09-23T00:43:51.132Z",
    "rebased": "2026-09-23T00:45:51.132Z",
    "d": "d/64.08c8d6a49ac75235.json",
-   "dc": "pending",
+   "dc": "e6aeedc365e6c264b3c19c9e2318a9d18b904366",
    "parts": {
     "day": [
      "p/49c31ce08a4d0e92.json",
@@ -14845,7 +14845,7 @@
    "s": "2026-09-23T20:28:50.772Z",
    "rebased": "2026-09-23T20:30:50.772Z",
    "d": "d/74.7e8b223617d651be.json",
-   "dc": "pending",
+   "dc": "e6aeedc365e6c264b3c19c9e2318a9d18b904366",
    "parts": {
     "the": [
      "p/f1d6506e4b8681d5.json",
@@ -17606,7 +17606,7 @@
    "s": "2026-09-23T22:23:50.365Z",
    "rebased": "2026-09-23T22:25:50.365Z",
    "d": "d/77.a8def9c6d0f231ef.json",
-   "dc": "pending",
+   "dc": "e6aeedc365e6c264b3c19c9e2318a9d18b904366",
    "parts": {
     "wil": [
      "p/d0dcae11451b062a.json",
@@ -23634,7 +23634,7 @@
    "s": "2026-09-25T02:28:13.853Z",
    "rebased": "2026-09-25T02:30:13.853Z",
    "d": "d/435.921887ac26c2cafd.json",
-   "dc": "pending",
+   "dc": "e6aeedc365e6c264b3c19c9e2318a9d18b904366",
    "parts": null
   },
   "436": {
@@ -31232,7 +31232,7 @@
    "s": "2026-09-22T22:16:41.427Z",
    "rebased": "2026-09-22T22:18:41.427Z",
    "d": "d/7a.433e489439230f88.json",
-   "dc": "pending",
+   "dc": "e6aeedc365e6c264b3c19c9e2318a9d18b904366",
    "parts": null
   },
   "4af": {
@@ -34189,7 +34189,7 @@
    "s": "2026-09-23T20:28:02.362Z",
    "rebased": "2026-09-23T20:30:02.362Z",
    "d": "d/43f.f1a9f7458ec3ec46.json",
-   "dc": "pending",
+   "dc": "e6aeedc365e6c264b3c19c9e2318a9d18b904366",
    "parts": {
     "при": [
      "p/fb82944f8d01100d.json",
@@ -44044,15 +44044,15 @@
   "after_at": "2026-09-26T10:24:51.185Z",
   "after_id": 124632
  },
- "index": "i/91520e39e6ee782d.json",
+ "index": "i/29175d2482d78ea0.json",
  "indexes": [
-  "i/704eed9a2e36e2aa.json",
   "i/ff9caa86f85fbcf3.json",
   "i/a41a19afe032e206.json",
-  "i/91520e39e6ee782d.json"
+  "i/91520e39e6ee782d.json",
+  "i/29175d2482d78ea0.json"
  ],
  "updated": "2026-09-26T10:25:08.049Z",
- "dataCommit": "cc06788ebaac0ec94d25c4063ef417979a8c8854",
+ "dataCommit": "e6aeedc365e6c264b3c19c9e2318a9d18b904366",
  "layout": 2,
  "partsCommit": null
 }
