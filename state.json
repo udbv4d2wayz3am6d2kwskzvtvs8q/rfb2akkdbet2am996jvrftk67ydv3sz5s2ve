@@ -3404,7 +3404,7 @@
    "s": "2026-09-23T05:44:26.743Z",
    "rebased": "2026-09-23T05:46:26.743Z",
    "d": "d/63.6b54aa70aa1d19d8.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "cha": [
      "p/be58cf550a306136.json",
@@ -5758,7 +5758,7 @@
    "s": "2026-09-22T22:16:43.097Z",
    "rebased": "2026-09-22T22:18:43.097Z",
    "d": "d/65.57acbedefa371413.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "eig": [
      "p/a58a52254daebb0d.json",
@@ -7877,7 +7877,7 @@
    "s": "2026-09-24T00:36:42.530Z",
    "rebased": "2026-09-24T00:38:42.530Z",
    "d": "d/67.fc5be77631cf3381.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "gho": [
      "p/81e2a1d468856625.json",
@@ -10001,7 +10001,7 @@
    "s": "2026-09-23T05:44:47.438Z",
    "rebased": "2026-09-23T05:46:47.438Z",
    "d": "d/69.d5108ddd7c480f63.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "ita": [
      "p/5d2e098ae13959f3.json",
@@ -13093,7 +13093,7 @@
    "s": "2026-09-24T00:36:53.461Z",
    "rebased": "2026-09-24T00:38:53.461Z",
    "d": "d/73.2abc050ecad1eae6.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "sou": [
      "p/ebe7c943e9866d8e.json",
@@ -14845,7 +14845,7 @@
    "s": "2026-09-23T20:28:50.772Z",
    "rebased": "2026-09-23T20:30:50.772Z",
    "d": "d/74.c34ebf6566ac99ed.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "the": [
      "p/f1d6506e4b8681d5.json",
@@ -18304,7 +18304,7 @@
    "s": "2026-09-22T14:38:37.960Z",
    "rebased": "2026-09-22T14:40:37.960Z",
    "d": "d/79.6c1df57de2d77db9.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "yea": [
      "p/c755ab43e50f5a5e.json",
@@ -24474,7 +24474,7 @@
    "s": "2026-09-23T10:18:32.001Z",
    "rebased": "2026-09-23T10:20:32.001Z",
    "d": "d/438.a077f0691a73b6f1.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "ист": [
      "p/a45edbc49abe1279.json",
@@ -33407,7 +33407,7 @@
    "s": "2026-09-24T02:25:02.079Z",
    "rebased": "2026-09-24T02:27:02.079Z",
    "d": "d/6a.9a6c4735a1a297a2.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "jeo": [
      "p/69a8168a9f97ded3.json",
@@ -35061,7 +35061,7 @@
    "s": "2026-09-24T00:36:50.368Z",
    "rebased": "2026-09-24T00:38:50.368Z",
    "d": "d/6b.71ce2560f0fc9658.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "kur": [
      "p/666ea2a093469949.json",
@@ -36303,7 +36303,7 @@
    "s": "2026-09-23T18:29:20.691Z",
    "rebased": "2026-09-23T18:31:20.691Z",
    "d": "d/6d.6007c526c43403b0.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "mys": [
      "p/a3fc54b758547c36.json",
@@ -38668,7 +38668,7 @@
    "s": "2026-09-24T12:30:49.732Z",
    "rebased": "2026-09-24T12:32:49.732Z",
    "d": "d/6e.4363acbaabfe4227.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "nig": [
      "p/d6a18eadb0510a58.json",
@@ -41374,7 +41374,7 @@
    "s": "2026-09-23T20:28:34.821Z",
    "rebased": "2026-09-23T20:30:34.821Z",
    "d": "d/43c.df7d123dabcbb424.json",
-   "dc": "pending",
+   "dc": "a87df2a8254e51f562e348173a01f55ede0a6d07",
    "parts": {
     "мил": [
      "p/3645738f1f040f59.json",
@@ -44044,15 +44044,15 @@
   "after_at": "2026-09-26T14:25:03.664Z",
   "after_id": 124642
  },
- "index": "i/e0e1e1c2084e7402.json",
+ "index": "i/ef78a9bb8bac9eb8.json",
  "indexes": [
-  "i/a41a19afe032e206.json",
   "i/91520e39e6ee782d.json",
   "i/29175d2482d78ea0.json",
-  "i/e0e1e1c2084e7402.json"
+  "i/e0e1e1c2084e7402.json",
+  "i/ef78a9bb8bac9eb8.json"
  ],
  "updated": "2026-09-26T14:25:21.592Z",
- "dataCommit": "44fa9d22e529b7b0d3fba5fc911c864cf09efaaf",
+ "dataCommit": "a87df2a8254e51f562e348173a01f55ede0a6d07",
  "layout": 2,
  "partsCommit": null
 }
