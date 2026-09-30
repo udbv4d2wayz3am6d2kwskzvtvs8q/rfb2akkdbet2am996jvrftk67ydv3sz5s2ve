@@ -400,7 +400,7 @@
    "s": "2026-09-23T05:44:32.103Z",
    "rebased": "2026-09-23T05:46:32.103Z",
    "d": "d/61.3becf0ac2e8ca621.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "and": [
      "p/7930faab2f7a4b36.json",
@@ -2272,7 +2272,7 @@
    "s": "2026-09-23T20:28:22.379Z",
    "rebased": "2026-09-23T20:30:22.379Z",
    "d": "d/62.5b4f2a72038dab5f.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "bon": [
      "p/fedd814d88f51066.json",
@@ -3404,7 +3404,7 @@
    "s": "2026-09-23T05:44:26.743Z",
    "rebased": "2026-09-23T05:46:26.743Z",
    "d": "d/63.3b6bb3f9f03c6a8d.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "cha": [
      "p/be58cf550a306136.json",
@@ -4556,7 +4556,7 @@
   "64": {
    "letter": "d",
    "b": "b/64.56429c1a67a05071.json",
-   "bc": "pending",
+   "bc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "n": 11612,
    "s": "2026-09-30T00:49:39.164Z",
    "rebased": "2026-09-30T00:51:39.164Z",
@@ -4565,12 +4565,12 @@
    "parts": {
     "dél": [
      "p/8b189423a5e6eed2.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      9
     ],
     "day": [
      "p/ab5562c8eab5a42f.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      479
     ],
     "día": [
@@ -4580,7 +4580,7 @@
     ],
     "dat": [
      "p/05ccc62b1a134bd8.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      126
     ],
     "din": [
@@ -4600,37 +4600,37 @@
     ],
     "del": [
      "p/f7c61993b6e4e961.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      355
     ],
     "dai": [
      "p/9c86dfc41c212979.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      104
     ],
     "deu": [
      "p/64e5862752bf0582.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      70
     ],
     "des": [
      "p/c8d47310527ce01b.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      517
     ],
     "dan": [
      "p/91c63d8cdff73c71.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      390
     ],
     "dea": [
      "p/1c65a63f4b90c66a.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      992
     ],
     "die": [
      "p/cb8a2858fbd3aa38.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      363
     ],
     "dra": [
@@ -4680,7 +4680,7 @@
     ],
     "dau": [
      "p/45a5fd5e775e4bb8.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      85
     ],
     "dol": [
@@ -4690,12 +4690,12 @@
     ],
     "don": [
      "p/9ec372a201960bdf.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      319
     ],
     "dri": [
      "p/e1c20387698698dd.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      126
     ],
     "doe": [
@@ -4705,12 +4705,12 @@
     ],
     "deo": [
      "p/84d93b9763540315.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      42
     ],
     "dre": [
      "p/2798d897a4a3afd1.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      262
     ],
     "dos": [
@@ -4720,17 +4720,17 @@
     ],
     "dir": [
      "p/961d3be312507da2.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      106
     ],
     "dao": [
      "p/24cbb596464572c6.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      59
     ],
     "dar": [
      "p/f5a1f36e52095b45.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      507
     ],
     "dou": [
@@ -4755,12 +4755,12 @@
     ],
     "dep": [
      "p/a13d49635f203b7b.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      44
     ],
     "det": [
      "p/94438c78bbb2cf95.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      128
     ],
     "dzi": [
@@ -4775,7 +4775,7 @@
     ],
     "doc": [
      "p/e082421292c1953d.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      101
     ],
     "deb": [
@@ -4830,7 +4830,7 @@
     ],
     "dal": [
      "p/9d69e9a02bb1951c.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      83
     ],
     "dru": [
@@ -4845,12 +4845,12 @@
     ],
     "due": [
      "p/91ce9880559f62cc.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      36
     ],
     "dor": [
      "p/4efa9b61aa828483.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      72
     ],
     "dui": [
@@ -4930,7 +4930,7 @@
     ],
     "dif": [
      "p/1d5e6be22d81a9a6.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      20
     ],
     "doi": [
@@ -4975,7 +4975,7 @@
     ],
     "dad": [
      "p/2c7ac34436515c49.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      78
     ],
     "dni": [
@@ -4995,7 +4995,7 @@
     ],
     "dic": [
      "p/4f8b9f251bac68a9.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      46
     ],
     "daw": [
@@ -7025,7 +7025,7 @@
    "s": "2026-09-23T06:49:06.851Z",
    "rebased": "2026-09-23T06:51:06.851Z",
    "d": "d/66.6076d9d2954bca79.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "fra": [
      "p/d8a487e40d629bbc.json",
@@ -8954,7 +8954,7 @@
    "s": "2026-09-24T00:36:45.934Z",
    "rebased": "2026-09-24T00:38:45.934Z",
    "d": "d/68.c8bcda20ef599a29.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "hun": [
      "p/8e44e72b36808495.json",
@@ -10001,7 +10001,7 @@
    "s": "2026-09-23T05:44:47.438Z",
    "rebased": "2026-09-23T05:46:47.438Z",
    "d": "d/69.e55b67283297ce46.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "ita": [
      "p/5d2e098ae13959f3.json",
@@ -12136,7 +12136,7 @@
    "s": "2026-09-23T20:28:29.766Z",
    "rebased": "2026-09-23T20:30:29.766Z",
    "d": "d/72.b6db848bbafb3853.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "reu": [
      "p/034619885b48ce00.json",
@@ -13093,7 +13093,7 @@
    "s": "2026-09-24T00:36:53.461Z",
    "rebased": "2026-09-24T00:38:53.461Z",
    "d": "d/73.7c1bafbafc99cd06.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "sou": [
      "p/ebe7c943e9866d8e.json",
@@ -14845,7 +14845,7 @@
    "s": "2026-09-23T20:28:50.772Z",
    "rebased": "2026-09-23T20:30:50.772Z",
    "d": "d/74.7024c03f8e79f961.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "the": [
      "p/f1d6506e4b8681d5.json",
@@ -16032,7 +16032,7 @@
    "s": "2026-09-29T20:27:35.818Z",
    "rebased": "2026-09-29T20:29:35.818Z",
    "d": "d/75.ae1761bf8f4be0a3.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "uni": [
      "p/e85418b391280142.json",
@@ -17606,7 +17606,7 @@
    "s": "2026-09-23T22:23:50.365Z",
    "rebased": "2026-09-23T22:25:50.365Z",
    "d": "d/77.504a6d35ae625185.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "wil": [
      "p/d0dcae11451b062a.json",
@@ -18304,7 +18304,7 @@
    "s": "2026-09-29T16:29:51.566Z",
    "rebased": "2026-09-29T16:31:51.566Z",
    "d": "d/79.a93e9c9a9741c3f8.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "yea": [
      "p/c755ab43e50f5a5e.json",
@@ -20221,7 +20221,7 @@
    "s": "2026-09-23T16:28:56.767Z",
    "rebased": "2026-09-23T16:30:56.767Z",
    "d": "d/431.ad0c8ecf43604785.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "быт": [
      "p/cd7d334e29a71bc7.json",
@@ -21038,7 +21038,7 @@
    "s": "2026-09-23T20:27:46.666Z",
    "rebased": "2026-09-23T20:29:46.666Z",
    "d": "d/432.bccc87b7d40f89e8.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "вос": [
      "p/c5ed06ce7044aaa3.json",
@@ -21970,7 +21970,7 @@
    "s": "2026-09-23T05:44:37.972Z",
    "rebased": "2026-09-23T05:46:37.972Z",
    "d": "d/433.defb8061b8475cc3.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "гра": [
      "p/26568ce0ada29150.json",
@@ -22697,7 +22697,7 @@
    "s": "2026-09-23T16:29:04.107Z",
    "rebased": "2026-09-23T16:31:04.107Z",
    "d": "d/434.29972a323d381151.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "душ": [
      "p/8b99b4e35783ddb2.json",
@@ -23634,7 +23634,7 @@
    "s": "2026-09-25T02:28:13.853Z",
    "rebased": "2026-09-25T02:30:13.853Z",
    "d": "d/435.ac889a4b285be1c9.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": null
   },
   "436": {
@@ -23997,7 +23997,7 @@
    "s": "2026-09-23T20:28:16.361Z",
    "rebased": "2026-09-23T20:30:16.361Z",
    "d": "d/437.bf31d3409e9f90f8.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "зал": [
      "p/5cfcc78418017f1b.json",
@@ -24474,7 +24474,7 @@
    "s": "2026-09-23T10:18:32.001Z",
    "rebased": "2026-09-23T10:20:32.001Z",
    "d": "d/438.a1f096600c692ca8.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "ист": [
      "p/a45edbc49abe1279.json",
@@ -25252,7 +25252,7 @@
    "s": "2026-09-24T08:27:09.275Z",
    "rebased": "2026-09-24T08:29:09.275Z",
    "d": "d/440.bbbf9e43ec0eda47.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "ран": [
      "p/735c8639224ac439.json",
@@ -26014,7 +26014,7 @@
    "s": "2026-09-23T22:23:56.190Z",
    "rebased": "2026-09-23T22:25:56.190Z",
    "d": "d/441.6834951cbf18db56.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "сме": [
      "p/f79b8ca90278255f.json",
@@ -27331,7 +27331,7 @@
    "s": "2026-09-23T22:23:43.029Z",
    "rebased": "2026-09-23T22:25:43.029Z",
    "d": "d/442.7ad926305ea70a6f.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "тай": [
      "p/c188ac2d9a026cec.json",
@@ -28118,7 +28118,7 @@
    "s": "2026-09-24T02:25:04.011Z",
    "rebased": "2026-09-24T02:27:04.011Z",
    "d": "d/443.6b2cb4ee28d94b8a.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "уби": [
      "p/15bd063fa4700397.json",
@@ -28965,7 +28965,7 @@
    "s": "2026-09-23T20:28:43.159Z",
    "rebased": "2026-09-23T20:30:43.159Z",
    "d": "d/444.65a7b146bb0119b7.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "фра": [
      "p/e67c86937419aa44.json",
@@ -30582,7 +30582,7 @@
    "s": "2026-09-23T18:29:18.901Z",
    "rebased": "2026-09-23T18:31:18.901Z",
    "d": "d/448.7dfbacb7896837c1.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "шко": [
      "p/5732795af458ec59.json",
@@ -31397,7 +31397,7 @@
    "s": "2026-09-24T02:24:56.265Z",
    "rebased": "2026-09-24T02:26:56.265Z",
    "d": "d/43d.1f27436b437eefaa.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "ноч": [
      "p/5cb616c912df6715.json",
@@ -32080,7 +32080,7 @@
   "6f": {
    "letter": "o",
    "b": "b/6f.8506f681bc721830.json",
-   "bc": "pending",
+   "bc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "n": 8049,
    "s": "2026-09-30T00:49:45.843Z",
    "rebased": "2026-09-30T00:51:45.843Z",
@@ -32089,7 +32089,7 @@
    "parts": {
     "obj": [
      "p/8aefe2b4837b170b.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      13
     ],
     "one": [
@@ -32124,7 +32124,7 @@
     ],
     "off": [
      "p/c444569f27547ab5.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      125
     ],
     "oki": [
@@ -32134,7 +32134,7 @@
     ],
     "our": [
      "p/51ff3bde84ba851f.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      123
     ],
     "onl": [
@@ -32144,7 +32144,7 @@
     ],
     "ota": [
      "p/ff1bc944753b8d84.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      9
     ],
     "ove": [
@@ -32179,7 +32179,7 @@
     ],
     "onc": [
      "p/2720860d3c437fec.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      75
     ],
     "ohl": [
@@ -32244,7 +32244,7 @@
     ],
     "own": [
      "p/a8b5b896418a14a4.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      32
     ],
     "oni": [
@@ -32254,7 +32254,7 @@
     ],
     "ord": [
      "p/952a77b4a0b30a15.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      64
     ],
     "oas": [
@@ -32274,7 +32274,7 @@
     ],
     "oli": [
      "p/d8a30e4ad3807cff.json",
-     "pending",
+     "26f1ba381b289641b48d3fe134829c8596c54320",
      29
     ],
     "oub": [
@@ -33407,7 +33407,7 @@
    "s": "2026-09-24T02:25:02.079Z",
    "rebased": "2026-09-24T02:27:02.079Z",
    "d": "d/6a.9dce072563456cd5.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "jeo": [
      "p/69a8168a9f97ded3.json",
@@ -34189,7 +34189,7 @@
    "s": "2026-09-23T20:28:02.362Z",
    "rebased": "2026-09-23T20:30:02.362Z",
    "d": "d/43f.5279f942adefad67.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "при": [
      "p/fb82944f8d01100d.json",
@@ -35061,7 +35061,7 @@
    "s": "2026-09-24T00:36:50.368Z",
    "rebased": "2026-09-24T00:38:50.368Z",
    "d": "d/6b.99bcfb72b487842d.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "kur": [
      "p/666ea2a093469949.json",
@@ -36303,7 +36303,7 @@
    "s": "2026-09-23T18:29:20.691Z",
    "rebased": "2026-09-23T18:31:20.691Z",
    "d": "d/6d.50af2678f8225c44.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "mys": [
      "p/a3fc54b758547c36.json",
@@ -37671,7 +37671,7 @@
    "s": "2026-09-23T05:44:41.077Z",
    "rebased": "2026-09-23T05:46:41.077Z",
    "d": "d/6c.d97e63db360e7484.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "leb": [
      "p/5b9776cb1513d26f.json",
@@ -38668,7 +38668,7 @@
    "s": "2026-09-24T12:30:49.732Z",
    "rebased": "2026-09-24T12:32:49.732Z",
    "d": "d/6e.c1d33338a7433474.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "nig": [
      "p/d6a18eadb0510a58.json",
@@ -40618,7 +40618,7 @@
    "s": "2026-09-23T22:24:15.558Z",
    "rebased": "2026-09-23T22:26:15.558Z",
    "d": "d/43b.6997cf2f850c7f04.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "люб": [
      "p/87aea901626f88f7.json",
@@ -41374,7 +41374,7 @@
    "s": "2026-09-23T20:28:34.821Z",
    "rebased": "2026-09-23T20:30:34.821Z",
    "d": "d/43c.017cb3c68a6f84d6.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "мил": [
      "p/3645738f1f040f59.json",
@@ -42241,7 +42241,7 @@
    "s": "2026-09-23T05:44:50.568Z",
    "rebased": "2026-09-23T05:46:50.568Z",
    "d": "d/44d.9660ad07156fde45.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "эфи": [
      "p/99ce9be100d9a12c.json",
@@ -43020,7 +43020,7 @@
    "s": "2026-09-23T20:28:44.939Z",
    "rebased": "2026-09-23T20:30:44.939Z",
    "d": "d/43e.8dc91dcd7c459c92.json",
-   "dc": "pending",
+   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
    "parts": {
     "оск": [
      "p/986a3d2ddb6c694a.json",
@@ -44044,15 +44044,15 @@
   "after_at": "2026-09-30T00:38:07.442Z",
   "after_id": 124786
  },
- "index": "i/160517575afcbff4.json",
+ "index": "i/4b9fa31e81fc0a28.json",
  "indexes": [
-  "i/0e850a5341eaf442.json",
   "i/4ab75762c80c02f2.json",
   "i/cd7a60969aee50e7.json",
-  "i/160517575afcbff4.json"
+  "i/160517575afcbff4.json",
+  "i/4b9fa31e81fc0a28.json"
  ],
  "updated": "2026-09-30T00:51:34.720Z",
- "dataCommit": "0a20e49488e0fa889ae562d6250d7231dc25e813",
+ "dataCommit": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
  "layout": 2,
- "partsCommit": "2b0752fb03c2b7561ba05e10c980f22801e301fb"
+ "partsCommit": "26f1ba381b289641b48d3fe134829c8596c54320"
 }
