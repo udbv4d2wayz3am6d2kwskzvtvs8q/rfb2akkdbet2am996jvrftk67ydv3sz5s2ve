@@ -23638,13 +23638,13 @@
   },
   "435": {
    "letter": "е",
-   "b": "b/435.38fabb6650ab1158.json",
-   "bc": "ab3d9d505477d5a4eee178ce298732cc8e42fc7f",
-   "n": 1128,
-   "s": "2026-09-25T02:28:13.853Z",
-   "rebased": "2026-09-25T02:30:13.853Z",
-   "d": "d/435.ac889a4b285be1c9.json",
-   "dc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
+   "b": "b/435.27adc33e02ec9f2f.json",
+   "bc": "pending",
+   "n": 1132,
+   "s": "2026-10-02T04:21:14.198Z",
+   "rebased": "2026-10-02T04:23:14.198Z",
+   "d": null,
+   "dc": null,
    "parts": null
   },
   "436": {
@@ -44066,7 +44066,7 @@
   "i/6791cb3f997efd1c.json",
   "i/834b00c3ccb608d8.json"
  ],
- "updated": "2026-10-02T02:21:15.740Z",
+ "updated": "2026-10-02T04:23:10.339Z",
  "dataCommit": "7d492aec83c5593535e2cc71428693375fac1b7d",
  "layout": 2,
  "partsCommit": null
