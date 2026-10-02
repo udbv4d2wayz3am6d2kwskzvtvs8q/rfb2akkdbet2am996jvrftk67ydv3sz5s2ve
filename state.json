@@ -39624,13 +39624,13 @@
   },
   "44f": {
    "letter": "я",
-   "b": "b/44f.75bf206e2a5dbbab.json",
-   "bc": "a6cb9ceee31fa6884ba746a66fd15314a9499d13",
-   "n": 1715,
-   "s": "2026-09-24T22:27:32.281Z",
-   "rebased": "2026-09-24T22:29:32.281Z",
-   "d": "d/44f.7667c45524836f69.json",
-   "dc": "953d93fb12657af0ee395e0107e76c3d43c8373b",
+   "b": "b/44f.50a5d3140c1acc49.json",
+   "bc": "pending",
+   "n": 1718,
+   "s": "2026-10-02T00:28:19.188Z",
+   "rebased": "2026-10-02T00:30:19.188Z",
+   "d": null,
+   "dc": null,
    "parts": null
   },
   "fc": {
@@ -44066,7 +44066,7 @@
   "i/824b8937a32c8f8e.json",
   "i/392cea56101c28e6.json"
  ],
- "updated": "2026-10-01T22:20:33.566Z",
+ "updated": "2026-10-02T00:30:15.516Z",
  "dataCommit": "5cc37530e6f98c40e4dc5f65a82fe8a59fb251c8",
  "layout": 2,
  "partsCommit": null
