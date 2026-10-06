@@ -19,8 +19,8 @@
    "n": 1117,
    "s": "2026-10-01T02:20:24.240Z",
    "rebased": "2026-10-01T02:22:24.240Z",
-   "d": "d/31.a99b010ed7e798b5.json",
-   "dc": "c9c189fcaa1938440434add70c1bdb36d6ccecb5",
+   "d": "d/31.7409f461a51a1d61.json",
+   "dc": "pending",
    "parts": null
   },
   "32": {
@@ -388,8 +388,8 @@
    "n": 168,
    "s": "2026-10-03T13:04:29.412Z",
    "rebased": "2026-10-03T13:06:29.412Z",
-   "d": null,
-   "dc": null,
+   "d": "d/39.1add0773bb4697ce.json",
+   "dc": "pending",
    "parts": null
   },
   "61": {
@@ -4560,8 +4560,8 @@
    "n": 11612,
    "s": "2026-09-30T00:49:39.164Z",
    "rebased": "2026-09-30T00:51:39.164Z",
-   "d": "d/64.cb3ffb47b0bf28f2.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "d": "d/64.735fe9b2dba7253c.json",
+   "dc": "pending",
    "parts": {
     "dél": [
      "p/8b189423a5e6eed2.json",
@@ -5757,8 +5757,8 @@
    "n": 4856,
    "s": "2026-09-29T22:23:29.286Z",
    "rebased": "2026-09-29T22:25:29.286Z",
-   "d": "d/65.0b552d66be2ebd89.json",
-   "dc": "a038dfecdbb207f04b0df8df1451bdf3046b8301",
+   "d": "d/65.83e602b735f09fee.json",
+   "dc": "pending",
    "parts": {
     "eig": [
      "p/a58a52254daebb0d.json",
@@ -7886,8 +7886,8 @@
    "n": 6443,
    "s": "2026-10-01T02:20:03.348Z",
    "rebased": "2026-10-01T02:22:03.348Z",
-   "d": "d/67.3f0c32580395ce45.json",
-   "dc": "382581725d9ecb50308ed28673a05e0fd7d0f32b",
+   "d": "d/67.022cdfcfea874988.json",
+   "dc": "pending",
    "parts": {
     "gho": [
      "p/2d44824ad90fb03a.json",
@@ -10010,8 +10010,8 @@
    "n": 6380,
    "s": "2026-09-30T06:33:54.757Z",
    "rebased": "2026-09-30T06:35:54.757Z",
-   "d": "d/69.8ccb76908d18e0c8.json",
-   "dc": "382581725d9ecb50308ed28673a05e0fd7d0f32b",
+   "d": "d/69.3e079ef84485b42b.json",
+   "dc": "pending",
    "parts": {
     "ita": [
      "p/5d2e098ae13959f3.json",
@@ -10997,8 +10997,8 @@
    "n": 7414,
    "s": "2026-09-30T14:24:15.708Z",
    "rebased": "2026-09-30T14:26:15.708Z",
-   "d": "d/70.703f47d39516f8aa.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "d": "d/70.f8d8ef68bddc169e.json",
+   "dc": "pending",
    "parts": {
     "pil": [
      "p/704ae43b6635e208.json",
@@ -13102,8 +13102,8 @@
    "n": 16465,
    "s": "2026-10-01T02:20:15.009Z",
    "rebased": "2026-10-01T02:22:15.009Z",
-   "d": "d/73.6e63f6facff45883.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "d": "d/73.78cf4ea9665fc48f.json",
+   "dc": "pending",
    "parts": {
     "sou": [
      "p/ebe7c943e9866d8e.json",
@@ -14854,8 +14854,8 @@
    "n": 20448,
    "s": "2026-09-30T22:21:16.384Z",
    "rebased": "2026-09-30T22:23:16.384Z",
-   "d": "d/74.5b190d5e3a2032b0.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "d": "d/74.30aee17fa822cb2e.json",
+   "dc": "pending",
    "parts": {
     "the": [
      "p/7fada4a8d798230b.json",
@@ -24483,8 +24483,8 @@
    "n": 8918,
    "s": "2026-09-30T10:30:01.294Z",
    "rebased": "2026-09-30T10:32:01.294Z",
-   "d": "d/438.75dbc7a9dc62809a.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "d": "d/438.146a26f961867e81.json",
+   "dc": "pending",
    "parts": {
     "ист": [
      "p/0695677738d70237.json",
@@ -25261,8 +25261,8 @@
    "n": 6984,
    "s": "2026-10-01T10:22:28.223Z",
    "rebased": "2026-10-01T10:24:28.223Z",
-   "d": "d/440.90b5f1ddc83eced7.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "d": "d/440.69611819af196c36.json",
+   "dc": "pending",
    "parts": {
     "ран": [
      "p/fcf3a675143f40d3.json",
@@ -30068,13 +30068,13 @@
   },
   "446": {
    "letter": "ц",
-   "b": "b/446.cfc0f3d0a5ab8412.json",
-   "bc": "d93b6b2d579cde927d00d5651fdbe87b36ebbd69",
-   "n": 863,
-   "s": "2026-09-29T00:30:46.796Z",
-   "rebased": "2026-09-29T00:32:46.796Z",
-   "d": "d/446.e564e3ac2c1d65f4.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "b": "b/446.b7a980ebdae95f11.json",
+   "bc": "pending",
+   "n": 872,
+   "s": "2026-10-06T01:08:16.914Z",
+   "rebased": "2026-10-06T01:10:16.914Z",
+   "d": null,
+   "dc": null,
    "parts": null
   },
   "447": {
@@ -30591,8 +30591,8 @@
    "n": 2014,
    "s": "2026-09-30T20:20:48.540Z",
    "rebased": "2026-09-30T20:22:48.540Z",
-   "d": "d/448.6c412e73d1626859.json",
-   "dc": "a038dfecdbb207f04b0df8df1451bdf3046b8301",
+   "d": "d/448.6c28ba5e2f8ebfdb.json",
+   "dc": "pending",
    "parts": {
     "шам": [
      "p/3de728998c563072.json",
@@ -37680,8 +37680,8 @@
    "n": 9625,
    "s": "2026-09-30T06:33:45.366Z",
    "rebased": "2026-09-30T06:35:45.366Z",
-   "d": "d/6c.9f3e3601a121001c.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "d": "d/6c.347efd2eb2dadd1d.json",
+   "dc": "pending",
    "parts": {
     "leb": [
      "p/5b9776cb1513d26f.json",
@@ -40627,8 +40627,8 @@
    "n": 7360,
    "s": "2026-10-01T00:30:09.909Z",
    "rebased": "2026-10-01T00:32:09.909Z",
-   "d": "d/43b.8950b524d89a3b88.json",
-   "dc": "7a76ea7b0e0bbdd1c772052b27b94c7f9ebcf0f1",
+   "d": "d/43b.cc124ded01decccc.json",
+   "dc": "pending",
    "parts": {
     "люб": [
      "p/a5efd61b8560cd52.json",
@@ -44056,8 +44056,8 @@
   }
  },
  "cursor": {
-  "after_at": "2026-10-05T16:51:57.925Z",
-  "after_id": 900093592
+  "after_at": "2026-10-06T01:09:54.893Z",
+  "after_id": 900093593
  },
  "index": "i/353e451c40b0c278.json",
  "indexes": [
@@ -44066,7 +44066,7 @@
   "i/2ac0ff25db4d614a.json",
   "i/353e451c40b0c278.json"
  ],
- "updated": "2026-10-05T16:52:23.478Z",
+ "updated": "2026-10-06T01:10:13.431Z",
  "dataCommit": "63ca9d1c553ace84ace0feeb8845b0d429c0c166",
  "layout": 2,
  "partsCommit": "6d7dfc130e648473363373b88ac7cd53dc42f4fc",
@@ -44088,8 +44088,8 @@
    "2a4e1d5d9f56bc41a571e8f06d815d6158e059be"
   ],
   [
-   "k/e1491fb77ddf5fa7.json",
-   "a66ea381126c5a858ef9869e8ae62c044e0be16f"
+   "k/3aed28fedc16b318.json",
+   "pending"
   ],
   [
    "k/472c014634fc4f88.json",
@@ -44156,8 +44156,8 @@
    "f6ebca9724f42f3a044d6a162bb8fe16d8f2c604"
   ],
   [
-   "k/67f89af9bc39ff14.json",
-   "e950a3a53390114adbb0c507e635190ebdb36a3e"
+   "k/422018337c56d2d1.json",
+   "pending"
   ],
   [
    "k/cee452985d9878fc.json",
