@@ -4555,13 +4555,13 @@
   },
   "64": {
    "letter": "d",
-   "b": "b/64.56429c1a67a05071.json",
-   "bc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
-   "n": 11612,
-   "s": "2026-09-30T00:49:39.164Z",
-   "rebased": "2026-09-30T00:51:39.164Z",
-   "d": "d/64.d8da084c9f9fec6d.json",
-   "dc": "7ab67a03f8e142584a6beb8a150edc622ea56237",
+   "b": "b/64.57d5fc4f4662b029.json",
+   "bc": "pending",
+   "n": 11669,
+   "s": "2026-10-07T04:39:09.039Z",
+   "rebased": "2026-10-07T04:41:09.039Z",
+   "d": null,
+   "dc": null,
    "parts": {
     "dél": [
      "p/8b189423a5e6eed2.json",
@@ -4569,9 +4569,9 @@
      9
     ],
     "day": [
-     "p/ab5562c8eab5a42f.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     479
+     "p/f3b1364e82829778.json",
+     "pending",
+     483
     ],
     "día": [
      "p/30e6247d74094f7c.json",
@@ -4579,14 +4579,14 @@
      18
     ],
     "dat": [
-     "p/05ccc62b1a134bd8.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     126
+     "p/d3c76c3b6f5c9f32.json",
+     "pending",
+     128
     ],
     "din": [
-     "p/8977121813ada4e8.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     144
+     "p/0e40b19f1ba7e0ba.json",
+     "pending",
+     146
     ],
     "dom": [
      "p/b0ca3ff04834642d.json",
@@ -4594,9 +4594,9 @@
      75
     ],
     "dak": [
-     "p/b2cb816bfb5fcc58.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     52
+     "p/4062210ede21a564.json",
+     "pending",
+     54
     ],
     "del": [
      "p/f7c61993b6e4e961.json",
@@ -4604,39 +4604,39 @@
      355
     ],
     "dai": [
-     "p/9c86dfc41c212979.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     104
+     "p/a7f9194937fa0ec9.json",
+     "pending",
+     105
     ],
     "deu": [
-     "p/64e5862752bf0582.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     70
+     "p/45e7a21d32664cd7.json",
+     "pending",
+     71
     ],
     "des": [
-     "p/c8d47310527ce01b.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     517
+     "p/7eb0af134fbd3a48.json",
+     "pending",
+     518
     ],
     "dan": [
-     "p/91c63d8cdff73c71.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     390
+     "p/007c6ed8fe35a398.json",
+     "pending",
+     391
     ],
     "dea": [
-     "p/1c65a63f4b90c66a.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     992
+     "p/ff0ce3318a9289dc.json",
+     "pending",
+     996
     ],
     "die": [
-     "p/cb8a2858fbd3aa38.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     363
+     "p/5b25a6903e0ae2a5.json",
+     "pending",
+     368
     ],
     "dra": [
-     "p/ea06c0567f8e75b5.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     254
+     "p/82e638dc7fba81e5.json",
+     "pending",
+     256
     ],
     "dam": [
      "p/0ace6179d8051664.json",
@@ -4654,9 +4654,9 @@
      130
     ],
     "dev": [
-     "p/5ec81838b909809e.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     213
+     "p/13d693582089efd7.json",
+     "pending",
+     214
     ],
     "dil": [
      "p/7d2c19f6c0cef642.json",
@@ -4667,6 +4667,11 @@
      "p/aa0d5010b55b8482.json",
      "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
      20
+    ],
+    "dem": [
+     "p/abeb635dab6392de.json",
+     "pending",
+     157
     ],
     "dok": [
      "p/31d3e05ec60c2a34.json",
@@ -4689,19 +4694,19 @@
      133
     ],
     "don": [
-     "p/9ec372a201960bdf.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     319
+     "p/c39c4a0fbb3129e6.json",
+     "pending",
+     320
     ],
     "dri": [
-     "p/e1c20387698698dd.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     126
+     "p/ff474052f06a02da.json",
+     "pending",
+     127
     ],
     "doe": [
-     "p/00cf51416c0bf994.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     26
+     "p/1670d06d6f88b683.json",
+     "pending",
+     27
     ],
     "deo": [
      "p/84d93b9763540315.json",
@@ -4709,9 +4714,9 @@
      42
     ],
     "dre": [
-     "p/2798d897a4a3afd1.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     262
+     "p/1e82c0e3a4760f39.json",
+     "pending",
+     263
     ],
     "dos": [
      "p/5a6badcac6690e2a.json",
@@ -4719,9 +4724,9 @@
      63
     ],
     "dir": [
-     "p/961d3be312507da2.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     106
+     "p/1b43ab2f6f6faca1.json",
+     "pending",
+     107
     ],
     "dao": [
      "p/24cbb596464572c6.json",
@@ -4729,29 +4734,24 @@
      59
     ],
     "dar": [
-     "p/f5a1f36e52095b45.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     507
+     "p/9329c87333f77892.json",
+     "pending",
+     510
     ],
     "dou": [
-     "p/12a615c5ba2b0265.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     148
+     "p/bb8b146208bdc8a3.json",
+     "pending",
+     149
     ],
     "doo": [
      "p/6f35d52d5a2761bf.json",
      "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
      208
     ],
-    "dem": [
-     "p/b472e5352fc28cbe.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     156
-    ],
     "dis": [
-     "p/dab6181cb706d5b4.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     252
+     "p/1c998eec6e80f54f.json",
+     "pending",
+     254
     ],
     "dep": [
      "p/a13d49635f203b7b.json",
@@ -4759,9 +4759,14 @@
      44
     ],
     "det": [
-     "p/94438c78bbb2cf95.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     128
+     "p/d13c5ac8b785986f.json",
+     "pending",
+     129
+    ],
+    "dig": [
+     "p/acc5538a4b2ec105.json",
+     "pending",
+     41
     ],
     "dzi": [
      "p/f7146302e28f78a8.json",
@@ -4769,14 +4774,19 @@
      20
     ],
     "dia": [
-     "p/80c137357f5a47fa.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     234
+     "p/7d3df0e95ffc6eb3.json",
+     "pending",
+     235
     ],
     "doc": [
      "p/e082421292c1953d.json",
      "26f1ba381b289641b48d3fe134829c8596c54320",
      101
+    ],
+    "dro": [
+     "p/e2be6442d070255e.json",
+     "pending",
+     66
     ],
     "deb": [
      "p/d4356e416ce04a4b.json",
@@ -4794,9 +4804,14 @@
      13
     ],
     "dae": [
-     "p/6975ee5fab71b1df.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     37
+     "p/736d4abfccedacae.json",
+     "pending",
+     38
+    ],
+    "doi": [
+     "p/b1f98ce6d4f58c4f.json",
+     "pending",
+     18
     ],
     "dey": [
      "p/7ef9d22a4c6d6c20.json",
@@ -4829,9 +4844,9 @@
      44
     ],
     "dal": [
-     "p/9d69e9a02bb1951c.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     83
+     "p/405a903120cfa9fd.json",
+     "pending",
+     84
     ],
     "dru": [
      "p/3f11c57c7ea5337d.json",
@@ -4864,9 +4879,14 @@
      14
     ],
     "dog": [
-     "p/03005df917db72a0.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     202
+     "p/9c5bc36a4b486211.json",
+     "pending",
+     203
+    ],
+    "düs": [
+     "p/639d42fed53060c7.json",
+     "pending",
+     6
     ],
     "daz": [
      "p/fdff69f9d0e45f2c.json",
@@ -4879,9 +4899,9 @@
      2
     ],
     "deg": [
-     "p/bea4fe017e0658cf.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     33
+     "p/77d228e936899333.json",
+     "pending",
+     34
     ],
     "dix": [
      "p/605a54ea1713a6a9.json",
@@ -4892,6 +4912,11 @@
      "p/9121d7b134be74e9.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
      2
+    ],
+    "död": [
+     "p/b8beb5ca32473b66.json",
+     "pending",
+     3
     ],
     "dek": [
      "p/48b01a7cf881c090.json",
@@ -4907,6 +4932,11 @@
      "p/ca1bf45309e5f786.json",
      "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
      48
+    ],
+    "dut": [
+     "p/826d59459166aa9a.json",
+     "pending",
+     21
     ],
     "div": [
      "p/621bc672864caec5.json",
@@ -4933,11 +4963,6 @@
      "26f1ba381b289641b48d3fe134829c8596c54320",
      20
     ],
-    "doi": [
-     "p/be92529f6402eeda.json",
-     "0df266a44930552a8287016efb0015cc3f08e4df",
-     17
-    ],
     "dhu": [
      "p/a613b162997fbbdb.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
@@ -4959,14 +4984,19 @@
      114
     ],
     "dun": [
-     "p/828dda6e1e7c2679.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     60
+     "p/b4a2d7cb660cabbf.json",
+     "pending",
+     61
     ],
     "dew": [
      "p/ff21e5206f104529.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
      7
+    ],
+    "dtf": [
+     "p/84369a1053bf2b05.json",
+     "pending",
+     1
     ],
     "dib": [
      "p/8f88a4e5d31f1a68.json",
@@ -5038,11 +5068,6 @@
      "0df266a44930552a8287016efb0015cc3f08e4df",
      1
     ],
-    "dut": [
-     "p/2284d8e91e2fa241.json",
-     "0df266a44930552a8287016efb0015cc3f08e4df",
-     20
-    ],
     "deh": [
      "p/3fa54432e369825b.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
@@ -5082,11 +5107,6 @@
      "p/bed7cdb057766d90.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
      1
-    ],
-    "dro": [
-     "p/6f7b973a43dd1f49.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     63
     ],
     "dot": [
      "p/6b22cd568a073f55.json",
@@ -5152,11 +5172,6 @@
      "p/81fcc0336ec04b11.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
      11
-    ],
-    "dig": [
-     "p/0ed20e51cf1a24f2.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     40
     ],
     "dya": [
      "p/e7fe5796c2da0739.json",
@@ -5238,11 +5253,6 @@
      "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
      7
     ],
-    "düs": [
-     "p/b7b85db4912999b4.json",
-     "0df266a44930552a8287016efb0015cc3f08e4df",
-     5
-    ],
     "dry": [
      "p/05cd8b7e9f43453b.json",
      "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
@@ -5262,11 +5272,6 @@
      "p/dee6f33cc28ce293.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
      10
-    ],
-    "död": [
-     "p/700e60f48d4b72ea.json",
-     "0df266a44930552a8287016efb0015cc3f08e4df",
-     2
     ],
     "diy": [
      "p/e02f35e006abf176.json",
@@ -32094,13 +32099,13 @@
   },
   "6f": {
    "letter": "o",
-   "b": "b/6f.8506f681bc721830.json",
-   "bc": "41debf22919d2d8cdaeb5cba74c20618fc342e1d",
-   "n": 8049,
-   "s": "2026-09-30T00:49:45.843Z",
-   "rebased": "2026-09-30T00:51:45.843Z",
-   "d": "d/6f.135ae4f6b6ce7705.json",
-   "dc": "7ab67a03f8e142584a6beb8a150edc622ea56237",
+   "b": "b/6f.75741e8453103e86.json",
+   "bc": "pending",
+   "n": 8095,
+   "s": "2026-10-07T04:39:14.454Z",
+   "rebased": "2026-10-07T04:41:14.454Z",
+   "d": null,
+   "dc": null,
    "parts": {
     "obj": [
      "p/8aefe2b4837b170b.json",
@@ -32108,9 +32113,9 @@
      13
     ],
     "one": [
-     "p/ce5278863bde6bb3.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     408
+     "p/c5259629fe8568bd.json",
+     "pending",
+     415
     ],
     "osi": [
      "p/fd1e28d97a21c5d8.json",
@@ -32128,19 +32133,19 @@
      10
     ],
     "osa": [
-     "p/172e4f0678f0a6b8.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     11
+     "p/21351bc11959ffeb.json",
+     "pending",
+     12
     ],
     "out": [
-     "p/e4ccaabac8c5f698.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     323
+     "p/3ee4d68495d9b0de.json",
+     "pending",
+     325
     ],
     "off": [
-     "p/c444569f27547ab5.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     125
+     "p/b493e0ebdeecca97.json",
+     "pending",
+     127
     ],
     "oki": [
      "p/df9595341960c389.json",
@@ -32188,9 +32193,9 @@
      34
     ],
     "oth": [
-     "p/0ccfbff340a9ba29.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     80
+     "p/f0947470089a3c22.json",
+     "pending",
+     81
     ],
     "onc": [
      "p/2720860d3c437fec.json",
@@ -32247,6 +32252,16 @@
      "0df266a44930552a8287016efb0015cc3f08e4df",
      8
     ],
+    "oji": [
+     "p/ea568b68aef73169.json",
+     "pending",
+     7
+    ],
+    "osu": [
+     "p/afd57207a5b2b463.json",
+     "pending",
+     2
+    ],
     "oak": [
      "p/61e3c73805cf25fa.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
@@ -32258,14 +32273,14 @@
      3
     ],
     "own": [
-     "p/a8b5b896418a14a4.json",
-     "26f1ba381b289641b48d3fe134829c8596c54320",
-     32
+     "p/8b666911d6472246.json",
+     "pending",
+     33
     ],
     "oni": [
-     "p/784e029ab7db1708.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     16
+     "p/46dd2dff908d5221.json",
+     "pending",
+     17
     ],
     "ord": [
      "p/952a77b4a0b30a15.json",
@@ -32317,6 +32332,11 @@
      "0df266a44930552a8287016efb0015cc3f08e4df",
      12
     ],
+    "oss": [
+     "p/b36bf6b2ed4fab93.json",
+     "pending",
+     20
+    ],
     "ope": [
      "p/7f90f89a6c9a4e41.json",
      "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
@@ -32352,10 +32372,10 @@
      "0df266a44930552a8287016efb0015cc3f08e4df",
      3
     ],
-    "oss": [
-     "p/de81d3591b87f55f.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     19
+    "och": [
+     "p/cdf967234ad42a74.json",
+     "pending",
+     20
     ],
     "ook": [
      "p/9768ee3925cf941d.json",
@@ -32370,6 +32390,11 @@
     "olo": [
      "p/3b9629ec8d42cb07.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
+     4
+    ],
+    "ouk": [
+     "p/a383b3471f3718cf.json",
+     "pending",
      4
     ],
     "oos": [
@@ -32442,11 +32467,6 @@
      "0df266a44930552a8287016efb0015cc3f08e4df",
      3
     ],
-    "oji": [
-     "p/9428115c7cbb59dd.json",
-     "0df266a44930552a8287016efb0015cc3f08e4df",
-     6
-    ],
     "odd": [
      "p/631b557607df1ef3.json",
      "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
@@ -32462,6 +32482,11 @@
      "0df266a44930552a8287016efb0015cc3f08e4df",
      1
     ],
+    "oul": [
+     "p/226b071d03cbd2f3.json",
+     "pending",
+     1
+    ],
     "oeu": [
      "p/f3f7d6dfffb2a715.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
@@ -32471,11 +32496,6 @@
      "p/d526c393ca2b11d4.json",
      "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
      5
-    ],
-    "och": [
-     "p/f048d27d0ff1123c.json",
-     "984c08d2d765e9888fd0a1199cd2791f159dbeb6",
-     19
     ],
     "oxi": [
      "p/960f68bc70fb7ba5.json",
@@ -32523,9 +32543,9 @@
      6
     ],
     "oly": [
-     "p/8d40620acc2928a7.json",
-     "0df266a44930552a8287016efb0015cc3f08e4df",
-     11
+     "p/a0d4781fb61ea940.json",
+     "pending",
+     12
     ],
     "oma": [
      "p/8e9ebe5c9c90f6f1.json",
@@ -32600,6 +32620,11 @@
     "otm": [
      "p/37231f71a314bfbc.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
+     1
+    ],
+    "ohr": [
+     "p/b6b0d422c4a8e5fb.json",
+     "pending",
      1
     ],
     "ole": [
@@ -32776,11 +32801,6 @@
      "p/bba39ba81a205988.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
      4
-    ],
-    "ouk": [
-     "p/7d44fb03a10aedf0.json",
-     "0df266a44930552a8287016efb0015cc3f08e4df",
-     3
     ],
     "obo": [
      "p/8dee5b6b1d39a6a0.json",
@@ -33014,11 +33034,6 @@
     ],
     "opo": [
      "p/f9c4532555b8da72.json",
-     "0df266a44930552a8287016efb0015cc3f08e4df",
-     1
-    ],
-    "osu": [
-     "p/c0ff55272c686dd0.json",
      "0df266a44930552a8287016efb0015cc3f08e4df",
      1
     ],
@@ -44071,7 +44086,7 @@
   "i/76522cecf7e338e7.json",
   "i/51fd8f7b86f8ba88.json"
  ],
- "updated": "2026-10-06T23:37:18.499Z",
+ "updated": "2026-10-07T04:41:04.981Z",
  "dataCommit": "348e5f28d06721ebd362b5a90e3e579e4572d609",
  "layout": 2,
  "partsCommit": "ac67d320b87c1193b281067efc0f49df3a05bfa0",
