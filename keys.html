@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Проверка пульта</title>
+<!--
+  A remote-control probe for TV browsers, served at /keys.
+
+  The Samsung TV browser keeps the D-pad for its own pointer: no key event
+  reaches the page, only mouse events. So this page measures what a TV layout
+  could build on instead:
+   - whether the page can hide that pointer (cursor: none, or a transparent
+     cursor image);
+   - how far one press moves it, and whether hovering, edge scrolling and
+     horizontal rails work under it;
+   - Pointer Lock: if the browser grants it, the pointer disappears and every
+     press arrives as movementX/movementY with no screen edge to stop at;
+   - "movement navigation": each burst of pointer movement becomes one focus
+     step in its direction, and OK activates the focused tile wherever the
+     hidden pointer happens to be.
+  Key events are still counted, for browsers that do deliver them, and move
+  focus with the same spatial rule.
+
+  ES5 on purpose: older Tizen and webOS engines must run it.
+-->
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 20px 32px; background: #0d0d0d; color: #ddd; font: 18px/1.4 system-ui, sans-serif; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 600; }
+  .big { font-size: 30px; font-weight: 600; color: #ffd84d; }
+  .row { display: flex; gap: 12px; margin: 12px 0; flex-wrap: wrap; align-items: center; }
+  .rail-box { position: relative; margin: 12px 0; }
+  .rail { display: flex; gap: 12px; overflow-x: auto; padding: 6px 2px; }
+  .tile { flex: none; width: 150px; height: 84px; border-radius: 10px; background: #222; color: #aaa;
+          display: flex; align-items: center; justify-content: center; font-size: 20px; outline: none;
+          border: 3px solid transparent; box-sizing: border-box; }
+  button, input { font: inherit; color: #ddd; background: #222; border: 3px solid #333; border-radius: 10px; padding: 8px 14px; outline: none; }
+  .tile:hover, button:hover { border-color: #4da3ff; }
+  .tile:focus, button:focus, input:focus { background: #3a3a10; color: #fff; border-color: #ffd84d; }
+  html.no-hover .tile:hover, html.no-hover button:hover { border-color: transparent; }
+  html.no-hover button:hover { border-color: #333; }
+  html.cursor-none, html.cursor-none * { cursor: none !important; }
+  html.cursor-blank, html.cursor-blank * { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==") 0 0, none !important; }
+  .zone { position: absolute; top: 0; bottom: 0; width: 90px; display: flex; align-items: center; justify-content: center;
+          font-size: 34px; color: #fff; background: rgba(77,163,255,.18); z-index: 1; }
+  .zone.left { left: 0; } .zone.right { right: 0; }
+  .label { color: #888; font-size: 15px; margin-top: 10px; }
+  #log { margin: 0; padding: 10px; background: #161616; border-radius: 10px; font: 15px/1.45 ui-monospace, monospace; white-space: pre-wrap; min-height: 7em; }
+  .muted { color: #888; font-size: 15px; word-break: break-all; }
+  #tail { height: 900px; display: flex; align-items: flex-end; color: #666; }
+</style>
+</head>
+<body>
+<h1>Проверка пульта</h1>
+<div class="muted">1) «Курсор»: пропадает ли он в режимах cursor: none и «прозрачная картинка»? 2) «Навигация движением»: двигают ли стрелки жёлтую рамку по плиткам, нажимает ли OK то, что в рамке? 3) «Захватить курсор». 4) Полки B и C, низ страницы.</div>
+<div class="row">
+  <div>Стрелок: <span id="arrows" class="big">0</span></div>
+  <div>Клавиш: <span id="others" class="big">0</span></div>
+  <div>Движений мыши: <span id="mouse" class="big">0</span></div>
+  <div>Кликов: <span id="clicks" class="big">0</span></div>
+</div>
+<div class="row">
+  <div>Курсор: <span id="pos" class="big">—</span></div>
+  <div>Одно нажатие: <span id="step" class="big">—</span></div>
+</div>
+<div class="row">
+  <button id="cursor" type="button">Курсор: обычный</button>
+  <button id="lock" type="button">Захватить курсор</button>
+  <button id="motion" type="button">Навигация движением: ВЫКЛ</button>
+  <button id="fullscreen" type="button">Во весь экран</button>
+  <input id="text" type="text" placeholder="Поле ввода">
+</div>
+<div class="row">
+  <div>Захват: <span id="lockState" class="big">—</span></div>
+  <div>Прокрутка страницы: <span id="pageScroll" class="big">0</span></div>
+</div>
+<div class="label">Ряд A</div>
+<div class="row" id="first"></div>
+<div class="label">Полка B: прокрутится ли она курсором у края?</div>
+<div class="rail-box"><div class="rail" id="rail"></div></div>
+<div class="label">Полка C: наведите на синие края, она должна ехать сама</div>
+<div class="rail-box">
+  <div class="zone left" id="zoneLeft">‹</div>
+  <div class="rail" id="rail2"></div>
+  <div class="zone right" id="zoneRight">›</div>
+</div>
+<pre id="log"></pre>
+<p id="info" class="muted"></p>
+<div id="tail">Низ страницы. Докатились курсором? Значит, прокрутка у края работает.</div>
+<script>
+(function () {
+  "use strict";
+
+  var counts = { arrows: 0, others: 0, mouse: 0, clicks: 0 };
+  var ARROW = { ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down",
+                Left: "left", Right: "right", Up: "up", Down: "down" };
+  var ARROW_CODE = { 37: "left", 38: "up", 39: "right", 40: "down" };
+  var GLYPH = { left: "←", right: "→", up: "↑", down: "↓" };
+  var FOCUSABLE = "a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]";
+  var CURSOR_MODES = [["", "обычный"], ["cursor-none", "cursor: none"], ["cursor-blank", "прозрачная картинка"]];
+  var cursorMode = 0, motionNav = false, lines = [];
+
+  function $(id) { return document.getElementById(id); }
+  function bump(name) { counts[name] += 1; $(name).textContent = counts[name]; }
+  function log(text) {
+    lines.unshift(text);
+    lines.length = Math.min(lines.length, 9);
+    $("log").textContent = lines.join("\n");
+  }
+  function tiles(host, count, prefix) {
+    for (var i = 1; i <= count; i += 1) {
+      var tile = document.createElement("div");
+      tile.className = "tile";
+      tile.tabIndex = 0;
+      tile.textContent = prefix + i;
+      host.appendChild(tile);
+    }
+  }
+  tiles($("first"), 6, "A");
+  tiles($("rail"), 16, "B");
+  tiles($("rail2"), 16, "C");
+
+  // The spatial rule. Candidates: visible, not nested in another focusable,
+  // on screen across the width unless they share the current element's rail.
+  // Left and right stay on the same line; up and down may step sideways.
+  function candidates(from) {
+    var list = document.querySelectorAll(FOCUSABLE), out = [];
+    for (var i = 0; i < list.length; i += 1) {
+      var el = list[i];
+      if (el === from || el.tabIndex < 0) continue;
+      if (el.parentElement && el.parentElement.closest && el.parentElement.closest(FOCUSABLE)) continue;
+      var r = el.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) continue;
+      var onScreen = r.right > 0 && r.left < window.innerWidth;
+      if (!onScreen && !(from && el.parentElement === from.parentElement)) continue;
+      out.push({ el: el, r: r });
+    }
+    return out;
+  }
+  function nearest(from, dir) {
+    var c = from.getBoundingClientRect(), best = null, bestScore = Infinity;
+    var cx = (c.left + c.right) / 2, cy = (c.top + c.bottom) / 2;
+    var list = candidates(from);
+    for (var i = 0; i < list.length; i += 1) {
+      var r = list[i].r, x = (r.left + r.right) / 2, y = (r.top + r.bottom) / 2;
+      var gap, side, offset;
+      if (dir === "right") { if (x <= cx + 1) continue; gap = r.left - c.right; side = Math.max(0, r.top - c.bottom, c.top - r.bottom); if (side > 0) continue; offset = Math.abs(y - cy); }
+      else if (dir === "left") { if (x >= cx - 1) continue; gap = c.left - r.right; side = Math.max(0, r.top - c.bottom, c.top - r.bottom); if (side > 0) continue; offset = Math.abs(y - cy); }
+      else if (dir === "down") { if (y <= cy + 1) continue; gap = r.top - c.bottom; side = Math.max(0, r.left - c.right, c.left - r.right); offset = Math.abs(x - cx); }
+      else { if (y >= cy - 1) continue; gap = c.top - r.bottom; side = Math.max(0, r.left - c.right, c.left - r.right); offset = Math.abs(x - cx); }
+      var score = Math.max(0, gap) + side * 3 + offset * 0.05;
+      if (score < bestScore) { bestScore = score; best = list[i].el; }
+    }
+    return best;
+  }
+  function firstVisible() {
+    var list = candidates(null);
+    for (var i = 0; i < list.length; i += 1) {
+      if (list[i].el.className === "tile" && list[i].r.top >= 0 && list[i].r.bottom <= window.innerHeight) return list[i].el;
+    }
+    return list.length ? list[0].el : null;
+  }
+  function step(dir) {
+    var from = document.activeElement;
+    var next = from && from !== document.body ? nearest(from, dir) : firstVisible();
+    if (next) next.focus();
+    return next;
+  }
+  function name(el) { return el ? (el.textContent || el.id || el.tagName).slice(0, 24) : "—"; }
+
+  // Keys, for browsers that deliver them.
+  function caretKeeps(el, dir) {
+    if (!el || el.tagName !== "INPUT" || dir === "up" || dir === "down") return false;
+    try { return dir === "left" ? el.selectionStart > 0 : el.selectionEnd < el.value.length; } catch (e) { return false; }
+  }
+  window.addEventListener("keydown", function (event) {
+    var dir = ARROW[event.key] || ARROW_CODE[event.keyCode] || "";
+    bump(dir ? "arrows" : "others");
+    log("keydown key=" + JSON.stringify(event.key) + " code=" + JSON.stringify(event.code) + " keyCode=" + event.keyCode);
+    if (!dir || event.defaultPrevented || caretKeeps(document.activeElement, dir)) return;
+    event.preventDefault();
+    step(dir);
+  }, false);
+
+  // Pointer measurement: a burst is movement with no pause over BURST_GAP_MS;
+  // one press of an arrow is one burst. Each burst is logged with its path on
+  // the main axis (start → farthest → end), which is where a bounce shows.
+  var BURST_GAP_MS = 150, FIRST_REPEAT_MS = 600, REPEAT_MS = 250, TOUCH_PX = 3;
+  var OPPOSITE = { left: "right", right: "left", up: "down", down: "up" };
+  var lastX = null, lastY = null, lastMove = 0, burst = null, typicalStep = 0, cleanSteps = [];
+  function dominant(dx, dy) {
+    if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return "";
+    return Math.abs(dx) >= Math.abs(dy) ? (dx > 0 ? "right" : "left") : (dy > 0 ? "down" : "up");
+  }
+  function edgeRoom(dir, x, y) {
+    return dir === "left" ? x : dir === "right" ? window.innerWidth - 1 - x : dir === "up" ? y : window.innerHeight - 1 - y;
+  }
+  function touches(point) {
+    return edgeRoom("left", point.x, point.y) <= TOUCH_PX || edgeRoom("right", point.x, point.y) <= TOUCH_PX ||
+      edgeRoom("up", point.x, point.y) <= TOUCH_PX || edgeRoom("down", point.x, point.y) <= TOUCH_PX;
+  }
+  function stepSize() { return typicalStep || 32; }
+  function finishBurst() {
+    if (!burst) return;
+    var dx = burst.dx, dy = burst.dy, dir = dominant(dx, dy), dist = Math.sqrt(dx * dx + dy * dy);
+    var horizontal = Math.abs(burst.far.x - burst.from.x) >= Math.abs(burst.far.y - burst.from.y);
+    var axis = horizontal ? "x" : "y";
+    var path = axis + " " + Math.round(burst.from[axis]) + "→" + Math.round(burst.far[axis]) + "→" + Math.round(burst.to[axis]);
+    var ms = burst.end - burst.start;
+    // The step size is learned from clean presses only: short, one way, and
+    // nowhere near a wall (a press that hits one is cut short by it).
+    var oneWay = Math.abs(burst.far.x - burst.to.x) + Math.abs(burst.far.y - burst.to.y) < 2;
+    // The median of the last few, so one odd burst cannot skew it.
+    if (ms < 700 && dist >= 4 && dist < 400 && oneWay && !touches(burst.from) && !touches(burst.far)) {
+      cleanSteps.push(dist);
+      if (cleanSteps.length > 7) cleanSteps.shift();
+      var sorted = cleanSteps.slice().sort(function (a, b) { return a - b; });
+      typicalStep = Math.round(sorted[Math.floor(sorted.length / 2)]);
+    }
+    $("step").textContent = (GLYPH[dir] || "·") + " " + Math.round(dist) + " px · " + burst.events + " соб. · " + ms + " мс · шаг " + (typicalStep || "?") + " px";
+    log("нажатие " + (GLYPH[dir] || "·") + " " + path + " · " + burst.events + " соб. · " + ms + " мс");
+    burst = null;
+  }
+
+  // Movement navigation. A press is movement with no pause over
+  // BURST_GAP_MS, and its direction is fixed where it starts: one step at
+  // once, then, while the pointer keeps going (a held arrow), one more after
+  // FIRST_REPEAT_MS and every REPEAT_MS after that. An ordinary press keeps
+  // the pointer moving for longer than 300 ms, so an earlier first repeat
+  // turned it into two steps.
+  //
+  // Movement the other way inside a press is drift, not a new arrow, until
+  // it adds up to half a step: a pointer held against a side wall leaves a
+  // pixel or two of vertical drift, which used to drop focus a row.
+  //
+  // A pointer that reaches a screen edge springs back when the press ends —
+  // after a tap and after a long hold alike. Read naively that is a press the
+  // other way, so focus came straight back. The spring never carries it
+  // farther from the wall than it was when it set off toward it, which is
+  // less than one step. So touching a wall arms a guard: movement away from
+  // that wall moves nothing while the pointer stays within the farther of
+  // (where its run toward the wall began) and (0.8 of a step), with no time
+  // limit. Past that it is a real press and counts at once. The guard is
+  // dropped once the spring has finished.
+  var press = null, runDir = "", runFrom = null, walls = {};
+  function armWall(dir) {
+    var size = stepSize(), tolerance = Math.max(6, size * 0.15);
+    var limit = Math.max(edgeRoom(dir, runFrom.x, runFrom.y), size * 0.8) + tolerance;
+    if (!walls[dir] || walls[dir].limit < limit) walls[dir] = { limit: limit, travel: 0, lastAt: 0 };
+  }
+  setInterval(function () {
+    var now = Date.now();
+    if (burst && now - lastMove > BURST_GAP_MS) finishBurst();
+    for (var dir in walls) {
+      var wall = walls[dir];
+      if (wall.travel > 0 && now - wall.lastAt > BURST_GAP_MS) {
+        log("отскок " + GLYPH[OPPOSITE[dir]] + " " + Math.round(wall.travel) + " px пропущен · шаг " + (typicalStep || "?") + " px · порог " + Math.round(wall.limit) + " px");
+        delete walls[dir];
+      }
+    }
+  }, 50);
+  function navigate(now, x, y, dx, dy) {
+    var dir1 = dominant(dx, dy);
+    if (!dir1) return;
+    var travel = Math.max(Math.abs(dx), Math.abs(dy));
+    if (dir1 !== runDir) { runDir = dir1; runFrom = { x: x - dx, y: y - dy }; }
+    var away = OPPOSITE[dir1], wall = walls[away], forced = false;
+    if (wall) {
+      if (edgeRoom(away, x, y) <= wall.limit) {
+        wall.travel += travel;
+        wall.lastAt = now;
+        return;
+      }
+      delete walls[away];
+      forced = true;
+    }
+    if (!press || forced || now - press.lastAt > BURST_GAP_MS) press = { dir: dir1, steps: 0, firstAt: 0, drift: {} };
+    press.lastAt = now;
+    if (dir1 !== press.dir) {
+      press.drift[dir1] = (press.drift[dir1] || 0) + travel;
+      if (press.drift[dir1] < Math.max(8, stepSize() * 0.5)) {
+        if (!press.driftLogged) { log("дрожь " + GLYPH[dir1] + " внутри нажатия " + GLYPH[press.dir] + " пропущена"); press.driftLogged = true; }
+        return;
+      }
+      press = { dir: dir1, steps: 0, firstAt: 0, drift: {}, lastAt: now };
+    }
+    if (!press.steps) { step(press.dir); press.steps = 1; press.firstAt = now; }
+    else if (now - press.firstAt >= FIRST_REPEAT_MS + (press.steps - 1) * REPEAT_MS) { step(press.dir); press.steps += 1; }
+    if (edgeRoom(dir1, x, y) <= TOUCH_PX) armWall(dir1);
+  }
+
+  document.addEventListener("mousemove", function (event) {
+    bump("mouse");
+    var now = Date.now(), x = event.clientX, y = event.clientY;
+    var mx = event.movementX, my = event.movementY;
+    var dx = typeof mx === "number" && (mx || my) ? mx : lastX === null ? 0 : x - lastX;
+    var dy = typeof my === "number" && (mx || my) ? my : lastY === null ? 0 : y - lastY;
+    lastX = x; lastY = y;
+    var edge = x <= 2 || y <= 2 || x >= window.innerWidth - 3 || y >= window.innerHeight - 3;
+    $("pos").textContent = x + "," + y + (edge ? " у края" : "");
+    if (now - lastMove > BURST_GAP_MS) {
+      finishBurst();
+      burst = { start: now, end: now, dx: 0, dy: 0, events: 0, from: { x: x - dx, y: y - dy }, far: { x: x - dx, y: y - dy }, to: null };
+    }
+    lastMove = now;
+    burst.end = now; burst.dx += dx; burst.dy += dy; burst.events += 1; burst.to = { x: x, y: y };
+    if (Math.abs(x - burst.from.x) + Math.abs(y - burst.from.y) > Math.abs(burst.far.x - burst.from.x) + Math.abs(burst.far.y - burst.from.y)) burst.far = { x: x, y: y };
+    if (motionNav) navigate(now, x, y, dx, dy);
+  }, true);
+
+  // In movement navigation OK activates the focused element, not whatever
+  // the hidden pointer is over. Its mousedown would move focus there first.
+  document.addEventListener("mousedown", function (event) {
+    if (motionNav && event.isTrusted !== false) event.preventDefault();
+  }, true);
+  document.addEventListener("click", function (event) {
+    bump("clicks");
+    var target = event.target;
+    if (motionNav && event.isTrusted !== false) {
+      var focused = document.activeElement;
+      if (focused && focused !== document.body && focused !== target && !(focused.contains && focused.contains(target))) {
+        event.preventDefault();
+        event.stopPropagation();
+        log("OK → " + name(focused) + " (курсор был над " + name(target) + ")");
+        if (focused.tagName === "BUTTON") focused.click();
+        return;
+      }
+    }
+    log("click " + event.clientX + "," + event.clientY + " на " + name(target));
+  }, true);
+
+  // Pointer Lock.
+  var root = document.documentElement;
+  var requestLock = root.requestPointerLock || root.webkitRequestPointerLock;
+  var lockedEl = function () { return document.pointerLockElement || document.webkitPointerLockElement || null; };
+  $("lockState").textContent = requestLock ? "есть API" : "нет API";
+  // A captured pointer is useless without movement navigation, so it turns on.
+  function lockChange() {
+    $("lockState").textContent = lockedEl() ? "ЗАХВАЧЕН" : "отпущен";
+    log("pointerlockchange: " + (lockedEl() ? "захвачен" : "отпущен"));
+    if (lockedEl() && !motionNav) $("motion").click();
+  }
+  function lockError() { $("lockState").textContent = "ОТКАЗ"; log("pointerlockerror"); }
+  document.addEventListener("pointerlockchange", lockChange);
+  document.addEventListener("webkitpointerlockchange", lockChange);
+  document.addEventListener("pointerlockerror", lockError);
+  document.addEventListener("webkitpointerlockerror", lockError);
+  $("lock").addEventListener("click", function () {
+    if (!requestLock) { log("Pointer Lock не поддерживается"); return; }
+    try {
+      var result = requestLock.call(root);
+      if (result && result.then) result.then(null, function (error) { lockError(); log(String(error && error.message || error)); });
+    } catch (error) { lockError(); log(String(error && error.message || error)); }
+  });
+
+  function setCursorMode(next) {
+    if (CURSOR_MODES[cursorMode][0]) root.classList.remove(CURSOR_MODES[cursorMode][0]);
+    cursorMode = next;
+    if (CURSOR_MODES[cursorMode][0]) root.classList.add(CURSOR_MODES[cursorMode][0]);
+    $("cursor").textContent = "Курсор: " + CURSOR_MODES[cursorMode][1];
+  }
+  $("cursor").addEventListener("click", function () { setCursorMode((cursorMode + 1) % CURSOR_MODES.length); });
+  $("motion").addEventListener("click", function () {
+    motionNav = !motionNav;
+    root.classList.toggle("no-hover", motionNav);
+    this.textContent = "Навигация движением: " + (motionNav ? "ВКЛ" : "ВЫКЛ");
+    // cursor: none still flashes the real pointer on OK on Samsung; the
+    // transparent image does not.
+    if (motionNav) { setCursorMode(2); var tile = firstVisible(); if (tile) tile.focus(); }
+  });
+  $("fullscreen").addEventListener("click", function () {
+    var request = root.requestFullscreen || root.webkitRequestFullscreen;
+    var exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if (document.fullscreenElement || document.webkitFullscreenElement) { if (exit) exit.call(document); }
+    else if (request) request.call(root);
+  });
+
+  // Scrolling under the pointer: the page at the screen edge, rail B by
+  // itself, rail C through hover zones.
+  var pageScrolls = 0;
+  window.addEventListener("scroll", function () { pageScrolls += 1; $("pageScroll").textContent = Math.round(window.pageYOffset) + " px · " + pageScrolls; });
+  window.addEventListener("wheel", function () { log("wheel"); }, { passive: true });
+  $("rail").addEventListener("scroll", function () { log("полка B: scrollLeft=" + Math.round(this.scrollLeft)); });
+  var glide = null;
+  function zone(id, speed) {
+    $(id).addEventListener("mouseenter", function () {
+      clearInterval(glide);
+      glide = setInterval(function () { $("rail2").scrollLeft += speed; }, 16);
+    });
+    $(id).addEventListener("mouseleave", function () { clearInterval(glide); });
+  }
+  zone("zoneLeft", -14);
+  zone("zoneRight", 14);
+
+  function media(query) { return window.matchMedia && matchMedia(query).matches ? "да" : "нет"; }
+  $("info").textContent = navigator.userAgent + "  ·  " + window.innerWidth + "×" + window.innerHeight +
+    " @" + (window.devicePixelRatio || 1) + "  ·  hover: " + media("(hover: hover)") + ", fine pointer: " + media("(pointer: fine)");
+})();
+</script>
+</body>
+</html>

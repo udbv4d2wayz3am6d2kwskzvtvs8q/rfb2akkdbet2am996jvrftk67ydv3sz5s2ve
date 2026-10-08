@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Проверка ТВ</title>
+<!--
+  A one-screen device check for TV browsers, served at /tvcheck.
+  (The projector answered: 2–5 and 8 hide its pointer, the file cursors do
+  not. Variants 9 and 10 check why TV mode still showed it.)
+
+  The Freestyle projector's Samsung browser draws its pointer over every
+  cursor the page asks for (cursor: none and a transparent image both failed
+  there, while the same rules hide it on a Samsung TV), and its video
+  stutters where the TV's does not. This page shows, in one photo, what the
+  device is and what it can decode, and walks through every other way a page
+  can hide a pointer: each cursor variant gets a big number on screen for a
+  few seconds, and the viewer reports the number at which the pointer went.
+
+  It uses the browser's pointer as it is (no movement navigation): move it
+  over a button and press OK. ES5 on purpose: older engines must run it.
+-->
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 24px 36px; background: #0d0d0d; color: #ddd; font: 22px/1.45 system-ui, sans-serif; }
+  h1 { margin: 0 0 8px; font-size: 32px; font-weight: 600; }
+  .lead { color: #ffd84d; font-size: 22px; margin-bottom: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  td { padding: 3px 14px 3px 0; vertical-align: top; }
+  td:first-child { color: #888; white-space: nowrap; width: 1%; }
+  .ua { word-break: break-all; color: #fff; }
+  .row { display: flex; gap: 14px; margin: 16px 0; flex-wrap: wrap; align-items: center; }
+  button { font: inherit; color: #ddd; background: #222; border: 3px solid #444; border-radius: 12px; padding: 12px 22px; }
+  button:hover { border-color: #ffd84d; color: #fff; }
+  .counts span { color: #ffd84d; font-weight: 700; }
+  .ok { color: #7ddc7d; } .no { color: #ff7a7a; }
+  #stage { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column;
+           pointer-events: none; background: rgba(0,0,0,.55); z-index: 5; }
+  #stage.on { display: flex; }
+  #stageNum { font-size: 220px; font-weight: 800; line-height: 1; color: #ffd84d; }
+  #stageText { font-size: 34px; color: #fff; margin-top: 10px; }
+  #stageHint { font-size: 22px; color: #bbb; margin-top: 14px; }
+  #fsVideo { width: 320px; height: 180px; background: #000; display: none; }
+  html.c2, html.c2 * { cursor: none !important; }
+  html.c3, html.c3 * { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==") 0 0, auto !important; }
+  html.c4, html.c4 * { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGklEQVR42u3BAQEAAACCIP+vbkhAAQAAAO8GECAAAcm1w7EAAAAASUVORK5CYII=") 0 0, auto !important; }
+  html.c5, html.c5 * { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAK0lEQVR42u3OMQEAAAjAoGn/0MbwgQRMNT3angkICAgICAgICAgICAgICBwkWgBBMJMVmQAAAABJRU5ErkJggg==") 0 0, auto !important; }
+  html.c6, html.c6 * { cursor: url("/tv-cursor.png") 0 0, auto !important; }
+  html.c7, html.c7 * { cursor: url("/tv-cursor.cur"), auto !important; }
+  html.c8, html.c8 * { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'/%3E") 0 0, auto !important; }
+  /* 9 is TV mode as it was: nothing takes the pointer. 10 adds the shield. */
+  html.c9 body *, html.c10 body * { pointer-events: none !important; }
+  html.c9, html.c9 *, html.c10, html.c10 * { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==") 0 0, none !important; }
+  #shield { display: none; }
+  html.c10 #shield { display: block; position: fixed; inset: 0; z-index: 4; pointer-events: auto !important; }
+</style>
+</head>
+<body>
+<h1>Проверка ТВ</h1>
+<div class="lead">1) Сфотографируй этот экран. 2) Нажми «Проверить курсор» и двигай курсор стрелками: запомни номера, на которых он исчез. 3) Нажми «Захват курсора», потом «Видео во весь экран» (выход — кнопкой «Назад»).</div>
+<table id="facts"></table>
+<div class="row counts">
+  <div>Стрелок: <span id="arrows">0</span></div>
+  <div>Других клавиш: <span id="keys">0</span></div>
+  <div>Движений курсора: <span id="moves">0</span></div>
+  <div>Нажатий OK: <span id="clicks">0</span></div>
+</div>
+<div class="row">
+  <button id="cursorBtn" type="button">Проверить курсор</button>
+  <button id="lockBtn" type="button">Захват курсора</button>
+  <button id="fsBtn" type="button">Весь экран</button>
+  <button id="videoBtn" type="button">Видео во весь экран</button>
+  <video id="fsVideo" muted playsinline></video>
+</div>
+<table id="results"></table>
+<div id="shield"></div>
+<div id="stage"><div id="stageNum"></div><div id="stageText"></div><div id="stageHint">двигай курсор стрелками — он виден?</div></div>
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+  function $(id) { return document.getElementById(id); }
+  function row(table, name, value, cls) {
+    var tr = document.createElement("tr");
+    var a = document.createElement("td"); a.textContent = name;
+    var b = document.createElement("td"); b.textContent = value; if (cls) b.className = cls;
+    tr.appendChild(a); tr.appendChild(b); table.appendChild(tr);
+    return b;
+  }
+  function media(q) { try { return matchMedia(q).matches; } catch (e) { return false; } }
+  function stored(key) { try { return localStorage.getItem(key) || "—"; } catch (e) { return "нет доступа"; } }
+
+  // ---- the device ----
+  var facts = $("facts");
+  row(facts, "Браузер", navigator.userAgent, "ua");
+  var vv = window.visualViewport;
+  row(facts, "Экран", "окно " + innerWidth + "×" + innerHeight + " · экран " + screen.width + "×" + screen.height +
+    " · плотность " + (window.devicePixelRatio || 1) + (vv ? " · масштаб " + Math.round(vv.scale * 100) / 100 : ""));
+  row(facts, "Ввод", "касаний " + (navigator.maxTouchPoints || 0) + " · hover " + (media("(hover: hover)") ? "да" : "нет") +
+    " · точный указатель " + (media("(pointer: fine)") ? "да" : "нет"));
+  row(facts, "Железо", "ядер " + (navigator.hardwareConcurrency || "?") + " · память " + (navigator.deviceMemory ? navigator.deviceMemory + " ГБ" : "?"));
+  row(facts, "Сайт", "пульт " + stored("alphy.tvPointer") + " · отскок " + stored("alphy.tvSpring") + " · захват " + stored("alphy.tvLock") +
+    " · лёгкое видео " + stored("alphy.videoLight") + " · режим " + stored("alphy.displayMode"));
+  var versionCell = row(facts, "Версия", "…");
+  var codecCell = row(facts, "Видео", "…");
+
+  // What the site serves now, and what this browser will start from.
+  function rev(text) { var m = /@([0-9a-f]{40})/.exec(text || ""); return m ? m[1].slice(0, 7) : "?"; }
+  var live = "?", kept = "нет";
+  function showVersion() { versionCell.textContent = "на сайте " + live + " · сохранено в браузере " + kept; }
+  try {
+    fetch("/", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (t) { live = rev(t); showVersion(); }, showVersion);
+    if (window.caches) caches.open("alphy-shell-v1").then(function (c) { return c.match("/__shell__"); })
+      .then(function (r) { return r ? r.text() : ""; }).then(function (t) { if (t) kept = rev(t); showVersion(); }, showVersion);
+  } catch (e) { showVersion(); }
+
+  // Codecs: MSE support, and whether the device says it decodes smoothly and
+  // in hardware ("экономно" = powerEfficient).
+  var CODECS = [
+    ["H.264", 'video/mp4; codecs="avc1.640028"'],
+    ["VP9", 'video/webm; codecs="vp09.00.40.08"'],
+    ["AV1", 'video/mp4; codecs="av01.0.08M.08"'],
+    ["HEVC", 'video/mp4; codecs="hvc1.1.6.L120.90"']
+  ];
+  var codecText = [];
+  function flushCodecs() {
+    var hls = "";
+    try { hls = document.createElement("video").canPlayType("application/vnd.apple.mpegurl"); } catch (e) {}
+    codecCell.textContent = codecText.join(" · ") + " · HLS сам: " + (hls || "нет");
+  }
+  var pending = CODECS.length;
+  CODECS.forEach(function (codec, i) {
+    var mse = false;
+    try { mse = !!(window.MediaSource && MediaSource.isTypeSupported(codec[1])); } catch (e) {}
+    codecText[i] = codec[0] + " " + (mse ? "да" : "нет");
+    var caps = navigator.mediaCapabilities;
+    if (!mse || !caps || !caps.decodingInfo) { if (!--pending) flushCodecs(); return; }
+    caps.decodingInfo({ type: "media-source", video: { contentType: codec[1], width: 1920, height: 1080, bitrate: 6000000, framerate: 25 } })
+      .then(function (info) {
+        codecText[i] = codec[0] + " да (" + (info.smooth ? "плавно" : "НЕ плавно") + ", " + (info.powerEfficient ? "экономно" : "НЕ экономно") + ")";
+      }, function () {})
+      .then(function () { if (!--pending) flushCodecs(); });
+  });
+  if (!pending) flushCodecs();
+
+  // ---- input ----
+  var counts = { arrows: 0, keys: 0, moves: 0, clicks: 0 };
+  function bump(name) { counts[name] += 1; $(name).textContent = counts[name]; }
+  var ARROWS = { ArrowLeft: 1, ArrowRight: 1, ArrowUp: 1, ArrowDown: 1, Left: 1, Right: 1, Up: 1, Down: 1 };
+  document.addEventListener("keydown", function (e) {
+    if (ARROWS[e.key] || (e.keyCode >= 37 && e.keyCode <= 40)) bump("arrows"); else bump("keys");
+    if (fsKeys) fsKeys.push(e.key || e.keyCode);
+  }, true);
+  document.addEventListener("mousemove", function () { bump("moves"); if (fsKeys) fsMoves += 1; }, true);
+  document.addEventListener("click", function () { bump("clicks"); }, true);
+
+  // ---- results ----
+  var results = $("results");
+  var cells = {};
+  function result(name, value, cls) {
+    if (!cells[name]) cells[name] = row(results, name, value, cls);
+    cells[name].textContent = value;
+    cells[name].className = cls || "";
+  }
+
+  // ---- cursor variants ----
+  var VARIANTS = [
+    "обычный (для сравнения)",
+    "cursor: none",
+    "прозрачная картинка 1×1",
+    "прозрачная картинка 32×32",
+    "почти прозрачная 32×32",
+    "картинка файлом (.png)",
+    "курсор файлом (.cur)",
+    "пустая SVG",
+    "как в приложении (раньше)",
+    "как в приложении (теперь, со щитом)"
+  ];
+  var cycling = null;
+  function setVariant(n) {
+    for (var i = 2; i <= VARIANTS.length; i += 1) root.classList.remove("c" + i);
+    if (n >= 2) root.classList.add("c" + n);
+  }
+  $("cursorBtn").addEventListener("click", function () {
+    if (cycling) return;
+    var n = 0;
+    $("stage").className = "on";
+    function next() {
+      n += 1;
+      if (n > VARIANTS.length) {
+        clearInterval(cycling); cycling = null; setVariant(0); $("stage").className = "";
+        result("Курсор", "показаны варианты 1–" + VARIANTS.length + ": на каком номере он исчез?");
+        return;
+      }
+      setVariant(n);
+      $("stageNum").textContent = n;
+      $("stageText").textContent = VARIANTS[n - 1];
+    }
+    next();
+    cycling = setInterval(next, 4500);
+  });
+
+  // ---- Pointer Lock ----
+  var requestLock = root.requestPointerLock || root.webkitRequestPointerLock;
+  function lockedEl() { return document.pointerLockElement || document.webkitPointerLockElement || null; }
+  var lockMoves = 0;
+  function onLock() {
+    if (lockedEl()) { result("Захват курсора", "ЗАХВАЧЕН — курсор пропал? Подвигай стрелками", "ok"); lockMoves = counts.moves; }
+    else result("Захват курсора", "отпущен · движений в захвате: " + (counts.moves - lockMoves));
+  }
+  function onLockError() { result("Захват курсора", "ОТКАЗ", "no"); }
+  ["pointerlockchange", "webkitpointerlockchange"].forEach(function (n) { document.addEventListener(n, onLock); });
+  ["pointerlockerror", "webkitpointerlockerror"].forEach(function (n) { document.addEventListener(n, onLockError); });
+  $("lockBtn").addEventListener("click", function () {
+    if (lockedEl()) { (document.exitPointerLock || document.webkitExitPointerLock).call(document); return; }
+    if (!requestLock) { result("Захват курсора", "нет такой функции", "no"); return; }
+    try {
+      var r = requestLock.call(root);
+      if (r && r.then) r.then(null, onLockError);
+    } catch (e) { onLockError(); }
+  });
+
+  // ---- fullscreen ----
+  var fsKeys = null, fsMoves = 0, fsName = "";
+  function fsElement() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
+  function enterFs(el, name) {
+    var request = el.requestFullscreen || el.webkitRequestFullscreen || el.webkitEnterFullscreen;
+    if (!request) { result(name, "нет такой функции", "no"); return; }
+    fsKeys = []; fsMoves = 0; fsName = name;
+    try {
+      var r = request.call(el);
+      if (r && r.then) r.then(null, function () { result(name, "ОТКАЗ", "no"); fsKeys = null; });
+    } catch (e) { result(name, "ОТКАЗ", "no"); fsKeys = null; }
+  }
+  function onFs() {
+    if (fsElement()) { result(fsName, "открыт…"); return; }
+    $("fsVideo").style.display = "none";
+    if (!fsKeys) return;
+    result(fsName, "был открыт · клавиш внутри: " + fsKeys.length + (fsKeys.length ? " (" + fsKeys.slice(0, 6).join(", ") + ")" : "") +
+      " · движений курсора: " + fsMoves + " · курсор был виден?");
+    fsKeys = null;
+  }
+  ["fullscreenchange", "webkitfullscreenchange"].forEach(function (n) { document.addEventListener(n, onFs); });
+  $("fsBtn").addEventListener("click", function () {
+    if (fsElement()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
+    enterFs(root, "Весь экран");
+  });
+  $("videoBtn").addEventListener("click", function () {
+    var video = $("fsVideo");
+    video.style.display = "block";
+    enterFs(video, "Видео во весь экран");
+  });
+})();
+</script>
+</body>
+</html>
