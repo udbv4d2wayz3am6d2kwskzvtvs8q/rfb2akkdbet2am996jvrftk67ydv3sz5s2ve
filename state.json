@@ -22737,7 +22737,7 @@
    "s": "2026-10-07T21:02:24.982Z",
    "rebased": "2026-10-07T21:04:24.982Z",
    "d": "d/434.d877542544888cbd.json",
-   "dc": "pending",
+   "dc": "bba44ff3d23a93c294433961b7cfa09b1678bef6",
    "parts": {
     "душ": [
      "p/5c139497a1da8e9a.json",
@@ -23669,7 +23669,7 @@
   "435": {
    "letter": "е",
    "b": "b/435.80d2f5b2b26f12a1.json",
-   "bc": "pending",
+   "bc": "bba44ff3d23a93c294433961b7cfa09b1678bef6",
    "n": 1139,
    "s": "2026-10-09T04:53:05.636Z",
    "rebased": "2026-10-09T04:55:05.636Z",
@@ -24514,7 +24514,7 @@
    "s": "2026-10-07T21:02:03.129Z",
    "rebased": "2026-10-07T21:04:03.129Z",
    "d": "d/438.ab9ebed30fb1edbe.json",
-   "dc": "pending",
+   "dc": "bba44ff3d23a93c294433961b7cfa09b1678bef6",
    "parts": {
     "ист": [
      "p/8ebea45f7389b704.json",
@@ -39675,7 +39675,7 @@
   "44f": {
    "letter": "я",
    "b": "b/44f.49c1f9ab66232147.json",
-   "bc": "pending",
+   "bc": "bba44ff3d23a93c294433961b7cfa09b1678bef6",
    "n": 1729,
    "s": "2026-10-09T04:53:03.477Z",
    "rebased": "2026-10-09T04:55:03.477Z",
@@ -41434,7 +41434,7 @@
    "s": "2026-10-08T15:15:55.672Z",
    "rebased": "2026-10-08T15:17:55.672Z",
    "d": "d/43c.fbecf08e26b0f557.json",
-   "dc": "pending",
+   "dc": "bba44ff3d23a93c294433961b7cfa09b1678bef6",
    "parts": {
     "мил": [
      "p/54ce4485e47df9fa.json",
@@ -44109,17 +44109,17 @@
   "after_at": "2026-10-09T04:54:35.727Z",
   "after_id": 900093694
  },
- "index": "i/6ae6c1301ded7c71.json",
+ "index": "i/37e019b2bffec85e.json",
  "indexes": [
-  "i/090dc271da64aceb.json",
   "i/6a6c5abab0a88a77.json",
   "i/86c11ca5ba9f18b8.json",
-  "i/6ae6c1301ded7c71.json"
+  "i/6ae6c1301ded7c71.json",
+  "i/37e019b2bffec85e.json"
  ],
  "updated": "2026-10-09T04:54:59.916Z",
- "dataCommit": "4eb0c0bfad6ccf9f54a323b34a5596ef4a544eb8",
+ "dataCommit": "bba44ff3d23a93c294433961b7cfa09b1678bef6",
  "layout": 2,
- "partsCommit": null,
+ "partsCommit": "f80324a0967e52b41e7384a3053b2e1f4a2faebd",
  "kp": [
   [
    "k/ab49a719d036a77a.json",
@@ -44363,7 +44363,7 @@
   ],
   [
    "k/c56ee2fa477d9189.json",
-   "pending"
+   "f80324a0967e52b41e7384a3053b2e1f4a2faebd"
   ],
   [
    "k/21471bcf54d63949.json",
