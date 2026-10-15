@@ -14869,8 +14869,8 @@
    "n": 20550,
    "s": "2026-10-08T15:16:08.814Z",
    "rebased": "2026-10-08T15:18:08.814Z",
-   "d": "d/74.b28d4c39406bd672.json",
-   "dc": "daf18d13e8010954b6abeebcd1c9dbf383e19c7d",
+   "d": "d/74.0fd9ef54c481669a.json",
+   "dc": "pending",
    "parts": {
     "the": [
      "p/fd0ff7f4cf000a37.json",
@@ -34253,8 +34253,8 @@
    "n": 19485,
    "s": "2026-10-15T07:46:11.115Z",
    "rebased": "2026-10-15T07:48:11.115Z",
-   "d": null,
-   "dc": null,
+   "d": "d/43f.8ec135fc9525dca2.json",
+   "dc": "pending",
    "parts": {
     "пре": [
      "p/e384d8b7f70a79ee.json",
@@ -37735,8 +37735,8 @@
    "n": 9695,
    "s": "2026-10-14T09:19:33.892Z",
    "rebased": "2026-10-14T09:21:33.892Z",
-   "d": "d/6c.afa7fe1f10a29192.json",
-   "dc": "0d5d4cb220ee2a2f49d12b05f5026f0aa2841d22",
+   "d": "d/6c.eb1cee13b7aafef4.json",
+   "dc": "pending",
    "parts": {
     "loo": [
      "p/7aae6a93328d37de.json",
@@ -44121,8 +44121,8 @@
   }
  },
  "cursor": {
-  "after_at": "2026-10-15T07:43:47.555Z",
-  "after_id": 900093836
+  "after_at": "2026-10-15T08:55:42.533Z",
+  "after_id": 900084313
  },
  "index": "i/e6cac996f4e93b82.json",
  "indexes": [
@@ -44131,7 +44131,7 @@
   "i/67803ab988ba9436.json",
   "i/e6cac996f4e93b82.json"
  ],
- "updated": "2026-10-15T07:47:32.994Z",
+ "updated": "2026-10-15T08:56:03.373Z",
  "dataCommit": "daf18d13e8010954b6abeebcd1c9dbf383e19c7d",
  "layout": 2,
  "partsCommit": "1108c5d41af6b771e97d67c9155a0bb1e6f2ac48",
@@ -44377,8 +44377,8 @@
    "e5307662594ff9d4cf2541e7615b90f208746490"
   ],
   [
-   "k/2bc5c870788246f9.json",
-   "a6c3825209c7de9695b61545cb48ef5a82b58d75"
+   "k/c5ba4ab8966a69ca.json",
+   "pending"
   ],
   [
    "k/53fea1525dd6db4f.json",
