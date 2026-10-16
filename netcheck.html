@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Проверка сети</title>
+<!--
+  A one-photo check of every hop Lift playback takes, from the viewer's own
+  network, served at /netcheck. Blocks in Russia differ by provider and change
+  week to week, and none of it can be seen from outside: probes in home
+  networks reached every host on 2026-10-11 while a viewer could not open a
+  title. The player page and its media can only be judged from here anyway —
+  Lift mints the media URLs for whoever fetched the page.
+
+  Everything Lift-side is fetched from a sandboxed (null-origin) frame, the
+  way the app does it: no alphy.tv origin, no referrer, no cookies. Nothing is
+  sent anywhere; the result stays on the screen.
+-->
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 18px 16px 28px; background: #0d0d0d; color: #ddd; font: 16px/1.4 system-ui, sans-serif; }
+  h1 { margin: 0 0 4px; font-size: 22px; font-weight: 600; }
+  .meta { color: #888; font-size: 13px; margin-bottom: 12px; word-break: break-word; }
+  .verdict { margin: 0 0 14px; padding: 12px 14px; border-radius: 12px; background: #1b1b1b; font-size: 17px; }
+  .verdict.ok { color: #8be08b; }
+  .verdict.bad { color: #ff8a7a; }
+  .verdict.wait { color: #ffd84d; }
+  table { border-collapse: collapse; width: 100%; max-width: 760px; }
+  td { padding: 7px 6px; border-top: 1px solid #222; vertical-align: top; }
+  td.mark { width: 1.4em; font-size: 18px; }
+  td.name { color: #eee; }
+  td.name small { display: block; color: #777; font-size: 12px; }
+  td.res { text-align: right; white-space: nowrap; color: #aaa; font-variant-numeric: tabular-nums; }
+  .ok { color: #8be08b; } .bad { color: #ff8a7a; } .skip { color: #666; }
+  button { margin-top: 16px; padding: 10px 18px; font: inherit; color: #111; background: #ffd84d; border: 0; border-radius: 10px; }
+</style>
+</head>
+<body>
+<h1>Проверка сети для Lift</h1>
+<div class="meta" id="meta"></div>
+<div class="verdict wait" id="verdict">Проверяю…</div>
+<table id="rows"></table>
+<button id="again" type="button">Проверить ещё раз</button>
+<script>
+(function () {
+  var LIFT_ID = 169; // Бойцовский клуб: a film every Lift entrance carries
+  var RELAY = "https://icmjgvlsyfqwyewvsuje.supabase.co/functions/v1/liftw";
+  var API = "https://api.lateremb.ws"; // Lift's own API, asked by the app first
+  var POINTER = "https://xoathqkggcuyoyutxwri.supabase.co/storage/v1/object/public/index/pointer.json";
+  var JSDELIVR = "https://cdn.jsdelivr.net/npm/shaka-player@4.11.17/package.json";
+  var TIMEOUT = 10000;
+  var rows = document.getElementById("rows");
+  var verdict = document.getElementById("verdict");
+  document.getElementById("meta").textContent = new Date().toLocaleString("ru-RU") + " · " +
+    (window.alphyRevision || "") + " " + navigator.userAgent;
+
+  // The null-origin frame every Lift request goes through.
+  var frame = document.createElement("iframe");
+  frame.sandbox = "allow-scripts";
+  frame.style.display = "none";
+  frame.srcdoc = "<!doctype html><script>" +
+    "addEventListener('message', function (event) {" +
+    "  var d = event.data || {}; if (!d.netcheck) return;" +
+    "  var started = performance.now(); var controller = new AbortController();" +
+    "  var timer = setTimeout(function () { controller.abort(); }, d.timeout);" +
+    "  fetch(d.url, { mode: 'cors', credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store', signal: controller.signal })" +
+    "    .then(function (r) { return (d.text ? r.text() : r.arrayBuffer()).then(function (body) {" +
+    "      parent.postMessage({ netcheck: true, id: d.id, status: r.status, ms: Math.round(performance.now() - started)," +
+    "        text: d.text ? body.slice(0, 600000) : '', bytes: d.text ? body.length : body.byteLength }, '*'); }); })" +
+    "    .catch(function (e) { parent.postMessage({ netcheck: true, id: d.id, status: 0, ms: Math.round(performance.now() - started)," +
+    "      error: controller.signal.aborted ? 'нет ответа' : String(e && e.message || e) }, '*'); })" +
+    "    .then(function () { clearTimeout(timer); });" +
+    "});" +
+    "parent.postMessage({ netcheck: true, ready: true }, '*');" +
+    "<\/script>";
+  var waiting = {}, seq = 0, ready;
+  var frameReady = new Promise(function (resolve) { ready = resolve; });
+  addEventListener("message", function (event) {
+    if (event.source !== frame.contentWindow) return;
+    var d = event.data || {};
+    if (!d.netcheck) return;
+    if (d.ready) { ready(); return; }
+    var done = waiting[d.id]; delete waiting[d.id];
+    if (done) done(d);
+  });
+  document.body.appendChild(frame);
+
+  function opaque(url, text) {
+    return frameReady.then(function () {
+      return new Promise(function (resolve) {
+        var id = ++seq; waiting[id] = resolve;
+        frame.contentWindow.postMessage({ netcheck: true, id: id, url: url, text: !!text, timeout: TIMEOUT }, "*");
+      });
+    });
+  }
+  function direct(url) {
+    var started = performance.now(), controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, TIMEOUT);
+    return fetch(url, { credentials: "omit", cache: "no-store", signal: controller.signal })
+      .then(function (r) { return r.text().then(function (text) {
+        return { status: r.status, ms: Math.round(performance.now() - started), text: text, bytes: text.length }; }); })
+      .catch(function (e) { return { status: 0, ms: Math.round(performance.now() - started),
+        error: controller.signal.aborted ? "нет ответа" : String(e && e.message || e) }; })
+      .then(function (r) { clearTimeout(timer); return r; });
+  }
+
+  function row(name, note) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<td class="mark">…</td><td class="name"></td><td class="res"></td>';
+    tr.children[1].textContent = name;
+    if (note) { var small = document.createElement("small"); small.textContent = note; tr.children[1].appendChild(small); }
+    rows.appendChild(tr);
+    return function (ok, text) {
+      tr.children[0].textContent = ok === null ? "–" : ok ? "✓" : "✗";
+      tr.children[0].className = "mark " + (ok === null ? "skip" : ok ? "ok" : "bad");
+      tr.children[2].textContent = text;
+    };
+  }
+  function describe(r) {
+    return r.status ? r.status + " · " + r.ms + " мс" : (r.error || "ошибка") + " · " + r.ms + " мс";
+  }
+  function isPlayer(r) { return r.status === 200 && /makePlayer\s*\(/.test(r.text || ""); }
+  function mpdOf(html) {
+    var m = /(https?:\\?\/\\?\/[a-z0-9.-]+\.interkh\.com[^"'\s]*?\.mpd[^"'\s]*)/.exec(html || "");
+    return m ? m[1].replace(/\\\//g, "/") : "";
+  }
+  function initOf(mpd) {
+    var base = /<BaseURL>([^<]+)<\/BaseURL>/.exec(mpd || "");
+    var init = /initialization="([^"]+)"/.exec(mpd || "");
+    return base && init ? base[1] + init[1].replace(/&amp;/g, "&") : "";
+  }
+
+  function run() {
+    rows.innerHTML = "";
+    verdict.className = "verdict wait";
+    verdict.textContent = "Проверяю…";
+    var r = {
+      api: row("Lift API напрямую", "api.lateremb.ws — поиск и данные тайтла без Supabase"),
+      relay: row("Supabase: ретранслятор Lift", "запасной путь для поиска и данных тайтла"),
+      storage: row("Supabase: хранилище", "указатель индекса поиска"),
+      jsdelivr: row("jsDelivr", "код сайта и индекс поиска"),
+      open1: row("Lift lift3.ws без подписи", "89.42.231.152 — так открывается для РФ"),
+      open2: row("Lift embed.lateremb.ws без подписи", "89.42.231.205"),
+      signed1: row("Lift lift3.ws с подписью", "подпись из /info"),
+      signed2: row("Lift embed.lateremb.ws с подписью", "подпись из /info"),
+      ort: row("Ortified api.ortified.ws", "тот же Lift, тайтлы из списков"),
+      mpd: row("CDN: манифест видео", "*.interkh.com"),
+      seg: row("CDN: сегмент видео", "выдан этому устройству"),
+    };
+    var result = {};
+    var relayTask = direct(RELAY + "?mode=info&id=" + LIFT_ID + "&view=player&cv=2&fresh=1").then(function (x) {
+      var info = null;
+      try { info = JSON.parse(x.text); } catch (e) { /* not JSON */ }
+      var ok = x.status === 200 && info && info.iframe_uri;
+      r.relay(!!ok, describe(x));
+      result.relay = !!ok;
+      return ok ? info : null;
+    });
+    var apiTask = opaque(API + "/info/" + LIFT_ID, true).then(function (x) {
+      var info = null;
+      try { info = JSON.parse(x.text); } catch (e) { /* not JSON */ }
+      var ok = x.status === 200 && info && info.iframe_uri;
+      r.api(!!ok, describe(x));
+      result.api = !!ok;
+      return ok ? info : null;
+    });
+    direct(POINTER).then(function (x) { r.storage(x.status === 200, describe(x)); result.storage = x.status === 200; });
+    direct(JSDELIVR).then(function (x) { r.jsdelivr(x.status === 200, describe(x)); });
+    var page = function (host, path, mark, key) {
+      return opaque("https://" + host + path, true).then(function (x) {
+        var ok = isPlayer(x);
+        mark(ok, describe(x) + (x.status === 200 && !ok ? " · не плеер" : ""));
+        result[key] = ok;
+        return ok ? x.text : "";
+      });
+    };
+    var open1 = page("lift3.ws", "/embed/movie/" + LIFT_ID, r.open1, "open1");
+    var open2 = page("embed.lateremb.ws", "/embed/movie/" + LIFT_ID, r.open2, "open2");
+    var ort = page("api.ortified.ws", "/embed/movie/" + LIFT_ID, r.ort, "ort");
+    var signed = Promise.all([apiTask, relayTask]).then(function (both) { return both[0] || both[1]; }).then(function (info) {
+      if (!info) {
+        r.signed1(null, "нет подписи"); r.signed2(null, "нет подписи");
+        return ["", ""];
+      }
+      var u = new URL(info.iframe_uri);
+      var path = u.pathname + u.search;
+      return Promise.all([page("lift3.ws", path, r.signed1, "signed1"), page("embed.lateremb.ws", path, r.signed2, "signed2")]);
+    });
+    Promise.all([open1, open2, ort, signed]).then(function (pages) {
+      var html = pages[0] || pages[1] || pages[3][0] || pages[3][1] || pages[2];
+      var mpdUrl = mpdOf(html);
+      if (!mpdUrl) { r.mpd(null, "нет страницы плеера"); r.seg(null, "—"); return null; }
+      return opaque(mpdUrl, true).then(function (x) {
+        r.mpd(x.status === 200, describe(x));
+        result.mpd = x.status === 200;
+        var initUrl = x.status === 200 ? initOf(x.text) : "";
+        if (!initUrl) { r.seg(null, "—"); return; }
+        return opaque(initUrl, false).then(function (y) {
+          r.seg(y.status === 200, describe(y) + (y.status === 410 ? " · ссылка не для этого адреса" : ""));
+          result.seg = y.status === 200;
+        });
+      });
+    }).then(function () {
+      var open = result.open1 || result.open2, signedOk = result.signed1 || result.signed2;
+      var lines = [];
+      if ((open || signedOk) && result.seg) {
+        verdict.className = "verdict ok";
+        lines.push(open ? "Lift открывается напрямую, без Supabase" : "Lift открывается только с подписью: через ретранслятор Supabase");
+        if (!result.open1 && !result.signed1 && (result.open2 || result.signed2)) lines.push("lift3.ws недоступен, работает второй адрес");
+        lines.push(result.api ? "поиск Lift идёт напрямую" : (result.relay ? "поиск Lift идёт через Supabase" : "поиск Lift недоступен"));
+      } else if (open || signedOk) {
+        verdict.className = "verdict bad";
+        lines.push("Страница плеера есть, но видео с CDN не идёт");
+      } else {
+        verdict.className = "verdict bad";
+        lines.push("Страница плеера Lift недоступна ни на одном адресе");
+        if (!result.relay && !result.api) lines.push("ни API Lift, ни ретранслятор Supabase не отвечают");
+      }
+      verdict.textContent = lines.join(". ") + ".";
+    });
+  }
+  document.getElementById("again").addEventListener("click", run);
+  run();
+})();
+</script>
+</body>
+</html>
