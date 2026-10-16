@@ -17641,7 +17641,7 @@
    "s": "2026-10-15T16:25:30.297Z",
    "rebased": "2026-10-15T16:27:30.297Z",
    "d": "d/77.79ab0f186df4dc14.json",
-   "dc": "pending",
+   "dc": "c9af487bde039bfb3e0385058bb30c918f7d57df",
    "parts": {
     "war": [
      "p/f992e603c052cc8b.json",
@@ -21088,7 +21088,7 @@
    "s": "2026-10-15T07:45:41.674Z",
    "rebased": "2026-10-15T07:47:41.674Z",
    "d": "d/432.dd4356fac0ef04b2.json",
-   "dc": "pending",
+   "dc": "c9af487bde039bfb3e0385058bb30c918f7d57df",
    "parts": {
     "вос": [
      "p/a14ed0405f69ff84.json",
@@ -22020,7 +22020,7 @@
    "s": "2026-10-14T09:19:28.478Z",
    "rebased": "2026-10-14T09:21:28.478Z",
    "d": "d/433.3911c6324d148289.json",
-   "dc": "pending",
+   "dc": "c9af487bde039bfb3e0385058bb30c918f7d57df",
    "parts": {
     "гне": [
      "p/1c6699a4d0c621b7.json",
@@ -27391,7 +27391,7 @@
    "s": "2026-10-15T07:45:36.526Z",
    "rebased": "2026-10-15T07:47:36.526Z",
    "d": "d/442.c26a49d6c96289b5.json",
-   "dc": "pending",
+   "dc": "c9af487bde039bfb3e0385058bb30c918f7d57df",
    "parts": {
     "тай": [
      "p/40a061c0d3457d25.json",
@@ -39826,7 +39826,7 @@
    "s": "2026-10-15T16:26:12.197Z",
    "rebased": "2026-10-15T16:28:12.197Z",
    "d": "d/43a.562d8bcecdcd61fd.json",
-   "dc": "pending",
+   "dc": "c9af487bde039bfb3e0385058bb30c918f7d57df",
    "parts": {
     "кос": [
      "p/428a2853da64c7e8.json",
@@ -44144,17 +44144,17 @@
   "after_at": "2026-10-16T08:47:58.682Z",
   "after_id": 900093061
  },
- "index": "i/f4c9e950dae24bb6.json",
+ "index": "i/f32da4488e0b6a17.json",
  "indexes": [
-  "i/d9d62ced3971bce3.json",
   "i/a5810f8f5c9b4c76.json",
   "i/dbced31b1ee8e153.json",
-  "i/f4c9e950dae24bb6.json"
+  "i/f4c9e950dae24bb6.json",
+  "i/f32da4488e0b6a17.json"
  ],
  "updated": "2026-10-16T08:48:20.563Z",
- "dataCommit": "5281573f19afddfc53be539bebdc09ee486060e0",
+ "dataCommit": "c9af487bde039bfb3e0385058bb30c918f7d57df",
  "layout": 2,
- "partsCommit": "5cc73ec8cfb3113d15caea9154344606276d6d86",
+ "partsCommit": "009fff82c00d328f1be05cb8e72646bdfccf1ebe",
  "kp": [
   [
    "k/067ebdc3f9b4927c.json",
@@ -44294,7 +44294,7 @@
   ],
   [
    "k/84be4150598a67bc.json",
-   "pending"
+   "009fff82c00d328f1be05cb8e72646bdfccf1ebe"
   ],
   [
    "k/0d2c638f088679a4.json",
