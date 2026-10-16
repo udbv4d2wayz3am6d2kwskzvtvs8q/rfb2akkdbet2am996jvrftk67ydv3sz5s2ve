@@ -20271,7 +20271,7 @@
    "s": "2026-10-14T22:58:41.601Z",
    "rebased": "2026-10-14T23:00:41.601Z",
    "d": "d/431.2dd84c5bd4c73b8d.json",
-   "dc": "pending",
+   "dc": "4366783974c23cd9d52f290bdec7819fea6c847d",
    "parts": {
     "быт": [
      "p/4e4ab8ff564d51cb.json",
@@ -21088,7 +21088,7 @@
    "s": "2026-10-15T07:45:41.674Z",
    "rebased": "2026-10-15T07:47:41.674Z",
    "d": "d/432.c22ae1f25e9842e9.json",
-   "dc": "pending",
+   "dc": "4366783974c23cd9d52f290bdec7819fea6c847d",
    "parts": {
     "вос": [
      "p/a14ed0405f69ff84.json",
@@ -31446,12 +31446,12 @@
   "4e9": {
    "letter": "ө",
    "b": "b/4e9.a8a3d26fcf0a99f4.json",
-   "bc": "pending",
+   "bc": "4366783974c23cd9d52f290bdec7819fea6c847d",
    "n": 1,
    "s": "2026-10-16T22:34:39.562Z",
    "rebased": "2026-10-16T22:36:39.562Z",
    "d": "d/4e9.04d6b85f11fdfdd8.json",
-   "dc": "pending",
+   "dc": "4366783974c23cd9d52f290bdec7819fea6c847d",
    "parts": null
   },
   "e9": {
@@ -34280,7 +34280,7 @@
    "s": "2026-10-15T07:46:11.115Z",
    "rebased": "2026-10-15T07:48:11.115Z",
    "d": "d/43f.6d37f2feaee520a9.json",
-   "dc": "pending",
+   "dc": "4366783974c23cd9d52f290bdec7819fea6c847d",
    "parts": {
     "пре": [
      "p/e384d8b7f70a79ee.json",
@@ -44155,17 +44155,17 @@
   "after_at": "2026-10-16T22:36:10.062Z",
   "after_id": 900093865
  },
- "index": "i/7e0db99a931240a0.json",
+ "index": "i/3dac7a418b60deca.json",
  "indexes": [
-  "i/dbced31b1ee8e153.json",
   "i/f4c9e950dae24bb6.json",
   "i/f32da4488e0b6a17.json",
-  "i/7e0db99a931240a0.json"
+  "i/7e0db99a931240a0.json",
+  "i/3dac7a418b60deca.json"
  ],
  "updated": "2026-10-16T22:36:28.914Z",
- "dataCommit": "ca109f1b78ec8b95eac0c965fa6076f63c70ef08",
+ "dataCommit": "4366783974c23cd9d52f290bdec7819fea6c847d",
  "layout": 2,
- "partsCommit": "170323ac38a6000a08522655a6c4b165fee660f3",
+ "partsCommit": "064326fd45099f09199acdb2ff82b88d1e556cd8",
  "kp": [
   [
    "k/067ebdc3f9b4927c.json",
@@ -44257,7 +44257,7 @@
   ],
   [
    "k/8fe057dd6faf9935.json",
-   "pending"
+   "064326fd45099f09199acdb2ff82b88d1e556cd8"
   ],
   [
    "k/09f25e469e96af62.json",
