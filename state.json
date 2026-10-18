@@ -399,8 +399,8 @@
    "n": 12309,
    "s": "2026-10-14T09:19:17.421Z",
    "rebased": "2026-10-14T09:21:17.421Z",
-   "d": "d/61.595d51491cc15a71.json",
-   "dc": "6991452ada3df203096dd82fd10e68cc34c2e010",
+   "d": "d/61.f76bcaa8023ed149.json",
+   "dc": "pending",
    "parts": {
     "ang": [
      "p/8fc9fafa11a53ae0.json",
@@ -8978,8 +8978,8 @@
    "n": 7822,
    "s": "2026-10-15T07:46:27.118Z",
    "rebased": "2026-10-15T07:48:27.118Z",
-   "d": "d/68.8b1e0abfec9a62e5.json",
-   "dc": "6991452ada3df203096dd82fd10e68cc34c2e010",
+   "d": "d/68.67a192dbb9b1aa5c.json",
+   "dc": "pending",
    "parts": {
     "hun": [
      "p/6f93355840645c1e.json",
@@ -24533,8 +24533,8 @@
    "n": 8978,
    "s": "2026-10-14T22:58:26.190Z",
    "rebased": "2026-10-14T23:00:26.190Z",
-   "d": "d/438.405b3210f235712a.json",
-   "dc": "0ff959186288486d0e1c4379f70dc582171e5f8a",
+   "d": "d/438.056e07e09cfe34ea.json",
+   "dc": "pending",
    "parts": {
     "ист": [
      "p/49ce3235b810e231.json",
@@ -30646,8 +30646,8 @@
    "n": 2032,
    "s": "2026-10-14T22:58:23.601Z",
    "rebased": "2026-10-14T23:00:23.601Z",
-   "d": "d/448.5731cbf1ab241ad7.json",
-   "dc": "a63a962bf025694b455fb1426074d81f51b65f09",
+   "d": "d/448.ee5b09c4b83f9dc4.json",
+   "dc": "pending",
    "parts": {
     "шам": [
      "p/3de728998c563072.json",
@@ -44152,8 +44152,8 @@
   }
  },
  "cursor": {
-  "after_at": "2026-10-18T15:28:58.934Z",
-  "after_id": 900002454
+  "after_at": "2026-10-18T22:15:48.506Z",
+  "after_id": 900093869
  },
  "index": "i/ffba37612aa888b2.json",
  "indexes": [
@@ -44162,7 +44162,7 @@
   "i/dc1c4fdcc086e4c3.json",
   "i/ffba37612aa888b2.json"
  ],
- "updated": "2026-10-18T18:29:20.389Z",
+ "updated": "2026-10-18T22:16:09.567Z",
  "dataCommit": "17bdfe6d2d9dd05edb0a8886b18b88e088e626b1",
  "layout": 2,
  "partsCommit": null,
@@ -44208,8 +44208,8 @@
    "9d10b0ef6fa4801f1bbfef3b599a5d3841026271"
   ],
   [
-   "k/13983c7da15ee2ef.json",
-   "7dbee5f6791c680cbae714c30235dfe8761e1f15"
+   "k/33843c98ea7b9341.json",
+   "pending"
   ],
   [
    "k/f15c141aa6a890af.json",
