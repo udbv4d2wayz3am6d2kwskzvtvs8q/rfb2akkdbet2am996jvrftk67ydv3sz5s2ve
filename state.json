@@ -41454,7 +41454,7 @@
   "44e": {
    "letter": "ю",
    "b": "b/44e.817a825b33a70fd7.json",
-   "bc": "pending",
+   "bc": "e0c94eba4215bf9cc75cf803dcf4507ece22e003",
    "n": 329,
    "s": "2026-10-24T22:15:06.181Z",
    "rebased": "2026-10-24T22:17:06.181Z",
@@ -44155,17 +44155,17 @@
   "after_at": "2026-10-24T18:37:18.465Z",
   "after_id": 900094020
  },
- "index": "i/2d3860089ee3dcf0.json",
+ "index": "i/b9d9eb61d7e6deed.json",
  "indexes": [
-  "i/eb9b737c9e949abd.json",
   "i/3893fd13a29ac3c1.json",
   "i/d9682f1e8a6f94db.json",
-  "i/2d3860089ee3dcf0.json"
+  "i/2d3860089ee3dcf0.json",
+  "i/b9d9eb61d7e6deed.json"
  ],
  "updated": "2026-10-24T22:17:00.111Z",
- "dataCommit": "792b6a6d83caf3e1741fe9741e17b779f76a5372",
+ "dataCommit": "e0c94eba4215bf9cc75cf803dcf4507ece22e003",
  "layout": 2,
- "partsCommit": "e396f498cba8fb9adc0c71ad40d50075631c2292",
+ "partsCommit": null,
  "kp": [
   [
    "k/067ebdc3f9b4927c.json",
