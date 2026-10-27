@@ -8979,7 +8979,7 @@
    "s": "2026-10-22T08:00:20.243Z",
    "rebased": "2026-10-22T08:02:20.243Z",
    "d": "d/68.81418b8353d64b02.json",
-   "dc": "pending",
+   "dc": "693d7c35ac23a5929fa0e3ab1dc2b1c5710f68f9",
    "parts": {
     "hun": [
      "p/771b6fa6c4534f12.json",
@@ -13118,7 +13118,7 @@
    "s": "2026-10-22T16:45:36.208Z",
    "rebased": "2026-10-22T16:47:36.208Z",
    "d": "d/73.909f67835ff1c687.json",
-   "dc": "pending",
+   "dc": "693d7c35ac23a5929fa0e3ab1dc2b1c5710f68f9",
    "parts": {
     "sou": [
      "p/1a8c533b41a0cdfd.json",
@@ -25312,7 +25312,7 @@
    "s": "2026-10-22T22:58:39.589Z",
    "rebased": "2026-10-22T23:00:39.589Z",
    "d": "d/440.03eb3cba9d978496.json",
-   "dc": "pending",
+   "dc": "693d7c35ac23a5929fa0e3ab1dc2b1c5710f68f9",
    "parts": {
     "ран": [
      "p/a5b73d0a326d209d.json",
@@ -26074,7 +26074,7 @@
    "s": "2026-10-22T16:45:17.460Z",
    "rebased": "2026-10-22T16:47:17.460Z",
    "d": "d/441.131a26ae4af3e574.json",
-   "dc": "pending",
+   "dc": "693d7c35ac23a5929fa0e3ab1dc2b1c5710f68f9",
    "parts": {
     "сме": [
      "p/adbee5568709a071.json",
@@ -32166,7 +32166,7 @@
    "s": "2026-10-21T08:02:59.849Z",
    "rebased": "2026-10-21T08:04:59.849Z",
    "d": "d/6f.3932491e4bae716c.json",
-   "dc": "pending",
+   "dc": "693d7c35ac23a5929fa0e3ab1dc2b1c5710f68f9",
    "parts": {
     "obj": [
      "p/8aefe2b4837b170b.json",
@@ -44155,17 +44155,17 @@
   "after_at": "2026-10-27T09:39:02.852Z",
   "after_id": 900094069
  },
- "index": "i/cbe52921c2cdae00.json",
+ "index": "i/e6251d7725558075.json",
  "indexes": [
-  "i/1170424b5ea27249.json",
   "i/824cdda85b865090.json",
   "i/7e36d79ebb5b719f.json",
-  "i/cbe52921c2cdae00.json"
+  "i/cbe52921c2cdae00.json",
+  "i/e6251d7725558075.json"
  ],
  "updated": "2026-10-27T09:39:27.240Z",
- "dataCommit": "8bd3af4ed614cc95283a4333a153413ec04cf1e1",
+ "dataCommit": "693d7c35ac23a5929fa0e3ab1dc2b1c5710f68f9",
  "layout": 2,
- "partsCommit": "63ee6a5ebf437e4a00c766150d7d97c9d176057f",
+ "partsCommit": null,
  "kp": [
   [
    "k/067ebdc3f9b4927c.json",
