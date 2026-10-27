@@ -8978,8 +8978,8 @@
    "n": 7839,
    "s": "2026-10-22T08:00:20.243Z",
    "rebased": "2026-10-22T08:02:20.243Z",
-   "d": "d/68.5a1b735fff1279df.json",
-   "dc": "fa94c91040a5531baaa2038e1ed63ccc2bd0640c",
+   "d": "d/68.81418b8353d64b02.json",
+   "dc": "pending",
    "parts": {
     "hun": [
      "p/771b6fa6c4534f12.json",
@@ -13117,8 +13117,8 @@
    "n": 16628,
    "s": "2026-10-22T16:45:36.208Z",
    "rebased": "2026-10-22T16:47:36.208Z",
-   "d": "d/73.dfcf3744234003f2.json",
-   "dc": "32b504b5af3fe48467d73d0b32328da14d676fbf",
+   "d": "d/73.909f67835ff1c687.json",
+   "dc": "pending",
    "parts": {
     "sou": [
      "p/1a8c533b41a0cdfd.json",
@@ -25311,8 +25311,8 @@
    "n": 7046,
    "s": "2026-10-22T22:58:39.589Z",
    "rebased": "2026-10-22T23:00:39.589Z",
-   "d": "d/440.db42c2ff5ff42661.json",
-   "dc": "32b504b5af3fe48467d73d0b32328da14d676fbf",
+   "d": "d/440.03eb3cba9d978496.json",
+   "dc": "pending",
    "parts": {
     "ран": [
      "p/a5b73d0a326d209d.json",
@@ -26073,8 +26073,8 @@
    "n": 17901,
    "s": "2026-10-22T16:45:17.460Z",
    "rebased": "2026-10-22T16:47:17.460Z",
-   "d": "d/441.58103e2dba297c37.json",
-   "dc": "fa94c91040a5531baaa2038e1ed63ccc2bd0640c",
+   "d": "d/441.131a26ae4af3e574.json",
+   "dc": "pending",
    "parts": {
     "сме": [
      "p/adbee5568709a071.json",
@@ -32165,8 +32165,8 @@
    "n": 8136,
    "s": "2026-10-21T08:02:59.849Z",
    "rebased": "2026-10-21T08:04:59.849Z",
-   "d": "d/6f.f3ba0a93423aa7a3.json",
-   "dc": "fa94c91040a5531baaa2038e1ed63ccc2bd0640c",
+   "d": "d/6f.3932491e4bae716c.json",
+   "dc": "pending",
    "parts": {
     "obj": [
      "p/8aefe2b4837b170b.json",
@@ -44152,8 +44152,8 @@
   }
  },
  "cursor": {
-  "after_at": "2026-10-27T08:22:26.216Z",
-  "after_id": 900094067
+  "after_at": "2026-10-27T09:39:02.852Z",
+  "after_id": 900094069
  },
  "index": "i/cbe52921c2cdae00.json",
  "indexes": [
@@ -44162,7 +44162,7 @@
   "i/7e36d79ebb5b719f.json",
   "i/cbe52921c2cdae00.json"
  ],
- "updated": "2026-10-27T08:29:04.061Z",
+ "updated": "2026-10-27T09:39:27.240Z",
  "dataCommit": "8bd3af4ed614cc95283a4333a153413ec04cf1e1",
  "layout": 2,
  "partsCommit": "63ee6a5ebf437e4a00c766150d7d97c9d176057f",
