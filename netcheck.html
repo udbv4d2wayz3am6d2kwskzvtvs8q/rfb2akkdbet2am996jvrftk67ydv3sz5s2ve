@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Проверка сети</title>
+<!--
+  Network check served at /netcheck. Reads full pages and the actual WS and
+  obfuscated HTTP media transports from the viewer's network. A handshake or
+  a partial HTTP 200 alone does not prove playback. No report is uploaded.
+
+  Everything Lift-side is fetched from a sandboxed (null-origin) frame, the
+  way the app does it: no alphy.tv origin, no referrer, no cookies. Reports stay local and can be downloaded without signed media URLs.
+-->
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 18px 16px 28px; background: #0d0d0d; color: #ddd; font: 16px/1.4 system-ui, sans-serif; }
+  h1 { margin: 0 0 4px; font-size: 22px; font-weight: 600; }
+  .meta { color: #888; font-size: 13px; margin-bottom: 12px; word-break: break-word; }
+  .verdict { margin: 0 0 14px; padding: 12px 14px; border-radius: 12px; background: #1b1b1b; font-size: 17px; }
+  .verdict.ok { color: #8be08b; }
+  .verdict.bad { color: #ff8a7a; }
+  .verdict.wait { color: #ffd84d; }
+  table { border-collapse: collapse; width: 100%; max-width: 760px; }
+  td { padding: 7px 6px; border-top: 1px solid #222; vertical-align: top; }
+  td.mark { width: 1.4em; font-size: 18px; }
+  td.name { color: #eee; }
+  td.name small { display: block; color: #777; font-size: 12px; }
+  td.res { text-align: right; overflow-wrap: anywhere; color: #aaa; font-variant-numeric: tabular-nums; }
+  .ok { color: #8be08b; } .bad { color: #ff8a7a; } .skip { color: #666; }
+  button:disabled { opacity: .5; }
+  button { margin-top: 16px; padding: 10px 18px; font: inherit; color: #111; background: #ffd84d; border: 0; border-radius: 10px; }
+</style>
+</head>
+<body>
+<h1>Проверка сети для Lift</h1>
+<div class="meta" id="meta"></div>
+<div class="verdict wait" id="verdict">Проверяю…</div>
+<table id="rows"></table>
+<button id="again" type="button">Проверить ещё раз</button>
+<button id="download" type="button" disabled>Сохранить отчёт</button>
+<script>
+(function () {
+  'use strict';
+  const VERSION = '2026-10-22.2';
+  const LIFT_ID = /^\d{1,9}$/.test(new URLSearchParams(location.search).get('id') || '')
+    ? new URLSearchParams(location.search).get('id') : '106';
+  const HOSTS = ['embed.lateremb.ws', 'lift3.ws', 'zenithjs.ws'];
+  const RELAY = 'https://icmjgvlsyfqwyewvsuje.supabase.co/functions/v1/liftw';
+  const TIMEOUT = 10000;
+  const rows = document.getElementById('rows');
+  const verdict = document.getElementById('verdict');
+  const again = document.getElementById('again');
+  const download = document.getElementById('download');
+  let report, seq = 0;
+  const waiting = new Map();
+
+  // Self-contained: no script/CDN has to load before a broken network can be
+  // diagnosed. As in app.js, vendor traffic has Origin:null and no credentials.
+  function broker() {
+    const allowed = value => {
+      try {
+        const u = new URL(value);
+        return u.protocol === 'https:' && !u.username && !u.password && !u.port && (
+          (['embed.lateremb.ws', 'lift3.ws', 'zenithjs.ws', 'api.ortified.ws'].includes(u.hostname)
+            && /^\/embed\/movie\/\d+$/.test(u.pathname)) ||
+          (u.hostname === 'api.lateremb.ws' && /^\/info\/\d+$/.test(u.pathname) && !u.search) ||
+          (u.hostname.endsWith('.interkh.com') && u.hostname.length > 12));
+      } catch { return false; }
+    };
+    const wire = (value, offset) => {
+      const u = new URL(value);
+      if (!/\.(?:mpd|m3u8|webm|ts)$/.test(u.pathname)) return value;
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      const substitution = 'DlChEXitLONYRkFjAsnBbymWzSHMqKPgQZpvwerofJTVdIuUcxaG';
+      const payload = btoa(Math.round((Date.now() + (offset || 0)) / 3600000) + '/' + u.pathname + u.search)
+        .replace(/[A-Za-z]/g, ch => substitution[alphabet.indexOf(ch)]);
+      return u.origin + '/x-en-x/' + payload;
+    };
+    const socketRequest = (url, handshake, observe = () => {}, range = '', endpoint = '') => new Promise((resolve, reject) => {
+      if (endpoint && !['wss://ws.getzend.digital/px', 'wss://wsr.getzend.digital/px'].includes(endpoint)) return reject(new Error('Blocked WS endpoint'));
+      const socket = new WebSocket(endpoint || 'wss://ws.getzend.digital/px');
+      socket.binaryType = 'arraybuffer';
+      let done = false;
+      const finish = (error, value) => {
+        if (done) return;
+        done = true; clearTimeout(timer);
+        socket.close();
+        error ? reject(error) : resolve(value);
+      };
+      const timer = setTimeout(() => finish(new Error('WS timeout')), 10000);
+      socket.onerror = () => finish(new Error('WS connection error'));
+      socket.onclose = () => finish(new Error('WS connection closed'));
+      socket.onopen = () => {
+        observe('ws-body');
+        if (handshake) return finish(null, new ArrayBuffer(0));
+        if (new TextEncoder().encode(url).length > (endpoint === 'wss://wsr.getzend.digital/px' ? 4096 : 255)) return finish(new Error('WS URL too long'));
+        socket.send(JSON.stringify({ req: 'f', url, range: range || undefined }));
+      };
+      socket.onmessage = async event => {
+        if (typeof event.data === 'string') return;
+        const buffer = event.data instanceof ArrayBuffer ? event.data : await event.data.arrayBuffer();
+        const bytes = new Uint8Array(buffer);
+        if (bytes[0] && bytes.length <= 2) return finish(new Error('WS response ' + bytes[0]));
+        if (bytes.length < 2 || bytes.length < 2 + bytes[1]) return;
+        const expectedLength = new TextEncoder().encode(url).length;
+        const replyUrlBytes = endpoint === 'wss://wsr.getzend.digital/px' && expectedLength > 255 && expectedLength % 256 === bytes[1]
+          && new TextDecoder().decode(bytes.subarray(2, 2 + expectedLength)) === url ? expectedLength : bytes[1];
+        const name = new TextDecoder().decode(bytes.subarray(2, 2 + replyUrlBytes));
+        if (name !== url) return;
+        if (bytes[0]) return finish(new Error('WS response ' + bytes[0]));
+        finish(null, buffer.slice(2 + replyUrlBytes));
+      };
+    });
+    addEventListener('message', async event => {
+      const d = event.data;
+      if (event.source !== parent || !d?.netcheck || (!d.handshake && !allowed(d.url))) return;
+      const start = performance.now();
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), d.timeout);
+      let result;
+      try {
+        let body, status, responseUrl;
+        if (d.handshake || d.transport === 'ws') {
+          body = await socketRequest(d.url, d.handshake, () => {}, d.range, d.socketUrl); status = d.handshake ? 101 : 200; responseUrl = d.url;
+        } else {
+          const response = await fetch(d.transport === 'http' ? wire(d.url, d.offset) : d.url, {
+            mode: 'cors', credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store', signal: controller.signal,
+          });
+          status = response.status;
+          body = await response.arrayBuffer();
+          const logical = new URL(d.url), actual = new URL(response.url);
+          logical.hostname = actual.hostname;
+          responseUrl = actual.pathname.startsWith('/x-en-x/') ? logical.href : actual.href;
+        }
+        result = { status, bytes: body.byteLength, responseUrl, text: d.text ? new TextDecoder().decode(body).slice(0, 600000) : '' };
+      } catch (e) {
+        result = { status: 0, bytes: 0, error: controller.signal.aborted ? 'timeout' : String(e?.message || e).replace(/https?:\/\/\S+/g, '[URL]') };
+      } finally { clearTimeout(timer); }
+      parent.postMessage({ netcheck: true, id: d.id, ms: Math.round(performance.now() - start), ...result }, '*');
+    });
+    parent.postMessage({ netcheck: true, ready: true }, '*');
+  }
+  const frame = document.createElement('iframe');
+  frame.sandbox = 'allow-scripts'; frame.referrerPolicy = 'no-referrer'; frame.style.display = 'none';
+  frame.srcdoc = '<!doctype html><script>(' + broker.toString() + ')();<\/script>';
+  let markReady;
+  const ready = new Promise(resolve => { markReady = resolve; });
+  addEventListener('message', event => {
+    if (event.source !== frame.contentWindow || !event.data?.netcheck) return;
+    if (event.data.ready) { markReady(); return; }
+    const finish = waiting.get(event.data.id);
+    if (finish) finish(event.data);
+  });
+  document.body.appendChild(frame);
+
+  function opaque(url, options = {}) {
+    return new Promise(resolve => {
+      const id = ++seq;
+      const start = performance.now();
+      const timer = setTimeout(() => finish({ status: 0, bytes: 0, error: 'sandbox timeout', ms: Math.round(performance.now() - start) }), TIMEOUT + 2000);
+      const finish = result => { clearTimeout(timer); waiting.delete(id); resolve(result); };
+      waiting.set(id, finish);
+      ready.then(() => {
+        if (waiting.has(id)) frame.contentWindow.postMessage({ netcheck: true, id, url, timeout: TIMEOUT, ...options }, '*');
+      });
+    });
+  }
+  async function direct(url, expectedHash) {
+    const start = performance.now(), controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), TIMEOUT);
+    try {
+      const r = await fetch(url, { credentials: 'omit', cache: 'no-store', signal: controller.signal });
+      const body = await r.arrayBuffer();
+      const hash = expectedHash && crypto.subtle ? [...new Uint8Array(await crypto.subtle.digest('SHA-256', body))].map(x => x.toString(16).padStart(2, '0')).join('') : '';
+      return { status: r.status, bytes: body.byteLength, ms: Math.round(performance.now() - start),
+        text: expectedHash ? '' : new TextDecoder().decode(body), integrity: expectedHash ? hash === expectedHash : undefined };
+    } catch { return { status: 0, bytes: 0, error: controller.signal.aborted ? 'timeout' : 'fetch error', ms: Math.round(performance.now() - start) }; }
+    finally { clearTimeout(timer); }
+  }
+  function row(key, name, note) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td class="mark">…</td><td class="name"></td><td class="res"></td>';
+    tr.children[1].textContent = name;
+    const small = document.createElement('small'); small.textContent = note; tr.children[1].appendChild(small);
+    rows.appendChild(tr);
+    return (r, ok) => {
+      tr.children[0].textContent = ok === null ? '–' : ok ? '✓' : '✗';
+      tr.children[0].className = 'mark ' + (ok === null ? 'skip' : ok ? 'ok' : 'bad');
+      tr.children[2].textContent = r ? (r.status || r.error || 'ошибка') + ' · ' + r.ms + ' мс · ' + (r.bytes || 0) + ' Б' : 'нет исходных данных';
+      // No signed URLs, HTML, cookies, IP addresses, or page tokens in reports.
+      report.checks[key] = { ok, status: r?.status || 0, ms: r?.ms || 0, bytes: r?.bytes || 0, error: r?.error || '', integrity: r?.integrity };
+    };
+  }
+  function pageData(html) {
+    const match = /\bdash"?\s*:\s*"([^"\n]+\.mpd[^"\n]*)"/.exec(html || '')
+      || /\bdasha"?\s*:\s*"([^"\n]+\.mpd[^"\n]*)"/.exec(html || '');
+    if (!match) return null;
+    let url = match[1].replace(/\\\//g, '/').replace(/&amp;/g, '&');
+    const name = /\bo\[k\]\s*\+=\s*'&'\s*\+\s*([A-Za-z_$][\w$]*)/.exec(html)?.[1];
+    const values = new Set();
+    if (name) for (const m of html.matchAll(new RegExp('\\b' + name.replace(/\$/g, '\\$') + '\\s*=\\s*"([0-9A-Za-z]{1,64})"', 'g'))) {
+      if ((html.slice(html.lastIndexOf('\n', m.index) + 1, m.index).match(/'/g) || []).length % 2 === 0) values.add(m[1]);
+    }
+    if (values.size === 1) url += '&' + [...values][0];
+    const unix = Number(/\bunixTime\s*=\s*(\d{10})\b/.exec(html)?.[1]);
+    const cfg = /\b(?:var|let|const)\s+cdn_cfg\s*=\s*\{([\s\S]*?)\}/.exec(html || '')?.[1];
+    const value = /\bws\s*:\s*["']([0-9a-f]+)["']/i.exec(cfg || '')?.[1];
+    let ws = null;
+    if (/\bws\s*:\s*(?:false|null|0)\b/.test(cfg || '')) ws = false;
+    if (value && value.length % 2 === 0 && value.length < 1024) {
+      const key = parseInt(value.slice(0, 2), 16);
+      const decoded = value.slice(2).match(/../g)?.map(v => String.fromCharCode(parseInt(v, 16) ^ key)).join('');
+      if (['wss://ws.getzend.digital/px', 'wss://wsr.getzend.digital/px'].includes(decoded)) ws = decoded;
+    }
+    return { url, offset: unix ? unix * 1000 - Date.now() : 0, cdnConfig: { present: cfg !== undefined, ws } };
+  }
+  function segmentOf(mpd, manifestUrl) {
+    const base = /<BaseURL>([^<]+)<\/BaseURL>/.exec(mpd || '')?.[1];
+    const init = /initialization="([^"]+)"/.exec(mpd || '')?.[1];
+    const media = /media="([^"]+)"/.exec(mpd || '')?.[1];
+    const representation = /<Representation\b[^>]*\bid="([^"]+)"/.exec(mpd || '')?.[1];
+    if (!init || !media || !representation) return null;
+    const u = new URL((base || '').replace(/&amp;/g, '&'), manifestUrl);
+    if (u.protocol === 'http:' && u.hostname.endsWith('.interkh.com')) u.protocol = 'https:';
+    const expand = v => new URL(v.replace(/&amp;/g, '&').replace(/\$RepresentationID\$/g, representation).replace(/\$Number\$/g, '30'), u).href;
+    return { init: expand(init), media: expand(media) };
+  }
+  async function run() {
+    again.disabled = true; download.disabled = true; rows.innerHTML = '';
+    report = { version: VERSION, at: new Date().toISOString(), userAgent: navigator.userAgent, liftId: LIFT_ID, checks: {} };
+    verdict.className = 'verdict wait'; verdict.textContent = 'Проверяю полный ответ страницы и оба транспорта видео…';
+    document.getElementById('meta').textContent = VERSION + ' · Lift ' + LIFT_ID + ' · ' + new Date().toLocaleString('ru-RU');
+    const check = async (key, name, note, task, valid = r => r.status === 200 && r.bytes > 0) => {
+      const mark = row(key, name, note);
+      const r = await task; mark(r, !!valid(r)); return r;
+    };
+    const api = check('api', 'Lift API', 'api.lateremb.ws · полный ответ', opaque('https://api.lateremb.ws/info/' + LIFT_ID, { text: true }), r => {
+      try { return r.status === 200 && !!JSON.parse(r.text).iframe_uri; } catch { return false; }
+    });
+    const relay = check('relay', 'Резервный API', 'Supabase · данные тайтла', direct(RELAY + '?mode=info&id=' + LIFT_ID + '&view=player&cv=2&fresh=1'), r => {
+      try { return r.status === 200 && !!JSON.parse(r.text).iframe_uri; } catch { return false; }
+    });
+    const hash = '450e7e4d81761c4f02692d5d975ad31f3f7f9d91dcf32818a53d5b991f999dbd';
+    const library = check('shaka', 'Библиотека плеера', 'jsDelivr · полный файл и SHA-256', direct('https://cdn.jsdelivr.net/npm/shaka-player@4.11.17/dist/shaka-player.compiled.js', hash), r => r.status === 200 && r.integrity);
+    const mirror = check('shakaMirror', 'Резерв библиотеки', 'alphy.tv · полный файл и SHA-256', direct('/player-runtime.js', hash), r => r.status === 200 && r.integrity);
+    const ws = check('ws', 'WebSocket видео', 'ws.getzend.digital · настоящее открытие соединения', opaque('', { handshake: true }), r => r.status === 101);
+    const pages = await Promise.all(HOSTS.map((host, i) => check('page' + i, 'Страница ' + host, 'полное тело · Origin:null', opaque('https://' + host + '/embed/movie/' + LIFT_ID + '?host=liftw.ws', { text: true }), r => r.status === 200 && !!pageData(r.text))));
+    const infos = await Promise.all([api, relay]);
+    if (!pages.some(r => r.status === 200 && pageData(r.text))) {
+      let info; for (const r of infos) { try { const value = JSON.parse(r.text); if (value.iframe_uri) { info = value; break; } } catch {} }
+      if (info) {
+        const signed = new URL(info.iframe_uri);
+        if (/^\/embed\/movie\/\d+$/.test(signed.pathname)) pages.push(...await Promise.all(HOSTS.map((host, i) => check('signed' + i, 'Подписанная страница ' + host, 'подпись API · полный ответ', opaque('https://' + host + signed.pathname + signed.search, { text: true }), r => r.status === 200 && !!pageData(r.text)))));
+      }
+    }
+    const data = pages.map(r => r.status === 200 ? pageData(r.text) : null).find(Boolean);
+    const media = async transport => {
+      const manifestMark = row(transport + 'Manifest', transport.toUpperCase() + ': манифест', 'полный MPD, выданный этой сети');
+      const initMark = row(transport + 'Init', transport.toUpperCase() + ': инициализация', 'по адресу из MPD');
+      const segMark = row(transport + 'Segment', transport.toUpperCase() + ': 30-й сегмент', 'полный ответ видео; декодирование не проверяется');
+      if (!data) { [manifestMark, initMark, segMark].forEach(mark => mark(null, null)); return; }
+      const opts = { transport, offset: data.offset, socketUrl: data.cdnConfig?.ws || '' };
+      const mpd = await opaque(data.url, { ...opts, text: true });
+      const valid = mpd.status === 200 && /<MPD[\s>]/.test(mpd.text || '');
+      manifestMark(mpd, valid);
+      const segment = valid ? segmentOf(mpd.text, mpd.responseUrl || data.url) : null;
+      if (!segment) { initMark(null, null); segMark(null, null); return; }
+      const init = await opaque(segment.init, opts); initMark(init, init.status === 200 && init.bytes > 0);
+      const seg = await opaque(segment.media, opts); segMark(seg, seg.status === 200 && seg.bytes > 0);
+    };
+    await Promise.all([library, mirror, ws, media('ws'), media('http')]);
+    const c = report.checks;
+    const pageOk = !!data, libOk = c.shaka?.ok || c.shakaMirror?.ok;
+    const mediaOk = c.wsInit?.ok && c.wsSegment?.ok;
+    let message;
+    if (!pageOk) message = 'Не загружается полная страница Lift. Результаты по каждому адресу — в таблице.';
+    else if (!libOk) message = 'Страница Lift доступна, но библиотека плеера не загружается целиком.';
+    else if (!mediaOk) message = 'Страница Lift доступна, основной WS-транспорт видео не прошёл проверку. HTTP проверен отдельно.';
+    else message = 'Полная страница, библиотека и видео по WS доступны в этой сети. Декодирование и длительное воспроизведение этим тестом не проверяются.';
+    report.verdict = message;
+    verdict.className = 'verdict ' + (pageOk && libOk && mediaOk ? 'ok' : 'bad'); verdict.textContent = message;
+    again.disabled = false; download.disabled = false;
+  }
+  again.addEventListener('click', () => run().catch(failed));
+  download.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' }));
+    const link = document.createElement('a'); link.href = url; link.download = 'alphy-netcheck.json'; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  function failed() { verdict.className = 'verdict bad'; verdict.textContent = 'Проверка прервана. Сохраните промежуточный отчёт.'; again.disabled = false; download.disabled = false; }
+  run().catch(failed);
+})();
+</script>
+</body>
+</html>
