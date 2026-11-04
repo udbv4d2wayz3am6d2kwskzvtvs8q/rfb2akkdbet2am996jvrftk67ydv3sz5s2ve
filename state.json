@@ -22024,8 +22024,8 @@
    "n": 5929,
    "s": "2026-10-28T20:48:25.698Z",
    "rebased": "2026-10-28T20:50:25.698Z",
-   "d": "d/433.21731dd0484f508e.json",
-   "dc": "56a4a7cc018d3fe4855bfae12fd0c7da5eb4c8db",
+   "d": "d/433.073bcfce5afde486.json",
+   "dc": "pending",
    "parts": {
     "гил": [
      "p/0acd045f8b0e3927.json",
@@ -44162,8 +44162,8 @@
   }
  },
  "cursor": {
-  "after_at": "2026-11-04T09:48:32.953Z",
-  "after_id": 900012180
+  "after_at": "2026-11-04T11:53:26.097Z",
+  "after_id": 900027146
  },
  "index": "i/ad5dfc5c6e814575.json",
  "indexes": [
@@ -44172,7 +44172,7 @@
   "i/54d44ed792631d30.json",
   "i/ad5dfc5c6e814575.json"
  ],
- "updated": "2026-11-04T10:57:58.012Z",
+ "updated": "2026-11-04T11:53:48.668Z",
  "dataCommit": "4282a86d7faee63f071e84ee562a9f2c7e3aedc4",
  "layout": 2,
  "partsCommit": "38398f1616882e73a7b7a616378de95c5460758b",
@@ -44382,8 +44382,8 @@
    "2f90a2f77e9a25450983059ab3adf06a354b4a5c"
   ],
   [
-   "k/98e57b1f30275eb8.json",
-   "3e46f9a1aeae4c9010ddeaa306cc5ee414c51e1c"
+   "k/64a6ed1cfa82115a.json",
+   "pending"
   ],
   [
    "k/abc227687234b981.json",
@@ -44435,8 +44435,8 @@
   ]
  ],
  "playable": [
-  "k/7c5058719fdf15d0.json",
-  "38398f1616882e73a7b7a616378de95c5460758b"
+  "k/fe3ea5aec3390373.json",
+  "pending"
  ],
  "pictures": [
   [
