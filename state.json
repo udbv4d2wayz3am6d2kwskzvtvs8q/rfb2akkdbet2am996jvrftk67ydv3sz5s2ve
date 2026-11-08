@@ -400,7 +400,7 @@
    "s": "2026-11-05T00:44:28.965Z",
    "rebased": "2026-11-05T00:46:28.965Z",
    "d": "d/61.a93827bffb143977.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "ang": [
      "p/8fc9fafa11a53ae0.json",
@@ -12166,7 +12166,7 @@
    "s": "2026-11-06T09:56:06.249Z",
    "rebased": "2026-11-06T09:58:06.249Z",
    "d": "d/72.6a0ad1d25753991f.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "reu": [
      "p/034619885b48ce00.json",
@@ -21098,7 +21098,7 @@
    "s": "2026-11-05T09:55:59.666Z",
    "rebased": "2026-11-05T09:57:59.666Z",
    "d": "d/432.e405892e82195768.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "вос": [
      "p/d66e56b015394ee7.json",
@@ -22030,7 +22030,7 @@
    "s": "2026-11-05T00:44:35.702Z",
    "rebased": "2026-11-05T00:46:35.702Z",
    "d": "d/433.5983073d93848f0b.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "гил": [
      "p/0acd045f8b0e3927.json",
@@ -24062,7 +24062,7 @@
    "s": "2026-11-06T00:47:54.613Z",
    "rebased": "2026-11-06T00:49:54.613Z",
    "d": "d/437.4238ba5363e7eb46.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "зер": [
      "p/e099dbbdeffedb1f.json",
@@ -25327,7 +25327,7 @@
    "s": "2026-11-06T09:56:00.714Z",
    "rebased": "2026-11-06T09:58:00.714Z",
    "d": "d/440.05f0e53f452315e1.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "ран": [
      "p/27e7226393fade0e.json",
@@ -29537,7 +29537,7 @@
    "s": "2026-11-05T09:56:08.854Z",
    "rebased": "2026-11-05T09:58:08.854Z",
    "d": "d/445.9a7b703db0469bde.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "хау": [
      "p/d9298c148397030e.json",
@@ -32186,7 +32186,7 @@
    "s": "2026-11-04T10:56:15.933Z",
    "rebased": "2026-11-04T10:58:15.933Z",
    "d": "d/6f.7e1ab57b5de5113d.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "obj": [
      "p/8aefe2b4837b170b.json",
@@ -37782,7 +37782,7 @@
    "s": "2026-11-05T00:44:39.996Z",
    "rebased": "2026-11-05T00:46:39.996Z",
    "d": "d/6c.697c505e0870a151.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "loo": [
      "p/7aae6a93328d37de.json",
@@ -40734,7 +40734,7 @@
    "s": "2026-11-06T09:55:53.601Z",
    "rebased": "2026-11-06T09:57:53.601Z",
    "d": "d/43b.9df57edb076daa72.json",
-   "dc": "pending",
+   "dc": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
    "parts": {
     "люб": [
      "p/1dcf4bb5ba5f12b4.json",
@@ -44175,17 +44175,17 @@
   "after_at": "2026-11-08T09:27:15.690Z",
   "after_id": 900094405
  },
- "index": "i/2c46d035b9e441bd.json",
+ "index": "i/618f02a07dca7cd7.json",
  "indexes": [
-  "i/ae1d5ef59f8312a3.json",
   "i/f0d72f66af4c7226.json",
   "i/d3cdc155a73114f7.json",
-  "i/2c46d035b9e441bd.json"
+  "i/2c46d035b9e441bd.json",
+  "i/618f02a07dca7cd7.json"
  ],
  "updated": "2026-11-08T09:35:25.242Z",
- "dataCommit": "c1bcdafcf6bf4df6be181935078eb784a2778f82",
+ "dataCommit": "7912755bb12862c83ca2235cea71539cf3c0d1bc",
  "layout": 2,
- "partsCommit": "6a56af51550a546661e489d4c06546232a4f171e",
+ "partsCommit": "6095bdbee24a91a799ed559b8654cedc489adf8d",
  "kp": [
   [
    "k/1874d2988220854b.json",
@@ -44217,7 +44217,7 @@
   ],
   [
    "k/36bf082fa509c329.json",
-   "pending"
+   "6095bdbee24a91a799ed559b8654cedc489adf8d"
   ],
   [
    "k/7c9f4bfc805c7d8b.json",
@@ -44293,7 +44293,7 @@
   ],
   [
    "k/5343f5264e748a9e.json",
-   "pending"
+   "6095bdbee24a91a799ed559b8654cedc489adf8d"
   ],
   [
    "k/49950d4e988985e9.json",
@@ -44425,7 +44425,7 @@
   ],
   [
    "k/1849aa3a4aa3b2c1.json",
-   "pending"
+   "6095bdbee24a91a799ed559b8654cedc489adf8d"
   ],
   [
    "k/9ae347092f7b7b5b.json",
@@ -44446,7 +44446,7 @@
  ],
  "playable": [
   "k/717e02aa826805c2.json",
-  "pending"
+  "6095bdbee24a91a799ed559b8654cedc489adf8d"
  ],
  "pictures": [
   [
