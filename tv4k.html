@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Проверка 4К</title>
+<!--
+  Served at /tv4k. Samsung's specs cap MSE at FHD for H.264, so on a TV a page's
+  own player (hls.js) cannot reach 4K, while the set's decoder can. The set's own
+  HLS player, a plain <video src>, is the one way left in a browser. This page
+  plays one episode through it, rung by rung, and shows in one photo what the
+  player really produced: the frame size it decoded and whether time moved.
+
+  It starts by itself and needs no remote. The first two rows separate "the
+  player cannot read a compressed playlist" from "it cannot play this at all",
+  so a failure at 4K means 4K. ES5 on purpose, like /tvcheck.
+-->
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 24px 36px; background: #0d0d0d; color: #ddd; font: 22px/1.4 system-ui, sans-serif; }
+  h1 { margin: 0 0 6px; font-size: 32px; font-weight: 600; }
+  .lead { color: #ffd84d; margin-bottom: 12px; }
+  table { border-collapse: collapse; width: 100%; }
+  td { padding: 5px 14px 5px 0; vertical-align: top; }
+  td.name { color: #999; white-space: nowrap; }
+  .ok { color: #8be08b; } .bad { color: #ff8a7a; } .wait { color: #ffd84d; }
+  #stage { position: fixed; right: 36px; bottom: 24px; width: 480px; height: 270px; background: #000; }
+  #stage video { width: 100%; height: 100%; }
+  button { margin-top: 14px; padding: 10px 18px; font: inherit; color: #111; background: #ffd84d; border: 0; border-radius: 10px; }
+</style>
+</head>
+<body>
+<h1>Проверка 4К</h1>
+<div class="lead" id="lead">Идёт проверка, около двух минут. Ничего нажимать не нужно. Дождитесь надписи «Готово» и сфотографируйте экран.</div>
+<table id="rows"></table>
+<div id="stage"></div>
+<button id="again" type="button">Проверить ещё раз</button>
+<script>
+(function () {
+  "use strict";
+  var RELEASE = "releases/20261101T131837Z-eece1cf8/titles/lucky/59970/";
+  var BUCKET = "https://f003.backblazeb2.com/file/fxunique/" + RELEASE;
+  var PLAIN = "https://icmjgvlsyfqwyewvsuje.supabase.co/functions/v1/fxplain/" + RELEASE;
+  var PLAIN_BACKUP = "https://gzwynsvcydynqidwxjru.supabase.co/functions/v1/fxplain/" + RELEASE;
+  var TESTS = [
+    ["720p, плейлист как на бакете", BUCKET + "index-720.m3u8", 25],
+    ["720p, плейлист без сжатия", PLAIN + "index-720.m3u8", 25],
+    ["Широкий 1080p (2582×1080)", PLAIN + "index-1080.m3u8", 30],
+    ["4К (3840×1606)", PLAIN + "index-2160.m3u8", 40],
+    ["4К, резервный адрес", PLAIN_BACKUP + "index-2160.m3u8", 40]
+  ];
+  var rows = document.getElementById("rows");
+  var stage = document.getElementById("stage");
+  var lead = document.getElementById("lead");
+  var again = document.getElementById("again");
+  var running = false;
+
+  function row(name) {
+    var tr = rows.insertRow();
+    var title = tr.insertCell();
+    var value = tr.insertCell();
+    title.className = "name";
+    title.textContent = name;
+    value.textContent = "…";
+    return value;
+  }
+  function show(cell, text, cls) { cell.textContent = text; cell.className = cls || ""; }
+
+  // Whether the set claims 4K, per codec, for the record.
+  function claims() {
+    var cell = row("Заявлено для 4К");
+    var list = [
+      ["H.264", 'video/mp4; codecs="avc1.640033"'],
+      ["HEVC", 'video/mp4; codecs="hvc1.1.6.L153.90"'],
+      ["VP9", 'video/webm; codecs="vp09.00.51.08"']
+    ];
+    var text = [];
+    var caps = navigator.mediaCapabilities;
+    function finish() { cell.textContent = text.join(" · "); }
+    if (!caps || !caps.decodingInfo) { cell.textContent = "браузер не отвечает"; return; }
+    var pending = list.length;
+    list.forEach(function (codec, i) {
+      caps.decodingInfo({ type: "media-source", video: { contentType: codec[1], width: 3840, height: 2160, bitrate: 16000000, framerate: 24 } })
+        .then(function (info) { text[i] = codec[0] + " " + (info.supported ? "да" : "нет"); },
+          function () { text[i] = codec[0] + " ?"; })
+        .then(function () { if (!--pending) finish(); });
+    });
+  }
+
+  function play(test, done) {
+    var cell = row(test[0]);
+    show(cell, "проверяю…", "wait");
+    var video = document.createElement("video");
+    var startedAt = Date.now();
+    var top = "";
+    var moved = 0;
+    var last = -1;
+    var finished = false;
+    video.muted = true;
+    video.autoplay = true;
+    video.setAttribute("playsinline", "");
+    stage.innerHTML = "";
+    stage.appendChild(video);
+
+    function size() {
+      if (video.videoWidth) top = video.videoWidth + "×" + video.videoHeight;
+    }
+    function end(text, cls) {
+      if (finished) return;
+      finished = true;
+      clearInterval(timer);
+      show(cell, text, cls);
+      try { video.pause(); video.removeAttribute("src"); video.load(); } catch (e) {}
+      stage.innerHTML = "";
+      setTimeout(done, 1500);
+    }
+    video.addEventListener("error", function () {
+      var error = video.error;
+      end("ошибка " + (error ? error.code : "?") + (error && error.message ? ": " + error.message.slice(0, 70) : "") +
+        " · " + Math.round((Date.now() - startedAt) / 1000) + " с", "bad");
+    });
+    var timer = setInterval(function () {
+      size();
+      var now = video.currentTime;
+      if (now > last + 0.1) moved += 1;
+      last = now;
+      var seconds = (Date.now() - startedAt) / 1000;
+      // Ten seconds of a moving clock is a picture that plays, not a first frame.
+      if (top && now >= 10) {
+        var bytes = video.webkitAudioDecodedByteCount;
+        end("ИГРАЕТ " + top + " · старт " + Math.round(seconds - now) + " с" + (bytes === undefined ? "" : bytes > 0 ? " · звук есть" : " · звука не видно"), "ok");
+      } else if (seconds > test[2]) {
+        end("не заиграло за " + test[2] + " с · кадр " + (top || "нет") + " · время " + now.toFixed(1), "bad");
+      } else {
+        show(cell, "проверяю… " + Math.round(seconds) + " с · кадр " + (top || "нет") + " · время " + now.toFixed(1), "wait");
+      }
+    }, 1000);
+    try {
+      video.src = test[1];
+      var started = video.play();
+      if (started && started.then) started.then(null, function () {});
+    } catch (e) {
+      end("отказ: " + e.message, "bad");
+    }
+  }
+
+  function run() {
+    if (running) return;
+    running = true;
+    rows.innerHTML = "";
+    lead.textContent = "Идёт проверка, около двух минут. Ничего нажимать не нужно. Дождитесь надписи «Готово» и сфотографируйте экран.";
+    show(row("Браузер"), navigator.userAgent.replace(/^Mozilla\/5\.0 /, ""));
+    claims();
+    var index = 0;
+    (function next() {
+      if (index >= TESTS.length) {
+        running = false;
+        lead.textContent = "Готово. Сфотографируйте экран.";
+        return;
+      }
+      play(TESTS[index++], next);
+    })();
+  }
+  again.addEventListener("click", run);
+  run();
+})();
+</script>
+</body>
+</html>

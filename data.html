@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Alphy TV: данные</title>
+<!--
+  Every title the site knows, joined across sources, at /data. A static page
+  like /tvcheck: the files come from the release mirror, the same ones search
+  reads, so Vercel serves only this document. fx and tyo arrive first; Lift's
+  index is 35 MB of letters with each title in several, so a worker reads it
+  and the page never blocks. docs/DATA_PAGE_2026-11-02.md has the join rules.
+-->
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #000; --surface: #0c0c0c; --raised: #151515; --line: #232323;
+    --ink: #f0efec; --ink-2: #b4b3ab; --ink-3: #7b7a73;
+    --accent: #ff0;
+    --lift: #3987e5; --fx: #d95926; --tyo: #199e70; --soap: #8a8a84;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); }
+  body { font: 15px/1.4 Inter, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  button, input { font: inherit; color: inherit; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 22px 24px 40px; }
+  header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+  h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  h1 a { color: var(--accent); }
+  .fresh { color: var(--ink-3); font-size: 13px; }
+  .load { flex: 1 1 200px; display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-size: 13px; justify-content: flex-end; }
+  .load i { display: block; width: 160px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+  .load b { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+  .load.done { display: none; }
+
+  .tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 14px; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+  .tile span { display: block; color: var(--ink-3); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile b { display: block; font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.02em; margin-top: 2px; }
+  .tile small { color: var(--ink-3); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+  .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 8px 0; }
+  .search { flex: 1 1 320px; position: relative; }
+  .search input { width: 100%; height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); outline: 0; }
+  .search input:focus { border-color: var(--accent); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .seg button { height: 38px; padding: 0 12px; background: var(--surface); border: 0; color: var(--ink-2); cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button.on { background: var(--raised); color: var(--ink); }
+  .btn { height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+  .btn:hover, .seg button:hover { color: var(--ink); }
+  .btn.four.on { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: 12px; margin-bottom: 14px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+  .panel h2 { margin: 0 0 2px; font-size: 14px; font-weight: 600; }
+  .panel p.note { margin: 0 0 10px; color: var(--ink-3); font-size: 12px; }
+  .head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 2px; }
+  .seg.small button { height: 26px; padding: 0 10px; font-size: 12px; }
+  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--ink-2); margin-bottom: 6px; }
+  .stack { display: grid; gap: 12px; align-content: start; min-width: 0; }
+
+  .euler-box { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: center; }
+  #euler { width: 100%; height: auto; display: block; touch-action: manipulation; cursor: pointer; border-radius: 10px; }
+  #euler circle { transition: cx .35s, cy .35s, r .35s; }
+  #euler text { font-variant-numeric: tabular-nums; pointer-events: none; }
+  .regions { display: grid; gap: 1px; }
+  .reg { display: grid; grid-template-columns: 50px 1fr 58px; gap: 8px; align-items: center; padding: 4px 6px; border: 0; border-radius: 6px; background: none; cursor: pointer; text-align: left; }
+  .reg:hover { background: var(--raised); }
+  .reg.on { background: var(--raised); box-shadow: inset 2px 0 0 var(--accent); }
+  .reg .dots { display: flex; gap: 4px; }
+  .reg .dots i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--ink-3); opacity: .4; }
+  .reg .dots i.in { border-color: transparent; opacity: 1; }
+  .reg .track { height: 8px; border-radius: 4px; background: var(--raised); overflow: hidden; }
+  .reg .track b { display: block; height: 100%; border-radius: 4px; background: var(--ink-2); transition: width .25s; }
+  .reg.on .track b { background: var(--accent); }
+  .reg .n { text-align: right; font-variant-numeric: tabular-nums; font-size: 13px; }
+  .reg .name { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); margin-top: -3px; }
+
+  #hist { width: 100%; height: 130px; display: block; touch-action: none; cursor: crosshair; }
+  .quality { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .quality th, .quality td { padding: 6px 8px; text-align: right; font-weight: 400; border-top: 1px solid var(--line); }
+  .quality thead th { border-top: 0; color: var(--ink-3); font-size: 12px; }
+  .quality th:first-child { text-align: left; }
+  .quality td.pick { cursor: pointer; }
+  .quality td.pick:hover { background: var(--raised); }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+
+  .table { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+  .thead, .row { display: grid; grid-template-columns: minmax(0, 1fr) 62px 74px 200px 64px 56px 56px; gap: 10px; align-items: center; padding: 0 14px; }
+  .thead { height: 38px; border-bottom: 1px solid var(--line); color: var(--ink-3); font-size: 12px; }
+  .thead button { background: none; border: 0; padding: 0; color: inherit; cursor: pointer; text-align: left; font: inherit; }
+  .thead button:hover, .thead button.on { color: var(--ink); }
+  .thead button.num, .row .num { text-align: right; }
+  #rows { height: min(66vh, 680px); overflow: auto; position: relative; }
+  #sizer { position: relative; }
+  .row { position: absolute; left: 0; right: 0; height: 44px; border-bottom: 1px solid #161616; }
+  .row:hover { background: var(--raised); }
+  .row .t { min-width: 0; }
+  .row .t a { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .t a:hover { color: var(--accent); }
+  .row .t small { display: block; color: var(--ink-3); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
+  .row .c { color: var(--ink-2); font-variant-numeric: tabular-nums; font-size: 14px; }
+  .chips { display: flex; gap: 4px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 7px; border-radius: 6px; background: var(--raised); color: var(--ink-2); font-size: 12px; }
+  .chip:hover { color: var(--ink); }
+  .chip i { width: 8px; height: 8px; border-radius: 50%; }
+  .q4 { color: #000; background: var(--accent); border-radius: 4px; padding: 0 5px; font-size: 12px; font-weight: 700; }
+  .empty { padding: 40px; text-align: center; color: var(--ink-3); }
+
+  .local { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 14px; }
+  .local th, .local td { padding: 7px 10px 7px 0; text-align: left; font-weight: 400; border-top: 1px solid var(--line); }
+  .local thead th { border-top: 0; color: var(--ink-3); font-size: 12px; }
+  .local .r { text-align: right; }
+  .local td.w { color: var(--ink-3); }
+  .help { color: var(--ink-3); font-size: 12px; margin: 10px 0 0; }
+  kbd { font: inherit; font-size: 11px; color: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+
+  #tip { position: fixed; z-index: 20; pointer-events: none; background: #1d1d1d; border: 1px solid #333; border-radius: 8px; padding: 6px 9px; font-size: 12px; font-variant-numeric: tabular-nums; display: none; max-width: 240px; }
+  #tip b { display: block; font-weight: 600; }
+
+  @media (max-width: 1080px) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    .tiles { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 14px 16px 30px; }
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+    .tile b { font-size: 22px; }
+    .euler-box { grid-template-columns: minmax(0, 1fr); }
+    .thead, .row { grid-template-columns: minmax(0, 1fr) 46px 96px; }
+    .thead > :nth-child(3), .thead > :nth-child(5), .thead > :nth-child(6), .thead > :nth-child(7),
+    .row > :nth-child(3), .row > :nth-child(5), .row > :nth-child(6), .row > :nth-child(7) { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><a href="/">Alphy</a> данные</h1>
+    <span class="fresh" id="fresh"></span>
+    <div class="load" id="load"><span id="loadText">Загружаю индексы…</span><i><b id="loadBar"></b></i></div>
+  </header>
+
+  <section class="tiles" id="tiles" aria-label="Итоги"></section>
+
+  <div class="bar">
+    <div class="search"><input id="q" type="search" placeholder="Название, год, kp>7, imdb>8. Клавиша /" aria-label="Поиск по тайтлам" autocomplete="off"></div>
+    <div class="seg" id="type" role="group" aria-label="Тип">
+      <button data-v="" class="on">Все</button><button data-v="film">Фильмы</button><button data-v="series">Сериалы</button>
+    </div>
+    <button class="btn four" id="four" aria-pressed="false" title="Клавиша 4">4K</button>
+    <button class="btn" id="reset">Сбросить</button>
+    <button class="btn" id="csv">CSV</button>
+  </div>
+
+  <div class="grid">
+    <section class="panel">
+      <div class="head">
+        <h2>Пересечение источников</h2>
+        <div class="seg small" id="zoom" role="group" aria-label="Масштаб"><button data-v="1" class="on">Вблизи</button><button data-v="0">Всё</button></div>
+      </div>
+      <p class="note" id="eulerNote"></p>
+      <div class="legend"><span><i class="sw" style="background:var(--lift)"></i>Lift</span><span><i class="sw" style="background:var(--fx)"></i>fx</span><span><i class="sw" style="background:var(--tyo)"></i>tyo</span></div>
+      <div class="euler-box">
+        <svg id="euler" viewBox="0 0 400 340" role="img" aria-label="Диаграмма пересечения Lift, fx и tyo"></svg>
+        <div class="regions" id="regions"></div>
+      </div>
+    </section>
+    <div class="stack">
+      <section class="panel">
+        <h2>По годам</h2>
+        <p class="note">Протяните по графику, чтобы выбрать годы. Двойной клик сбрасывает.</p>
+        <svg id="hist" role="img" aria-label="Тайтлы по годам"></svg>
+      </section>
+      <section class="panel">
+        <h2>Качество</h2>
+        <p class="note">Лучшая дорожка тайтла. Индекс Lift качество не хранит, 4K там нет.</p>
+        <table class="quality" id="quality"></table>
+      </section>
+    </div>
+  </div>
+
+  <section class="table" aria-label="Тайтлы">
+    <div class="thead" id="thead">
+      <button data-k="name">Название</button>
+      <button data-k="year" class="num">Год</button>
+      <button data-k="type">Тип</button>
+      <button data-k="count">Источники</button>
+      <button data-k="height" class="num">Качество</button>
+      <button data-k="kp" class="num">КП</button>
+      <button data-k="imdb" class="num">IMDb</button>
+    </div>
+    <div id="rows" tabindex="0"><div id="sizer"></div></div>
+  </section>
+
+  <section class="panel">
+    <h2>Что лежит локально для быстрого поиска</h2>
+    <p class="note">Файлы, которые читает поиск сайта, с размером без сжатия. Строки считаются на этой странице.</p>
+    <table class="local" id="local"></table>
+    <p class="help">Поиск идёт по ступеням: сначала каталог, история и закладки в памяти, затем буква индекса Lift и индексы fx и tyo, всё в браузере. PoiskKino спрашивается только по Enter.</p>
+    <p class="help"><kbd>/</kbd> поиск, <kbd>4</kbd> только 4K, <kbd>Esc</kbd> сбросить. Адрес страницы хранит фильтры, им можно поделиться.</p>
+  </section>
+</div>
+<div id="tip"></div>
+
+<script type="text/plain" id="workerSource">
+const LIFT = 1, FX = 2, TYO = 4, SOAP = 8;
+const POINTERS = [
+  "https://xoathqkggcuyoyutxwri.supabase.co/storage/v1/object/public/index/pointer.json",
+  "https://uxvvorqajlhbnallnvkt.supabase.co/storage/v1/object/public/index/pointer.json",
+];
+const CDN = "https://cdn.jsdelivr.net/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@";
+
+const fold = (value) => String(value || "").toLowerCase().replace(/ё/g, "е").replace(/\s*\(\d{4}\)\s*$/, "").replace(/[^0-9a-zа-я]+/g, "");
+
+// One title per film. Ids join first: Kinopoisk, Lift, IMDb. A row with no id of
+// its own takes a title of the same name, type and year, give or take one, and
+// only when exactly one such title exists.
+function joinTitles({ lift = [], fx = [], tyo = [], soap = [] }) {
+  const titles = [];
+  const byId = new Map();
+  const byName = new Map();
+  const parent = [];
+  const find = (at) => { while (parent[at] !== at) { parent[at] = parent[parent[at]]; at = parent[at]; } return at; };
+  const merge = (into, from) => {
+    if (into === from) return into;
+    parent[from] = into;
+    const a = titles[into], b = titles[from];
+    a.m |= b.m;
+    for (const key of ["f", "t", "l", "p", "fh", "th", "k", "i", "kr", "ir", "e"]) if (!a[key] && b[key]) a[key] = b[key];
+    if (!a.o) a.o = b.o;
+    if (!a.y) a.y = b.y;
+    return into;
+  };
+  const add = (row) => { parent.push(titles.length); titles.push(row); return titles.length - 1; };
+  const ids = (row) => [row.k && `k${row.k}`, row.l && `l${row.l}`, row.i && `i${row.i}`].filter(Boolean);
+  const place = (row) => {
+    let at = -1;
+    for (const key of ids(row)) if (byId.has(key)) at = at < 0 ? find(byId.get(key)) : merge(at, find(byId.get(key)));
+    if (at < 0) at = add(row);
+    else { const own = add(row); at = merge(at, own); }
+    for (const key of ids(titles[at])) byId.set(key, at);
+    for (const key of ids(row)) byId.set(key, at);
+    return at;
+  };
+  const nameKeys = (row) => [...new Set([fold(row.n), fold(row.o)])].filter((key) => key.length > 1);
+  const remember = (at) => {
+    const row = titles[at];
+    for (const key of nameKeys(row)) {
+      if (!byName.has(key)) byName.set(key, []);
+      byName.get(key).push(at);
+    }
+  };
+  const namesake = (row) => {
+    const found = new Set();
+    for (const key of nameKeys(row)) {
+      for (const at of byName.get(key) || []) {
+        const other = titles[find(at)];
+        if (!!other.s === !!row.s && row.y && other.y && Math.abs(other.y - row.y) <= 1) found.add(find(at));
+      }
+    }
+    return found.size === 1 ? [...found][0] : -1;
+  };
+  const settle = (row) => {
+    if (row.k || row.l || row.i) { remember(place(row)); return; }
+    const at = namesake(row);
+    if (at >= 0) merge(at, add(row));
+    else remember(add(row));
+  };
+
+  for (const [name, year, , series, liftId, kpId, original] of lift) {
+    if (liftId) settle({ n: name, o: original || "", y: year || 0, s: series ? 1 : 0, m: LIFT, l: liftId, k: kpId ? String(kpId) : "" });
+  }
+  for (const r of fx) {
+    settle({ n: r[1], o: r[2] || "", y: r[3] || 0, s: r[4] ? 1 : 0, m: FX, f: r[0], fh: r[5] || 0, e: r[6] || 0, i: r[7] || "", kr: r[8] || 0, ir: r[9] || 0, k: r[11] ? String(r[11]) : "", l: r[12] || 0 });
+  }
+  for (const r of tyo) {
+    settle({ n: r[1], o: r[2] || "", y: r[3] || 0, s: r[4] ? 1 : 0, m: TYO, t: r[0], th: r[5] || 0, e: r[6] || 0, i: r[7] || "", kr: r[8] || 0, ir: r[9] || 0, k: r[11] ? String(r[11]) : "", l: r[12] || 0 });
+  }
+  // soap names a film in English and gives no year, so only a name that one film
+  // carries joins it.
+  for (const movie of soap) {
+    const height = movie.q === "4K" ? 2160 : Number.parseInt(movie.q, 10) || 0;
+    const row = { n: movie.t, o: "", y: 0, s: 0, m: SOAP, p: String(movie.id), ph: height };
+    const found = new Set((byName.get(fold(movie.t)) || []).map(find).filter((at) => !titles[at].s));
+    const at = found.size === 1 ? merge([...found][0], add(row)) : add(row);
+    if (height) titles[at].ph = Math.max(titles[at].ph || 0, height);
+  }
+  const out = [];
+  titles.forEach((row, at) => {
+    if (find(at) !== at) return;
+    row.h = Math.max(row.fh || 0, row.th || 0, row.ph || 0);
+    row.x = `${fold(row.n)} ${fold(row.o)}`;
+    out.push(row);
+  });
+  return out;
+}
+
+async function text(url) {
+  const response = await fetch(url, { credentials: "omit" });
+  if (!response.ok) throw new Error(`${response.status} ${url}`);
+  return response.text();
+}
+
+async function main({ base }) {
+  const files = [];
+  const read = async (name, count) => {
+    const body = await text(`${base}${name}`);
+    const value = name.endsWith(".json") ? JSON.parse(body) : body;
+    files.push({ name, bytes: body.length, rows: count?.(value) ?? 0 });
+    return value;
+  };
+  const [fxData, tyoData, soapData] = await Promise.all([
+    read("fx-titles.json", (v) => v.titles.length), read("tyo-titles.json", (v) => v.titles.length), read("soap-movies.json", (v) => v.movies.length),
+  ]);
+  await Promise.all([
+    read("fx-4k.js", (v) => (v.match(/\["/g) || []).length), read("tyo-4k.js", (v) => (v.match(/\["/g) || []).length),
+    read("curated-fallback.json", (v) => (v.lists || []).reduce((sum, list) => sum + (list.items?.length || 0), 0)),
+    read("imdb-map.json", (v) => v.count || 0),
+  ]).catch(() => {});
+  const fx = fxData.titles, tyo = tyoData.titles, soap = soapData.movies;
+  const meta = { fxSnapshot: fxData.snapshot || "", tyoBase: tyoData.base || "" };
+  postMessage({ type: "data", stage: "fast", titles: joinTitles({ fx, tyo, soap }), files, meta });
+
+  const pointer = await Promise.any(POINTERS.map((url) => text(url).then(JSON.parse)));
+  const index = JSON.parse(await text(`${CDN}${pointer.c}/${pointer.f}`));
+  const letters = Object.values(index.l);
+  const seen = new Map();
+  let done = 0, bytes = 0, rowsRead = 0, next = 0;
+  await Promise.all(Array.from({ length: 10 }, async () => {
+    while (next < letters.length) {
+      const [baseFile, baseCommit, , deltaFile, deltaCommit] = letters[next];
+      next += 1;
+      const body = await text(`${CDN}${baseCommit}/${baseFile}`);
+      bytes += body.length;
+      let rows = JSON.parse(body);
+      if (deltaFile) {
+        const delta = JSON.parse(await text(`${CDN}${deltaCommit}/${deltaFile}`));
+        const gone = new Set([...(delta.r || []), ...(delta.u || []).map((row) => row[2])]);
+        rows = rows.filter((row) => !gone.has(row[2])).concat(delta.u || []);
+      }
+      rowsRead += rows.length;
+      for (const row of rows) if (row[4]) seen.set(row[4], row);
+      done += 1;
+      postMessage({ type: "progress", done, total: letters.length });
+    }
+  }));
+  files.push({ name: "Индекс Lift", bytes, rows: seen.size, letters: letters.length, rowsRead, lift: true });
+  meta.liftAt = pointer.at;
+  postMessage({ type: "data", stage: "full", titles: joinTitles({ lift: [...seen.values()], fx, tyo, soap }), files, meta });
+}
+
+if (typeof onmessage !== "undefined") onmessage = (event) => main(event.data).catch((error) => postMessage({ type: "error", message: String(error.message || error) }));
+</script>
+
+<script>
+(() => {
+  "use strict";
+  const REV = "__ALPHY_ASSET_REV__";
+  const BASE = /^[0-9a-f]{40}$/i.test(REV)
+    ? `https://cdn.jsdelivr.net/gh/udbv4d2wayz3am6d2kwskzvtvs8q/rfb2akkdbet2am996jvrftk67ydv3sz5s2ve@${REV}/` : `${location.origin}/`;
+  const LIFT = 1, FX = 2, TYO = 4, SOAP = 8;
+  const SOURCES = [
+    { bit: LIFT, id: "lift", name: "Lift", color: "var(--lift)" },
+    { bit: FX, id: "fx", name: "fx", color: "var(--fx)" },
+    { bit: TYO, id: "tyo", name: "tyo", color: "var(--tyo)" },
+  ];
+  const SET_MASK = LIFT | FX | TYO;
+  const REGIONS = [LIFT, FX, TYO, LIFT | FX, LIFT | TYO, FX | TYO, LIFT | FX | TYO, 0];
+  const YEAR_FROM = 1950;
+  const YEAR_TO = new Date().getFullYear() + 1;
+  const ROW_HEIGHT = 44;
+  const $ = (id) => document.getElementById(id);
+  const num = (value) => Number(value || 0).toLocaleString("ru-RU");
+  const esc = (value) => String(value ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const fold = (value) => String(value || "").toLowerCase().replace(/ё/g, "е").replace(/[^0-9a-zа-я]+/g, "");
+  const bytes = (value) => (value >= 1e6 ? `${(value / 1e6).toFixed(1)} МБ` : `${Math.round(value / 1e3)} КБ`);
+  const regionName = (mask) => {
+    if (!mask) return "только soap";
+    const names = SOURCES.filter((source) => mask & source.bit).map((source) => source.name);
+    return names.length === 1 ? `только ${names[0]}` : names.join(" и ");
+  };
+
+  let titles = [];
+  let files = [];
+  let meta = {};
+  let shown = [];
+  let orders = {};
+  let lastRegions = null;
+  const state = { q: "", four: false, type: "", y0: 0, y1: 0, region: null, sort: "year", dir: -1, zoom: true };
+
+  // =================================================================
+  // State in the address
+  // =================================================================
+  function readHash() {
+    const p = new URLSearchParams(location.hash.slice(1));
+    state.q = p.get("q") || "";
+    state.four = p.get("4k") === "1";
+    state.type = ["film", "series"].includes(p.get("t")) ? p.get("t") : "";
+    const years = /^(\d{4})-(\d{4})$/.exec(p.get("y") || "");
+    state.y0 = years ? Number(years[1]) : 0;
+    state.y1 = years ? Number(years[2]) : 0;
+    state.region = p.has("r") ? Number(p.get("r")) : null;
+    state.zoom = p.get("z") !== "0";
+    const sort = /^(\w+)-(asc|desc)$/.exec(p.get("s") || "");
+    if (sort) { state.sort = sort[1]; state.dir = sort[2] === "asc" ? 1 : -1; }
+  }
+
+  function writeHash() {
+    const p = new URLSearchParams();
+    if (state.q) p.set("q", state.q);
+    if (state.four) p.set("4k", "1");
+    if (state.type) p.set("t", state.type);
+    if (state.y0) p.set("y", `${state.y0}-${state.y1}`);
+    if (state.region !== null) p.set("r", state.region);
+    if (!state.zoom) p.set("z", "0");
+    if (state.sort !== "year" || state.dir !== -1) p.set("s", `${state.sort}-${state.dir > 0 ? "asc" : "desc"}`);
+    history.replaceState(null, "", `${location.pathname}${p.size ? `#${p}` : ""}`);
+  }
+
+  // =================================================================
+  // The filter pass, one loop over everything
+  // =================================================================
+  const SORTS = {
+    name: (a, b) => (a.x < b.x ? -1 : a.x > b.x ? 1 : 0),
+    year: (a, b) => a.y - b.y,
+    type: (a, b) => a.s - b.s,
+    count: (a, b) => popcount(a.m) - popcount(b.m),
+    height: (a, b) => a.h - b.h,
+    kp: (a, b) => (a.kr || 0) - (b.kr || 0),
+    imdb: (a, b) => (a.ir || 0) - (b.ir || 0),
+  };
+  const popcount = (mask) => (mask & 1) + ((mask >> 1) & 1) + ((mask >> 2) & 1) + ((mask >> 3) & 1);
+
+  function orderFor(key) {
+    if (!orders[key]) orders[key] = titles.map((_, index) => index).sort((a, b) => SORTS[key](titles[a], titles[b]) || titles[b].y - titles[a].y);
+    return orders[key];
+  }
+
+  // Free text with a little syntax: a four-digit year, kp>7, imdb>8.
+  function parseQuery(raw) {
+    const query = { words: [], year: 0, kp: 0, imdb: 0 };
+    for (const token of raw.trim().split(/\s+/).filter(Boolean)) {
+      const rating = /^(kp|кп|imdb)[>:](\d+(?:[.,]\d+)?)$/i.exec(token);
+      if (rating) { query[/imdb/i.test(rating[1]) ? "imdb" : "kp"] = Number(rating[2].replace(",", ".")) * 10; continue; }
+      if (/^(19|20)\d\d$/.test(token)) { query.year = Number(token); continue; }
+      const word = fold(token);
+      if (word) query.words.push(word);
+    }
+    return query;
+  }
+
+  function matchesText(row, query) {
+    if (query.year && row.y !== query.year) return false;
+    if (query.kp && (row.kr || 0) < query.kp) return false;
+    if (query.imdb && (row.ir || 0) < query.imdb) return false;
+    for (const word of query.words) if (!row.x.includes(word)) return false;
+    return true;
+  }
+
+  // Each chart counts everything but its own filter, so a selection never empties
+  // the control that made it.
+  function apply() {
+    const query = parseQuery(state.q);
+    const regions = new Map(REGIONS.map((mask) => [mask, 0]));
+    const years = new Map();
+    const quality = { fx: {}, tyo: {}, soap: {} };
+    let fourCount = 0;
+    const pass = new Uint8Array(titles.length);
+    let total = 0;
+    titles.forEach((row, index) => {
+      if (state.type && (state.type === "series") !== !!row.s) return;
+      if (!matchesText(row, query)) return;
+      const region = row.m & SET_MASK;
+      const inYears = !state.y0 || (row.y >= state.y0 && row.y <= state.y1);
+      const inRegion = state.region === null || region === state.region;
+      const isFour = row.h >= 2160;
+      const inFour = !state.four || isFour;
+      if (inYears && inFour) regions.set(region, regions.get(region) + 1);
+      if (inRegion && inFour && row.y) {
+        const year = Math.max(YEAR_FROM, Math.min(YEAR_TO, row.y));
+        const entry = years.get(year) || { all: 0, lift: 0, fx: 0, tyo: 0 };
+        entry.all += 1;
+        if (row.m & LIFT) entry.lift += 1;
+        if (row.m & FX) entry.fx += 1;
+        if (row.m & TYO) entry.tyo += 1;
+        years.set(year, entry);
+      }
+      if (inRegion && inYears) {
+        if (isFour) fourCount += 1;
+        for (const [id, height] of [["fx", row.fh], ["tyo", row.th], ["soap", row.ph]]) {
+          if (height) quality[id][height >= 2160 ? 2160 : height >= 1080 ? 1080 : height >= 720 ? 720 : 480] = (quality[id][height >= 2160 ? 2160 : height >= 1080 ? 1080 : height >= 720 ? 720 : 480] || 0) + 1;
+        }
+      }
+      if (inYears && inRegion && inFour) { pass[index] = 1; total += 1; }
+    });
+    const order = orderFor(state.sort);
+    shown = new Array(total);
+    let at = 0;
+    if (state.dir > 0) { for (let i = 0; i < order.length; i += 1) if (pass[order[i]]) shown[at++] = titles[order[i]]; }
+    else for (let i = order.length - 1; i >= 0; i -= 1) if (pass[order[i]]) shown[at++] = titles[order[i]];
+    lastRegions = regions;
+    drawTiles(regions, fourCount);
+    drawRegions(regions);
+    drawEuler(regions);
+    drawHist(years);
+    drawQuality(quality);
+    drawTable();
+    syncControls();
+    writeHash();
+  }
+
+  // =================================================================
+  // Tiles
+  // =================================================================
+  function drawTiles(regions, fourCount) {
+    const has = (bit) => [...regions].reduce((sum, [mask, count]) => sum + (mask & bit ? count : 0), 0);
+    const outside = [...regions].reduce((sum, [mask, count]) => sum + (mask & LIFT ? 0 : count), 0);
+    const rows = [
+      ["В таблице", num(shown.length), `из ${num(titles.length)}`],
+      ["Lift", num(has(LIFT)), ""],
+      ["fx", num(has(FX)), ""],
+      ["tyo", num(has(TYO)), ""],
+      ["Сверх Lift", num(outside), "только fx, tyo, soap"],
+      ["4K", num(fourCount), "во всех источниках"],
+    ];
+    $("tiles").innerHTML = rows.map(([label, value, note]) => `<div class="tile"><span>${label}</span><b>${value}</b><small>${note || "&nbsp;"}</small></div>`).join("");
+  }
+
+  // =================================================================
+  // Regions and the Euler diagram
+  // =================================================================
+  function drawRegions(regions) {
+    const max = Math.max(...regions.values(), 1);
+    const scale = (count) => (count ? Math.max(2, Math.sqrt(count / max) * 100) : 0);
+    const rows = REGIONS.filter((mask) => mask !== 0 || regions.get(0)).sort((a, b) => regions.get(b) - regions.get(a));
+    $("regions").innerHTML = rows.map((mask) => `
+      <button class="reg${state.region === mask ? " on" : ""}" data-r="${mask}" aria-pressed="${state.region === mask}">
+        <span class="dots">${SOURCES.map((source) => `<i class="${mask & source.bit ? "in" : ""}"${mask & source.bit ? ` style="background:${source.color}"` : ""}></i>`).join("")}</span>
+        <span class="track"><b style="width:${scale(regions.get(mask))}%"></b></span>
+        <span class="n">${num(regions.get(mask))}</span>
+        <span class="name">${regionName(mask)}</span>
+      </button>`).join("");
+  }
+
+  const lens = (r1, r2, d) => {
+    if (d >= r1 + r2) return 0;
+    if (d <= Math.abs(r1 - r2)) return Math.PI * Math.min(r1, r2) ** 2;
+    const a = r1 * r1 * Math.acos((d * d + r1 * r1 - r2 * r2) / (2 * d * r1));
+    const b = r2 * r2 * Math.acos((d * d + r2 * r2 - r1 * r1) / (2 * d * r2));
+    const c = 0.5 * Math.sqrt((-d + r1 + r2) * (d + r1 - r2) * (d - r1 + r2) * (d + r1 + r2));
+    return a + b - c;
+  };
+
+  // The distance at which two circles overlap by exactly `area`.
+  function distanceFor(r1, r2, area) {
+    if (area <= 0) return r1 + r2 + 4;
+    let low = Math.abs(r1 - r2), high = r1 + r2;
+    for (let i = 0; i < 40; i += 1) {
+      const middle = (low + high) / 2;
+      if (lens(r1, r2, middle) > area) low = middle; else high = middle;
+    }
+    return (low + high) / 2;
+  }
+
+  function eulerLayout(regions) {
+    const size = (bit) => [...regions].reduce((sum, [mask, count]) => sum + (mask & bit ? count : 0), 0);
+    const both = (a, b) => [...regions].reduce((sum, [mask, count]) => sum + ((mask & a) && (mask & b) ? count : 0), 0);
+    const radius = (count) => Math.sqrt(count / Math.PI);
+    const r = { lift: radius(size(LIFT)), fx: radius(size(FX)), tyo: radius(size(TYO)) };
+    const dLF = distanceFor(r.lift, r.fx, both(LIFT, FX));
+    const dLT = distanceFor(r.lift, r.tyo, both(LIFT, TYO));
+    const dFT = distanceFor(r.fx, r.tyo, both(FX, TYO));
+    const circles = { lift: { x: 0, y: 0, r: r.lift }, fx: { x: dLF, y: 0, r: r.fx } };
+    if (!r.lift) { circles.fx.x = 0; circles.tyo = { x: dFT, y: 0, r: r.tyo }; }
+    else {
+      const cos = Math.max(-1, Math.min(1, (dLF * dLF + dLT * dLT - dFT * dFT) / (2 * dLF * dLT || 1)));
+      circles.tyo = { x: dLT * cos, y: dLT * Math.sqrt(1 - cos * cos), r: r.tyo };
+    }
+    const live = Object.values(circles).filter((c) => c.r > 0);
+    if (!live.length) return null;
+    // Up close, the frame fits fx and tyo and Lift runs on past its edge. The
+    // areas stay true to each other either way.
+    const small = [circles.fx, circles.tyo].filter((c) => c.r > 0);
+    const framed = state.zoom && r.lift && small.length ? small : live;
+    const minX = Math.min(...framed.map((c) => c.x - c.r)), maxX = Math.max(...framed.map((c) => c.x + c.r));
+    const minY = Math.min(...framed.map((c) => c.y - c.r)), maxY = Math.max(...framed.map((c) => c.y + c.r));
+    const scale = Math.min(352 / (maxX - minX || 1), 296 / (maxY - minY || 1));
+    for (const c of Object.values(circles)) {
+      c.x = (c.x - (minX + maxX) / 2) * scale + 200;
+      c.y = (c.y - (minY + maxY) / 2) * scale + 170;
+      c.r *= scale;
+    }
+    return circles;
+  }
+
+  let layout = null;
+  const maskAt = (x, y) => SOURCES.reduce((mask, source) => {
+    const c = layout?.[source.id];
+    return c && c.r > 0 && (x - c.x) ** 2 + (y - c.y) ** 2 <= c.r ** 2 ? mask | source.bit : mask;
+  }, 0);
+
+  // The deepest point of each region, to hang its number on.
+  function labelSpots() {
+    const best = new Map();
+    for (let x = 4; x < 400; x += 6) {
+      for (let y = 4; y < 340; y += 6) {
+        const mask = maskAt(x, y);
+        if (!mask) continue;
+        // The frame's edge cuts a region as surely as a circle does.
+        const depth = Math.min(x, 400 - x, y, 340 - y, ...SOURCES.map((source) => {
+          const c = layout[source.id];
+          return c.r > 0 ? Math.abs(Math.hypot(x - c.x, y - c.y) - c.r) : 1e9;
+        }));
+        if (!best.has(mask) || depth > best.get(mask).depth) best.set(mask, { x, y, depth });
+      }
+    }
+    return best;
+  }
+
+  function drawEuler(regions) {
+    $("eulerNote").textContent = state.four
+      ? "Только 4K. Lift здесь значит, что тайтл есть и там, но без 4K. Клик по области оставляет её в таблице."
+      : "Площади кругов равны числу тайтлов. Клик по области оставляет её в таблице. Длина полос считается как радиус круга.";
+    layout = eulerLayout(regions);
+    const svg = $("euler");
+    if (!layout) { svg.innerHTML = '<text x="200" y="170" text-anchor="middle" fill="#7b7a73">Нет тайтлов</text>'; return; }
+    const circle = (c, extra) => `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" ${extra}/>`;
+    const live = SOURCES.filter((source) => layout[source.id].r > 0);
+    const selected = hoverRegion ?? state.region;
+    let highlight = "";
+    if (selected) {
+      const inside = live.filter((source) => selected & source.bit);
+      const outside = live.filter((source) => !(selected & source.bit));
+      const clips = inside.map((source) => `<clipPath id="k${source.id}">${circle(layout[source.id], "")}</clipPath>`).join("");
+      const holes = outside.map((source) => circle(layout[source.id], 'fill="#000"')).join("");
+      let shape = `<rect width="400" height="340" fill="#ff0" fill-opacity=".5" mask="url(#notOthers)"/>`;
+      for (const source of inside) shape = `<g clip-path="url(#k${source.id})">${shape}</g>`;
+      highlight = `<defs>${clips}<mask id="notOthers"><rect width="400" height="340" fill="#fff"/>${holes}</mask></defs>${shape}`;
+    }
+    const spots = labelSpots();
+    const named = new Map(SOURCES.map((source) => [source.bit, source.name]));
+    const counts = [...spots].filter(([, spot]) => spot.depth >= 11).map(([mask, spot]) => {
+      const name = named.get(mask) && spot.depth >= 22 ? `<text x="${spot.x}" y="${spot.y - 10}" text-anchor="middle" font-size="14" font-weight="700" fill="#f0efec">${named.get(mask)}</text>` : "";
+      return `${name}<text x="${spot.x}" y="${spot.y + 6}" text-anchor="middle" font-size="13" font-weight="600" fill="#f0efec">${num(regions.get(mask))}</text>`;
+    }).join("");
+    // fx and tyo rarely leave room inside, so they are named at their edges.
+    const small = live.filter((source) => source.bit !== LIFT);
+    const edges = small.map((source, index) => {
+      const c = layout[source.id];
+      const above = small.length < 2 ? c.y > 40 : index === 0;
+      const y = above ? Math.max(14, c.y - c.r - 7) : Math.min(334, c.y + c.r + 16);
+      return `<text x="${c.x}" y="${y}" text-anchor="middle" font-size="14" font-weight="700" fill="#f0efec">${source.name}</text>`;
+    }).join("");
+    svg.innerHTML = `${live.map((source) => circle(layout[source.id], `fill="${source.color}" fill-opacity=".34" stroke="${source.color}" stroke-width="2"`)).join("")}${highlight}${counts}${edges}`;
+  }
+
+  // =================================================================
+  // Years
+  // =================================================================
+  let histGeometry = null;
+  function drawHist(years) {
+    const svg = $("hist");
+    const width = svg.clientWidth || 600, height = svg.clientHeight || 130;
+    const pad = { left: 2, right: 2, top: 6, bottom: 18 };
+    const count = YEAR_TO - YEAR_FROM + 1;
+    const step = (width - pad.left - pad.right) / count;
+    const max = Math.max(1, ...[...years.values()].map((entry) => entry.all));
+    const plot = height - pad.top - pad.bottom;
+    const bars = [];
+    for (let year = YEAR_FROM; year <= YEAR_TO; year += 1) {
+      const entry = years.get(year);
+      const on = !state.y0 || (year >= state.y0 && year <= state.y1);
+      const h = entry ? Math.max(1.5, (entry.all / max) * plot) : 0;
+      const x = pad.left + (year - YEAR_FROM) * step;
+      if (h) bars.push(`<rect x="${x + 0.5}" y="${pad.top + plot - h}" width="${Math.max(1, step - 1.5)}" height="${h}" rx="1.5" fill="${on ? "#ff0" : "#3a3a36"}"/>`);
+    }
+    const ticks = [];
+    for (let year = 1960; year <= YEAR_TO; year += 20) ticks.push(`<text x="${pad.left + (year - YEAR_FROM + 0.5) * step}" y="${height - 4}" text-anchor="middle" font-size="11" fill="#7b7a73">${year}</text>`);
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.innerHTML = `<line x1="0" x2="${width}" y1="${pad.top + plot + 0.5}" y2="${pad.top + plot + 0.5}" stroke="#232323"/>${bars.join("")}${ticks.join("")}`;
+    histGeometry = { years, step, left: pad.left };
+  }
+
+  const yearAt = (event) => {
+    const box = $("hist").getBoundingClientRect();
+    const x = event.clientX - box.left;
+    return Math.max(YEAR_FROM, Math.min(YEAR_TO, YEAR_FROM + Math.floor((x - histGeometry.left) / histGeometry.step)));
+  };
+
+  // =================================================================
+  // Quality
+  // =================================================================
+  function drawQuality(quality) {
+    const rungs = [[2160, "4K"], [1080, "1080p"], [720, "720p"], [480, "до 480p"]];
+    const rows = [["fx", "fx", "var(--fx)"], ["tyo", "tyo", "var(--tyo)"], ["soap", "soap", "var(--soap)"]];
+    $("quality").innerHTML = `<thead><tr><th>Источник</th>${rungs.map(([, label]) => `<th>${label}</th>`).join("")}</tr></thead><tbody>${rows.map(([id, name, color]) =>
+      `<tr><th><span class="sw" style="background:${color}"></span>${name}</th>${rungs.map(([height]) =>
+        `<td${height === 2160 ? ' class="pick" data-four="1"' : ""}>${quality[id][height] ? num(quality[id][height]) : "—"}</td>`).join("")}</tr>`).join("")}</tbody>`;
+  }
+
+  // =================================================================
+  // The table: only the rows on screen exist
+  // =================================================================
+  const vanilla = (row) => (row.k ? `/k/${row.k}` : row.l ? `/l/${row.l}` : row.f ? `/f/${row.f}` : row.t ? `/t/${row.t}` : `/m/${row.p}`);
+  const chip = (href, name, color) => `<a class="chip" href="${href}" title="Открыть в ${name}"><i style="background:${color}"></i>${name}</a>`;
+  const rowHtml = (row, index) => `
+    <div class="row" style="top:${index * ROW_HEIGHT}px">
+      <div class="t"><a href="${vanilla(row)}">${esc(row.n)}</a>${row.o && fold(row.o) !== fold(row.n) ? `<small>${esc(row.o)}</small>` : ""}</div>
+      <div class="c num">${row.y || "—"}</div>
+      <div class="c">${row.s ? "сериал" : "фильм"}</div>
+      <div class="chips">${row.l ? chip(`/l/${row.l}`, "Lift", "var(--lift)") : ""}${row.f ? chip(`/f/${row.f}`, "fx", "var(--fx)") : ""}${row.t ? chip(`/t/${row.t}`, "tyo", "var(--tyo)") : ""}${row.p ? chip(`/m/${row.p}`, "soap", "var(--soap)") : ""}</div>
+      <div class="c num">${row.h >= 2160 ? '<span class="q4">4K</span>' : row.h ? `${row.h}p` : "—"}</div>
+      <div class="c num">${row.kr ? (row.kr / 10).toFixed(1) : "—"}</div>
+      <div class="c num">${row.ir ? (row.ir / 10).toFixed(1) : "—"}</div>
+    </div>`;
+
+  let drawnFrom = -1, drawnFor = null;
+  function drawRows() {
+    const box = $("rows");
+    const first = Math.max(0, Math.floor(box.scrollTop / ROW_HEIGHT) - 6);
+    if (first === drawnFrom && drawnFor === shown) return;
+    drawnFrom = first;
+    drawnFor = shown;
+    const last = Math.min(shown.length, first + Math.ceil(box.clientHeight / ROW_HEIGHT) + 12);
+    $("sizer").innerHTML = shown.length
+      ? shown.slice(first, last).map((row, offset) => rowHtml(row, first + offset)).join("")
+      : '<div class="empty">Ничего не найдено</div>';
+  }
+
+  function drawTable() {
+    $("sizer").style.height = `${Math.max(1, shown.length) * ROW_HEIGHT}px`;
+    drawnFor = null;
+    drawRows();
+    document.querySelectorAll("#thead button").forEach((button) => {
+      const on = button.dataset.k === state.sort;
+      button.classList.toggle("on", on);
+      button.textContent = button.textContent.replace(/ [↑↓]$/, "") + (on ? (state.dir > 0 ? " ↑" : " ↓") : "");
+    });
+  }
+
+  // =================================================================
+  // What search keeps at hand
+  // =================================================================
+  const PLACE = {
+    "fx-titles.json": ["Индекс fx", "при первом поиске"], "tyo-titles.json": ["Индекс tyo", "при первом поиске"],
+    "soap-movies.json": ["Каталог soap", "по запросу латиницей"], "fx-4k.js": ["4K fx без подгрузки", "с загрузкой страницы"],
+    "tyo-4k.js": ["4K tyo без подгрузки", "с загрузкой страницы"], "curated-fallback.json": ["Списки админа", "с загрузкой страницы"],
+    "imdb-map.json": ["Карта IMDb", "при показе рейтингов"],
+  };
+
+  async function drawLocal() {
+    const rows = files.map((file) => {
+      if (file.lift) return [`Индекс Lift, ${file.letters} файлов`, num(file.rows), bytes(file.bytes), `по букве при наборе, всего ${num(file.rowsRead)} строк с повторами`];
+      const [name, when] = PLACE[file.name] || [file.name, ""];
+      return [name, file.rows ? num(file.rows) : "—", bytes(file.bytes), when];
+    });
+    let stored = 0;
+    try { for (const key of Object.keys(localStorage)) if (key.startsWith("alphy")) stored += key.length + (localStorage.getItem(key)?.length || 0); } catch { /* optional */ }
+    rows.push(["Кэш этого браузера", "—", bytes(stored * 2), "localStorage сайта"]);
+    const usage = await navigator.storage?.estimate?.().catch(() => null);
+    if (usage?.usage) rows.push(["Кэш файлов браузера", "—", bytes(usage.usage), "service worker и IndexedDB сайта"]);
+    $("local").innerHTML = `<thead><tr><th>Что</th><th class="r">Строк</th><th class="r">Размер</th><th>Когда читается</th></tr></thead><tbody>${rows.map(([what, count, size, when]) =>
+      `<tr><td>${esc(what)}</td><td class="r">${count}</td><td class="r">${size}</td><td class="w">${esc(when)}</td></tr>`).join("")}</tbody>`;
+  }
+
+  function drawFresh() {
+    const day = (value) => (value ? new Date(value).toLocaleDateString("ru-RU", { day: "numeric", month: "short" }) : "");
+    const fx = /^(\d{4})(\d{2})(\d{2})/.exec(meta.fxSnapshot || "");
+    const tyo = /\/(\d{4})(\d{2})(\d{2})-/.exec(meta.tyoBase || "");
+    $("fresh").textContent = [fx && `fx ${day(`${fx[1]}-${fx[2]}-${fx[3]}`)}`, tyo && `tyo ${day(`${tyo[1]}-${tyo[2]}-${tyo[3]}`)}`, meta.liftAt && `Lift ${day(meta.liftAt)}`].filter(Boolean).join(" · ");
+  }
+
+  // =================================================================
+  // Controls
+  // =================================================================
+  function syncControls() {
+    if (document.activeElement !== $("q")) $("q").value = state.q;
+    $("four").classList.toggle("on", state.four);
+    $("four").setAttribute("aria-pressed", state.four);
+    document.querySelectorAll("#type button").forEach((button) => button.classList.toggle("on", button.dataset.v === state.type));
+    document.querySelectorAll("#zoom button").forEach((button) => button.classList.toggle("on", (button.dataset.v === "1") === state.zoom));
+  }
+
+  const scrollTop = () => { $("rows").scrollTop = 0; };
+  let pass = 0;
+  const schedule = () => { clearTimeout(pass); pass = setTimeout(() => { scrollTop(); apply(); }, 0); };
+
+  $("q").addEventListener("input", (event) => { state.q = event.target.value; schedule(); });
+  $("four").addEventListener("click", () => { state.four = !state.four; schedule(); });
+  $("type").addEventListener("click", (event) => { if (event.target.dataset.v !== undefined) { state.type = event.target.dataset.v; schedule(); } });
+  $("reset").addEventListener("click", () => { Object.assign(state, { q: "", four: false, type: "", y0: 0, y1: 0, region: null }); $("q").value = ""; schedule(); });
+  $("zoom").addEventListener("click", (event) => { if (event.target.dataset.v !== undefined) { state.zoom = event.target.dataset.v === "1"; schedule(); } });
+  $("regions").addEventListener("click", (event) => {
+    const row = event.target.closest(".reg");
+    if (!row) return;
+    const mask = Number(row.dataset.r);
+    state.region = state.region === mask ? null : mask;
+    schedule();
+  });
+  $("thead").addEventListener("click", (event) => {
+    const key = event.target.dataset.k;
+    if (!key) return;
+    if (state.sort === key) state.dir = -state.dir;
+    else { state.sort = key; state.dir = key === "name" ? 1 : -1; }
+    schedule();
+  });
+  $("quality").addEventListener("click", (event) => { if (event.target.dataset.four) { state.four = !state.four; schedule(); } });
+  $("rows").addEventListener("scroll", () => requestAnimationFrame(drawRows), { passive: true });
+
+  const tip = $("tip");
+  const showTip = (event, html) => {
+    tip.innerHTML = html;
+    tip.style.display = "block";
+    tip.style.left = `${Math.min(innerWidth - 250, event.clientX + 14)}px`;
+    tip.style.top = `${event.clientY + 14}px`;
+  };
+  const hideTip = () => { tip.style.display = "none"; };
+
+  let hoverRegion = null;
+  const eulerPoint = (event) => {
+    const box = $("euler").getBoundingClientRect();
+    return [(event.clientX - box.left) * (400 / box.width), (event.clientY - box.top) * (340 / box.height)];
+  };
+  $("euler").addEventListener("pointermove", (event) => {
+    const mask = layout ? maskAt(...eulerPoint(event)) : 0;
+    if (mask !== (hoverRegion || 0)) { hoverRegion = mask || null; if (lastRegions) drawEuler(lastRegions); }
+    const row = $("regions").querySelector(`[data-r="${mask}"] .n`);
+    if (mask) showTip(event, `<b>${regionName(mask)}</b>${row ? row.textContent : ""}`); else hideTip();
+  });
+  $("euler").addEventListener("pointerleave", () => { hoverRegion = null; hideTip(); if (lastRegions) drawEuler(lastRegions); });
+  $("euler").addEventListener("click", (event) => {
+    const mask = layout ? maskAt(...eulerPoint(event)) : 0;
+    state.region = !mask || state.region === mask ? null : mask;
+    schedule();
+  });
+
+  let brushFrom = 0;
+  $("hist").addEventListener("pointerdown", (event) => { brushFrom = yearAt(event); $("hist").setPointerCapture(event.pointerId); });
+  $("hist").addEventListener("pointermove", (event) => {
+    if (!histGeometry) return;
+    const year = yearAt(event);
+    if (brushFrom) {
+      state.y0 = Math.min(brushFrom, year);
+      state.y1 = Math.max(brushFrom, year);
+      schedule();
+    }
+    const entry = histGeometry.years.get(year);
+    showTip(event, `<b>${year}</b>${entry ? `${num(entry.all)} тайтлов<br>Lift ${num(entry.lift)}, fx ${num(entry.fx)}, tyo ${num(entry.tyo)}` : "нет тайтлов"}`);
+  });
+  $("hist").addEventListener("pointerup", () => { brushFrom = 0; });
+  $("hist").addEventListener("pointerleave", hideTip);
+  $("hist").addEventListener("dblclick", () => { state.y0 = 0; state.y1 = 0; schedule(); });
+
+  addEventListener("keydown", (event) => {
+    if (event.key === "Escape") { $("reset").click(); $("q").blur(); return; }
+    if (event.target.matches("input")) return;
+    if (event.key === "/") { event.preventDefault(); $("q").focus(); }
+    if (event.key === "4") $("four").click();
+  });
+  addEventListener("resize", () => { if (titles.length) apply(); });
+
+  $("csv").addEventListener("click", () => {
+    const cell = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+    const lines = [["name", "original", "year", "type", "sources", "quality", "kp", "imdb", "kpId", "imdbId", "liftId", "fx", "tyo"].join(",")];
+    for (const row of shown) {
+      const sources = [row.l && "lift", row.f && "fx", row.t && "tyo", row.p && "soap"].filter(Boolean).join("+");
+      lines.push([row.n, row.o, row.y, row.s ? "series" : "film", sources, row.h, row.kr ? row.kr / 10 : "", row.ir ? row.ir / 10 : "", row.k, row.i, row.l, row.f, row.t].map(cell).join(","));
+    }
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob(["﻿", lines.join("\n")], { type: "text/csv" }));
+    link.download = `alphy-titles-${shown.length}.csv`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  });
+
+  // =================================================================
+  // Data
+  // =================================================================
+  function adopt(next, nextFiles, nextMeta) {
+    titles = next;
+    orders = {};
+    files = nextFiles;
+    meta = nextMeta;
+    apply();
+    drawFresh();
+    drawLocal();
+  }
+
+  readHash();
+  const source = $("workerSource").textContent;
+  const worker = new Worker(URL.createObjectURL(new Blob([source], { type: "text/javascript" })));
+  worker.onmessage = ({ data }) => {
+    if (data.type === "progress") {
+      $("loadText").textContent = `Индекс Lift: ${data.done} из ${data.total}`;
+      $("loadBar").style.width = `${(data.done / data.total) * 100}%`;
+    } else if (data.type === "data") {
+      adopt(data.titles, data.files, data.meta);
+      if (data.stage === "full") $("load").classList.add("done");
+      else $("loadText").textContent = "Индекс Lift…";
+    } else if (data.type === "error") {
+      $("loadText").textContent = `Не загрузилось: ${data.message}`;
+    }
+  };
+  worker.postMessage({ base: BASE });
+})();
+</script>
+</body>
+</html>
