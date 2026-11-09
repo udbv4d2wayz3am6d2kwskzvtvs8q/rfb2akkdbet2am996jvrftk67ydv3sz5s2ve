@@ -3414,7 +3414,7 @@
    "s": "2026-11-05T00:44:20.860Z",
    "rebased": "2026-11-05T00:46:20.860Z",
    "d": "d/63.9d3301423068ba87.json",
-   "dc": "pending",
+   "dc": "405fbd8362cd2697f75b2d2fe394e84a83e21528",
    "parts": {
     "cha": [
      "p/8047967fbf6b9fe2.json",
@@ -24544,7 +24544,7 @@
    "s": "2026-11-05T09:56:13.795Z",
    "rebased": "2026-11-05T09:58:13.795Z",
    "d": "d/438.88b64fd970764941.json",
-   "dc": "pending",
+   "dc": "405fbd8362cd2697f75b2d2fe394e84a83e21528",
    "parts": {
     "ист": [
      "p/41640e895f9f21d4.json",
@@ -25327,7 +25327,7 @@
    "s": "2026-11-06T09:56:00.714Z",
    "rebased": "2026-11-06T09:58:00.714Z",
    "d": "d/440.17d8217305fe8ef1.json",
-   "dc": "pending",
+   "dc": "405fbd8362cd2697f75b2d2fe394e84a83e21528",
    "parts": {
     "ран": [
      "p/27e7226393fade0e.json",
@@ -36414,7 +36414,7 @@
    "s": "2026-11-05T11:53:57.359Z",
    "rebased": "2026-11-05T11:55:57.359Z",
    "d": "d/6d.cdf321723b9ced4e.json",
-   "dc": "pending",
+   "dc": "405fbd8362cd2697f75b2d2fe394e84a83e21528",
    "parts": {
     "mys": [
      "p/6b1a12deabafb189.json",
@@ -41490,7 +41490,7 @@
    "s": "2026-11-06T09:56:11.971Z",
    "rebased": "2026-11-06T09:58:11.971Z",
    "d": "d/43c.b19fec0010479eb9.json",
-   "dc": "pending",
+   "dc": "405fbd8362cd2697f75b2d2fe394e84a83e21528",
    "parts": {
     "мес": [
      "p/9e2cefc1ce0321a6.json",
@@ -44175,17 +44175,17 @@
   "after_at": "2026-11-09T04:56:53.982Z",
   "after_id": 900094416
  },
- "index": "i/5b3ec47cb50debf2.json",
+ "index": "i/cc61ddb9b77d041d.json",
  "indexes": [
-  "i/2c46d035b9e441bd.json",
   "i/618f02a07dca7cd7.json",
   "i/b7ff04faa0a09169.json",
-  "i/5b3ec47cb50debf2.json"
+  "i/5b3ec47cb50debf2.json",
+  "i/cc61ddb9b77d041d.json"
  ],
  "updated": "2026-11-09T04:57:10.363Z",
- "dataCommit": "c933c935c15ba9070c4fe05d424e1c0d890e75ce",
+ "dataCommit": "405fbd8362cd2697f75b2d2fe394e84a83e21528",
  "layout": 2,
- "partsCommit": "977ae9469d1a386793e0d3f3f3adbff9ac75a2bb",
+ "partsCommit": "53005683e66ab5e6b454618a5359b2b7a479d925",
  "kp": [
   [
    "k/1874d2988220854b.json",
@@ -44389,7 +44389,7 @@
   ],
   [
    "k/325efdfdf1eccb1b.json",
-   "pending"
+   "53005683e66ab5e6b454618a5359b2b7a479d925"
   ],
   [
    "k/a0bdfcf5e561b140.json",
@@ -44446,7 +44446,7 @@
  ],
  "playable": [
   "k/04a62ee7dd82859b.json",
-  "pending"
+  "53005683e66ab5e6b454618a5359b2b7a479d925"
  ],
  "pictures": [
   [
