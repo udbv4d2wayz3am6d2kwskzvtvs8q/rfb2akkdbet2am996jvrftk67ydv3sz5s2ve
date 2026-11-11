@@ -320,8 +320,8 @@
    "b": "b/33.057e0c339a4d91c4.json",
    "bc": "b546c0261ffded1e3644ae9aff710e9a272ff780",
    "n": 892,
-   "s": "2026-11-04T00:24:15.535Z",
-   "rebased": "2026-11-04T00:26:15.535Z",
+   "s": "2026-11-11T04:57:14.782Z",
+   "rebased": "2026-11-11T04:59:14.782Z",
    "d": null,
    "dc": null,
    "parts": null
@@ -18338,13 +18338,13 @@
   },
   "79": {
    "letter": "y",
-   "b": "b/79.ff7dc7a673bfdecd.json",
-   "bc": "b546c0261ffded1e3644ae9aff710e9a272ff780",
-   "n": 2856,
-   "s": "2026-11-04T00:24:12.718Z",
-   "rebased": "2026-11-04T00:26:12.718Z",
-   "d": "d/79.3496b25c7270b258.json",
-   "dc": "5dda4574f2559176f2a6248905765621d4c7fe75",
+   "b": "b/79.3b1bcea1099e183c.json",
+   "bc": "pending",
+   "n": 2862,
+   "s": "2026-11-11T04:57:10.803Z",
+   "rebased": "2026-11-11T04:59:10.803Z",
+   "d": null,
+   "dc": null,
    "parts": {
     "yea": [
      "p/c755ab43e50f5a5e.json",
@@ -18362,9 +18362,9 @@
      48
     ],
     "you": [
-     "p/e22bd9824ffc3b63.json",
-     "2f90a2f77e9a25450983059ab3adf06a354b4a5c",
-     979
+     "p/1e129f8f48d48f75.json",
+     "pending",
+     981
     ],
     "yag": [
      "p/7a55d616bdaa2436.json",
@@ -18417,9 +18417,9 @@
      10
     ],
     "yom": [
-     "p/7aacef8f074c0487.json",
-     "b89211683f58a04e0b35e89791f10881b1ada91d",
-     12
+     "p/e4f0fe8d63dbc12f.json",
+     "pending",
+     13
     ],
     "yön": [
      "p/5b08684daf405a58.json",
@@ -18432,9 +18432,9 @@
      67
     ],
     "yan": [
-     "p/9f21e678c3d449f8.json",
-     "cfdf1c246e520ca7a373ea2e337aa845e840f786",
-     138
+     "p/0131db2af9dc3bc8.json",
+     "pending",
+     139
     ],
     "yed": [
      "p/e5f87e86852f2f29.json",
@@ -18447,9 +18447,9 @@
      45
     ],
     "yue": [
-     "p/93f6a3988e85fbc6.json",
-     "cfdf1c246e520ca7a373ea2e337aa845e840f786",
-     59
+     "p/504e79c598b57c6a.json",
+     "pending",
+     60
     ],
     "yub": [
      "p/7e9c21a4267d2587.json",
@@ -18472,9 +18472,9 @@
      96
     ],
     "yun": [
-     "p/50a8a40e6f6c7ad8.json",
-     "cfdf1c246e520ca7a373ea2e337aa845e840f786",
-     58
+     "p/45c2a3eaca200659.json",
+     "pending",
+     59
     ],
     "yaz": [
      "p/662f9305fb7854b1.json",
@@ -44182,7 +44182,7 @@
   "i/6d94c4739c543b4c.json",
   "i/2734ea08acdea628.json"
  ],
- "updated": "2026-11-10T21:41:52.726Z",
+ "updated": "2026-11-11T04:59:06.312Z",
  "dataCommit": "5dda4574f2559176f2a6248905765621d4c7fe75",
  "layout": 2,
  "partsCommit": "3bb7b94a49da3bd059a1f4c4bb2ec6c6ee2d4254",
