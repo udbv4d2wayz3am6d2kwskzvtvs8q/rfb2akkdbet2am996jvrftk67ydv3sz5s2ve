@@ -8989,7 +8989,7 @@
    "s": "2026-11-12T16:36:34.143Z",
    "rebased": "2026-11-12T16:38:34.143Z",
    "d": "d/68.10673ebfc8b15ff3.json",
-   "dc": "pending",
+   "dc": "531d5f8f55b8fdda94c9e8364dccc8578e51460b",
    "parts": {
     "hou": [
      "p/cc598beee0fbc65b.json",
@@ -29557,7 +29557,7 @@
    "s": "2026-11-12T10:21:05.126Z",
    "rebased": "2026-11-12T10:23:05.126Z",
    "d": "d/445.f9e312287fccdbea.json",
-   "dc": "pending",
+   "dc": "531d5f8f55b8fdda94c9e8364dccc8578e51460b",
    "parts": {
     "хау": [
      "p/d9298c148397030e.json",
@@ -44195,17 +44195,17 @@
   "after_at": "2026-11-14T09:23:23.771Z",
   "after_id": 900094574
  },
- "index": "i/d272d0e76cca9099.json",
+ "index": "i/75d1965d9939fb8c.json",
  "indexes": [
-  "i/f57385bf42f03255.json",
   "i/cf13129f4a6e661e.json",
   "i/1f8b6997980c21e8.json",
-  "i/d272d0e76cca9099.json"
+  "i/d272d0e76cca9099.json",
+  "i/75d1965d9939fb8c.json"
  ],
  "updated": "2026-11-14T09:30:40.967Z",
- "dataCommit": "2fb3e060fd5cead99f763a949e285d3b43ed2965",
+ "dataCommit": "531d5f8f55b8fdda94c9e8364dccc8578e51460b",
  "layout": 2,
- "partsCommit": "dbdcac54dcb8dabb5b2fbd3eb24441a3cb3360e6",
+ "partsCommit": "dddccee76b9762b34350b74f06ef2bda3f217bb0",
  "kp": [
   [
    "k/4454e944443e799e.json",
@@ -44253,7 +44253,7 @@
   ],
   [
    "k/3a8733a3355c4268.json",
-   "pending"
+   "dddccee76b9762b34350b74f06ef2bda3f217bb0"
   ],
   [
    "k/e7c0315d3f33f4e0.json",
@@ -44466,7 +44466,7 @@
  ],
  "playable": [
   "k/d3aefd871125212a.json",
-  "pending"
+  "dddccee76b9762b34350b74f06ef2bda3f217bb0"
  ],
  "pictures": [
   [
