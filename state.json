@@ -2282,7 +2282,7 @@
    "s": "2026-11-13T00:54:19.121Z",
    "rebased": "2026-11-13T00:56:19.121Z",
    "d": "d/62.a371efd59cd59702.json",
-   "dc": "pending",
+   "dc": "261b447dbc6283fb8734dc691e649c969bf95603",
    "parts": {
     "bac": [
      "p/b123ccd08ce3aacb.json",
@@ -11028,7 +11028,7 @@
    "s": "2026-11-12T16:37:04.598Z",
    "rebased": "2026-11-12T16:39:04.598Z",
    "d": "d/70.e1e2813556400efb.json",
-   "dc": "pending",
+   "dc": "261b447dbc6283fb8734dc691e649c969bf95603",
    "parts": {
     "pie": [
      "p/50b41adb5c663098.json",
@@ -14890,7 +14890,7 @@
    "s": "2026-11-13T10:02:45.841Z",
    "rebased": "2026-11-13T10:04:45.841Z",
    "d": "d/74.e7629490ab3d1eab.json",
-   "dc": "pending",
+   "dc": "261b447dbc6283fb8734dc691e649c969bf95603",
    "parts": {
     "the": [
      "p/56e16267519557dc.json",
@@ -24082,7 +24082,7 @@
    "s": "2026-11-13T00:54:05.882Z",
    "rebased": "2026-11-13T00:56:05.882Z",
    "d": "d/437.577e32af15eaed10.json",
-   "dc": "pending",
+   "dc": "261b447dbc6283fb8734dc691e649c969bf95603",
    "parts": {
     "зер": [
      "p/e099dbbdeffedb1f.json",
@@ -32206,7 +32206,7 @@
    "s": "2026-11-18T16:57:47.598Z",
    "rebased": "2026-11-18T16:59:47.598Z",
    "d": "d/6f.93f2e49d2cbd63c2.json",
-   "dc": "pending",
+   "dc": "261b447dbc6283fb8734dc691e649c969bf95603",
    "parts": {
     "obj": [
      "p/8aefe2b4837b170b.json",
@@ -37802,7 +37802,7 @@
    "s": "2026-11-12T05:59:51.417Z",
    "rebased": "2026-11-12T06:01:51.417Z",
    "d": "d/6c.2be6136191eb9494.json",
-   "dc": "pending",
+   "dc": "261b447dbc6283fb8734dc691e649c969bf95603",
    "parts": {
     "loo": [
      "p/7aae6a93328d37de.json",
@@ -44195,17 +44195,17 @@
   "after_at": "2026-11-19T01:45:03.349Z",
   "after_id": 900094715
  },
- "index": "i/52d8e520d0b379e4.json",
+ "index": "i/3712cf6b5d7f5ecf.json",
  "indexes": [
-  "i/b53f985f5075522b.json",
   "i/4cd1dc65bda78e4a.json",
   "i/d19cacae7acdf00f.json",
-  "i/52d8e520d0b379e4.json"
+  "i/52d8e520d0b379e4.json",
+  "i/3712cf6b5d7f5ecf.json"
  ],
  "updated": "2026-11-19T01:45:23.862Z",
- "dataCommit": "01637a1802e9d63376bc02e43f07cc6ccecdcf1e",
+ "dataCommit": "261b447dbc6283fb8734dc691e649c969bf95603",
  "layout": 2,
- "partsCommit": "b0408eb53b85f10e788735c146d922549d61c7ff",
+ "partsCommit": null,
  "kp": [
   [
    "k/4454e944443e799e.json",
