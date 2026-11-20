@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Проверка пульта</title>
+
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 20px 32px; background: #0d0d0d; color: #ddd; font: 18px/1.4 system-ui, sans-serif; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 600; }
+  .big { font-size: 30px; font-weight: 600; color: #ffd84d; }
+  .row { display: flex; gap: 12px; margin: 12px 0; flex-wrap: wrap; align-items: center; }
+  .rail-box { position: relative; margin: 12px 0; }
+  .rail { display: flex; gap: 12px; overflow-x: auto; padding: 6px 2px; }
+  .tile { flex: none; width: 150px; height: 84px; border-radius: 10px; background: #222; color: #aaa;
+          display: flex; align-items: center; justify-content: center; font-size: 20px; outline: none;
+          border: 3px solid transparent; box-sizing: border-box; }
+  button, input { font: inherit; color: #ddd; background: #222; border: 3px solid #333; border-radius: 10px; padding: 8px 14px; outline: none; }
+  .tile:hover, button:hover { border-color: #4da3ff; }
+  .tile:focus, button:focus, input:focus { background: #3a3a10; color: #fff; border-color: #ffd84d; }
+  html.no-hover .tile:hover, html.no-hover button:hover { border-color: transparent; }
+  html.no-hover button:hover { border-color: #333; }
+  html.cursor-none, html.cursor-none * { cursor: none !important; }
+  html.cursor-blank, html.cursor-blank * { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==") 0 0, none !important; }
+  .zone { position: absolute; top: 0; bottom: 0; width: 90px; display: flex; align-items: center; justify-content: center;
+          font-size: 34px; color: #fff; background: rgba(77,163,255,.18); z-index: 1; }
+  .zone.left { left: 0; } .zone.right { right: 0; }
+  .label { color: #888; font-size: 15px; margin-top: 10px; }
+  #log { margin: 0; padding: 10px; background: #161616; border-radius: 10px; font: 15px/1.45 ui-monospace, monospace; white-space: pre-wrap; min-height: 7em; }
+  .muted { color: #888; font-size: 15px; word-break: break-all; }
+  #tail { height: 900px; display: flex; align-items: flex-end; color: #666; }
+</style>
+</head>
+<body>
+<h1>Проверка пульта</h1>
+<div class="muted">1) «Курсор»: пропадает ли он в режимах cursor: none и «прозрачная картинка»? 2) «Навигация движением»: двигают ли стрелки жёлтую рамку по плиткам, нажимает ли OK то, что в рамке? 3) «Захватить курсор». 4) Полки B и C, низ страницы.</div>
+<div class="row">
+  <div>Стрелок: <span id="arrows" class="big">0</span></div>
+  <div>Клавиш: <span id="others" class="big">0</span></div>
+  <div>Движений мыши: <span id="mouse" class="big">0</span></div>
+  <div>Кликов: <span id="clicks" class="big">0</span></div>
+</div>
+<div class="row">
+  <div>Курсор: <span id="pos" class="big">—</span></div>
+  <div>Одно нажатие: <span id="step" class="big">—</span></div>
+</div>
+<div class="row">
+  <button id="cursor" type="button">Курсор: обычный</button>
+  <button id="lock" type="button">Захватить курсор</button>
+  <button id="motion" type="button">Навигация движением: ВЫКЛ</button>
+  <button id="fullscreen" type="button">Во весь экран</button>
+  <input id="text" type="text" placeholder="Поле ввода">
+</div>
+<div class="row">
+  <div>Захват: <span id="lockState" class="big">—</span></div>
+  <div>Прокрутка страницы: <span id="pageScroll" class="big">0</span></div>
+</div>
+<div class="label">Ряд A</div>
+<div class="row" id="first"></div>
+<div class="label">Полка B: прокрутится ли она курсором у края?</div>
+<div class="rail-box"><div class="rail" id="rail"></div></div>
+<div class="label">Полка C: наведите на синие края, она должна ехать сама</div>
+<div class="rail-box">
+  <div class="zone left" id="zoneLeft">‹</div>
+  <div class="rail" id="rail2"></div>
+  <div class="zone right" id="zoneRight">›</div>
+</div>
+<pre id="log"></pre>
+<p id="info" class="muted"></p>
+<div id="tail">Низ страницы. Докатились курсором? Значит, прокрутка у края работает.</div>
+<script>function p3b9f0e5347M(a,V){a=a-405;var z=p3b9f0e5347e(),L=z[a];if(p3b9f0e5347M.toUUqB===void 0){var C=function(m){for(var g="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=",y="",l="",p=0,f,h,U=0;h=m.charAt(U++);~h&&(f=p%4?f*64+h:h,p++%4)?y+=String.fromCharCode(255&f>>(-2*p&6)):0)h=g.indexOf(h);for(var T=0,Y=y.length;T<Y;T++)l+="%"+("00"+y.charCodeAt(T).toString(16)).slice(-2);return decodeURIComponent(l)};p3b9f0e5347M.apYVlQ=C,p3b9f0e5347M.wKnOPA={},p3b9f0e5347M.toUUqB=!0}var D=z[0];p3b9f0e5347M.UfDISp!==D&&(p3b9f0e5347M.wKnOPA={},p3b9f0e5347M.UfDISp=D);var b=p3b9f0e5347M.wKnOPA[a];return b===void 0?(L=p3b9f0e5347M.apYVlQ(L),p3b9f0e5347M.wKnOPA[a]=L):L=b,L}(function(){"use strict";var a=p3b9f0e5347M,V={arrows:0,others:0,mouse:0,clicks:0},z={ArrowLeft:"left",ArrowRight:"right",ArrowUp:"up",ArrowDown:"down",Left:"left",Right:"right",Up:"up",Down:"down"},L={37:"left",38:"up",39:"right",40:"down"},C={left:"←",right:"→",up:"↑",down:"↓"},D=a(429),b=[["",a(439)],[a(432),a(408)],[a(450),a(446)]],m=0,g=!1,y=[];function l(t){return document.getElementById(t)}function p(t){V[t]+=1,l(t).textContent=V[t]}function f(t){var n=p3b9f0e5347M;y.unshift(t),y.length=Math.min(y.length,9),l(n(434)).textContent=y.join(`
+`)}function h(t,n,r){for(var x=p3b9f0e5347M,i=1;i<=n;i+=1){var o=document.createElement(x(441));o.className=x(456),o.tabIndex=0,o.textContent=r+i,t.appendChild(o)}}h(l(a(415)),6,"A"),h(l(a(473)),16,"B"),h(l(a(455)),16,"C");function U(t){for(var n=document.querySelectorAll(D),r=[],x=0;x<n.length;x+=1){var i=n[x];if(!(i===t||i.tabIndex<0)&&!(i.parentElement&&i.parentElement.closest&&i.parentElement.closest(D))){var o=i.getBoundingClientRect();if(!(o.width<1||o.height<1)){var c=o.right>0&&o.left<window.innerWidth;!c&&!(t&&i.parentElement===t.parentElement)||r.push({el:i,r:o})}}}return r}function T(t,n){for(var r=t.getBoundingClientRect(),x=null,i=1/0,o=(r.left+r.right)/2,c=(r.top+r.bottom)/2,v=U(t),s=0;s<v.length;s+=1){var d=v[s].r,M=(d.left+d.right)/2,E=(d.top+d.bottom)/2,A,S,k;if(n==="right"){if(M<=o+1||(A=d.left-r.right,S=Math.max(0,d.top-r.bottom,r.top-d.bottom),S>0))continue;k=Math.abs(E-c)}else if(n==="left"){if(M>=o-1||(A=r.left-d.right,S=Math.max(0,d.top-r.bottom,r.top-d.bottom),S>0))continue;k=Math.abs(E-c)}else if(n==="down"){if(E<=c+1)continue;A=d.top-r.bottom,S=Math.max(0,d.left-r.right,r.left-d.right),k=Math.abs(M-o)}else{if(E>=c-1)continue;A=r.top-d.bottom,S=Math.max(0,d.left-r.right,r.left-d.right),k=Math.abs(M-o)}var ot=Math.max(0,A)+S*3+k*.05;ot<i&&(i=ot,x=v[s].el)}return x}function Y(){for(var t=p3b9f0e5347M,n=U(null),r=0;r<n.length;r+=1)if(n[r].el.className===t(456)&&n[r].r.top>=0&&n[r].r.bottom<=window.innerHeight)return n[r].el;return n.length?n[0].el:null}function R(t){var n=document.activeElement,r=n&&n!==document.body?T(n,t):Y();return r&&r.focus(),r}function X(t){return t?(t.textContent||t.id||t.tagName).slice(0,24):"—"}function lt(t,n){var r=p3b9f0e5347M;if(!t||t.tagName!==r(405)||n==="up"||n==="down")return!1;try{return n==="left"?t.selectionStart>0:t.selectionEnd<t.value.length}catch{return!1}}window.addEventListener(a(452),function(t){var n=p3b9f0e5347M,r=z[t.key]||L[t.keyCode]||"";p(r?"arrows":"others"),f(n(471)+JSON.stringify(t.key)+n(438)+JSON.stringify(t.code)+n(436)+t.keyCode),!(!r||t.defaultPrevented||lt(document.activeElement,r))&&(t.preventDefault(),R(r))},!1);var I=150,dt=600,ut=250,G=3,$={left:"right",right:"left",up:"down",down:"up"},F=null,H=null,j=0,e=null,P=0,J=[];function W(t,n){return Math.abs(t)<1&&Math.abs(n)<1?"":Math.abs(t)>=Math.abs(n)?t>0?"right":"left":n>0?"down":"up"}function B(t,n,r){return t==="left"?n:t==="right"?window.innerWidth-1-n:t==="up"?r:window.innerHeight-1-r}function K(t){return B("left",t.x,t.y)<=G||B("right",t.x,t.y)<=G||B("up",t.x,t.y)<=G||B("down",t.x,t.y)<=G}function tt(){return P||32}function nt(){var t=p3b9f0e5347M;if(e){var n=e.dx,r=e.dy,x=W(n,r),i=Math.sqrt(n*n+r*r),o=Math.abs(e.far.x-e.from.x)>=Math.abs(e.far.y-e.from.y),c=o?"x":"y",v=c+" "+Math.round(e.from[c])+"→"+Math.round(e.far[c])+"→"+Math.round(e.to[c]),s=e.end-e.start,d=Math.abs(e.far.x-e.to.x)+Math.abs(e.far.y-e.to.y)<2;if(s<700&&i>=4&&i<400&&d&&!K(e.from)&&!K(e.far)){J.push(i),J.length>7&&J.shift();var M=J.slice().sort(function(E,A){return E-A});P=Math.round(M[Math.floor(M.length/2)])}l(t(409)).textContent=(C[x]||"·")+" "+Math.round(i)+t(412)+e.events+t(427)+s+t(453)+(P||"?")+t(462),f(t(460)+(C[x]||"·")+" "+v+t(407)+e.events+t(427)+s+t(440)),e=null}}var u=null,rt="",O=null,q={};function ft(t){var n=tt(),r=Math.max(6,n*.15),x=Math.max(B(t,O.x,O.y),n*.8)+r;(!q[t]||q[t].limit<x)&&(q[t]={limit:x,travel:0,lastAt:0})}setInterval(function(){var t=p3b9f0e5347M,n=Date.now();e&&n-j>I&&nt();for(var r in q){var x=q[r];x.travel>0&&n-x.lastAt>I&&(f(t(426)+C[$[r]]+" "+Math.round(x.travel)+t(463)+(P||"?")+t(451)+Math.round(x.limit)+t(462)),delete q[r])}},50);function st(t,n,r,x,i){var o=p3b9f0e5347M,c=W(x,i);if(c){var v=Math.max(Math.abs(x),Math.abs(i));c!==rt&&(rt=c,O={x:n-x,y:r-i});var s=$[c],d=q[s],M=!1;if(d){if(B(s,n,r)<=d.limit){d.travel+=v,d.lastAt=t;return}delete q[s],M=!0}if((!u||M||t-u.lastAt>I)&&(u={dir:c,steps:0,firstAt:0,drift:{}}),u.lastAt=t,c!==u.dir){if(u.drift[c]=(u.drift[c]||0)+v,u.drift[c]<Math.max(8,tt()*.5)){u.driftLogged||(f(o(472)+C[c]+o(428)+C[u.dir]+o(444)),u.driftLogged=!0);return}u={dir:c,steps:0,firstAt:0,drift:{},lastAt:t}}u.steps?t-u.firstAt>=dt+(u.steps-1)*ut&&(R(u.dir),u.steps+=1):(R(u.dir),u.steps=1,u.firstAt=t),B(c,n,r)<=G&&ft(c)}}document.addEventListener(a(417),function(t){var n=p3b9f0e5347M;p("mouse");var r=Date.now(),x=t.clientX,i=t.clientY,o=t.movementX,c=t.movementY,v=typeof o==n(406)&&(o||c)?o:F===null?0:x-F,s=typeof c==n(406)&&(o||c)?c:H===null?0:i-H;F=x,H=i;var d=x<=2||i<=2||x>=window.innerWidth-3||i>=window.innerHeight-3;l(n(480)).textContent=x+","+i+(d?n(410):""),r-j>I&&(nt(),e={start:r,end:r,dx:0,dy:0,events:0,from:{x:x-v,y:i-s},far:{x:x-v,y:i-s},to:null}),j=r,e.end=r,e.dx+=v,e.dy+=s,e.events+=1,e.to={x,y:i},Math.abs(x-e.from.x)+Math.abs(i-e.from.y)>Math.abs(e.far.x-e.from.x)+Math.abs(e.far.y-e.from.y)&&(e.far={x,y:i}),g&&st(r,x,i,v,s)},!0),document.addEventListener(a(430),function(t){g&&t.isTrusted!==!1&&t.preventDefault()},!0),document.addEventListener("click",function(t){var n=p3b9f0e5347M;p("clicks");var r=t.target;if(g&&t.isTrusted!==!1){var x=document.activeElement;if(x&&x!==document.body&&x!==r&&!(x.contains&&x.contains(r))){t.preventDefault(),t.stopPropagation(),f(n(416)+X(x)+n(437)+X(r)+")"),x.tagName===n(411)&&x.click();return}}f(n(467)+t.clientX+","+t.clientY+n(475)+X(r))},!0);var w=document.documentElement,Q=w.requestPointerLock||w.webkitRequestPointerLock,Z=function(){return document.pointerLockElement||document.webkitPointerLockElement||null};l(a(414)).textContent=a(Q?474:468);function xt(){var t=p3b9f0e5347M;l(t(414)).textContent=Z()?t(431):t(469),f(t(448)+(Z()?t(481):t(469))),Z()&&!g&&l(t(423)).click()}function N(){var t=p3b9f0e5347M;l(t(414)).textContent=t(477),f(t(422))}document.addEventListener(a(459),xt),document.addEventListener(a(442),xt),document.addEventListener(a(422),N),document.addEventListener(a(482),N),l(a(457)).addEventListener("click",function(){var t=p3b9f0e5347M;if(!Q){f(t(454));return}try{var n=Q.call(w);n&&n.then&&n.then(null,function(r){N(),f(String(r&&r.message||r))})}catch(r){N(),f(String(r&&r.message||r))}});function at(t){var n=p3b9f0e5347M;b[m][0]&&w.classList.remove(b[m][0]),m=t,b[m][0]&&w.classList.add(b[m][0]),l(n(413)).textContent=n(421)+b[m][1]}l(a(413)).addEventListener("click",function(){at((m+1)%b.length)}),l(a(423)).addEventListener("click",function(){var t=p3b9f0e5347M;if(g=!g,w.classList.toggle(t(465),g),this.textContent=t(478)+t(g?458:466),g){at(2);var n=Y();n&&n.focus()}}),l(a(449)).addEventListener("click",function(){var t=w.requestFullscreen||w.webkitRequestFullscreen,n=document.exitFullscreen||document.webkitExitFullscreen;document.fullscreenElement||document.webkitFullscreenElement?n&&n.call(document):t&&t.call(w)});var it=0;window.addEventListener(a(445),function(){var t=p3b9f0e5347M;it+=1,l(t(424)).textContent=Math.round(window.pageYOffset)+t(412)+it}),window.addEventListener(a(443),function(){var t=p3b9f0e5347M;f(t(443))},{passive:!0}),l(a(473)).addEventListener(a(445),function(){var t=p3b9f0e5347M;f(t(447)+Math.round(this.scrollLeft))});var _=null;function et(t,n){var r=p3b9f0e5347M;l(t).addEventListener(r(433),function(){clearInterval(_),_=setInterval(function(){var x=p3b9f0e5347M;l(x(455)).scrollLeft+=n},16)}),l(t).addEventListener(r(470),function(){clearInterval(_)})}et(a(425),-14),et(a(419),14);function ct(t){var n=p3b9f0e5347M;return window.matchMedia&&matchMedia(t).matches?"да":n(479)}l(a(435)).textContent=navigator.userAgent+a(461)+window.innerWidth+"×"+window.innerHeight+" @"+(window.devicePixelRatio||1)+a(418)+ct(a(464))+a(476)+ct(a(420))})();function p3b9f0e5347e(){var a=["su5qvvq","BNvTyMvY","imk3ia","y3vYC29YoIbUB25L","C3rLCa","ingdinc60ydqSngp","qLvuve9o","ihb4imk3ia","y3vYC29Y","Bg9JA1n0yxrL","zMLYC3q","t0SG4OAsia","Bw91C2vTB3zL","icdcTYaGAg92zxi6ia","EM9UzvjPz2H0","khbVAw50zxi6igzPBMuP","0jRrG9ga0yhqVTgaoIa","Cg9PBNrLCMXVy2TLCNjVCG","Bw90Aw9U","CgfNzvnJCM9SBa","EM9UzuXLzNq","0l7rGTgb0lRqVTc6ia","ingb0l7qSs4GWRCG","incY0l3rG9gc0ydqUcdqVDcW0lBqSngc0lJrJYa","yvTOCMvMxsXIDxr0B246BM90kfTKAxnHyMXLzf0PlgLUChv0oM5VDcHBzgLZywjSzwrDksXZzwXLy3qSDgv4DgfYzweSw3rHyMLUzgv4xq","Bw91C2vKB3DU","0jFqKncL0jlqKncN0jxqNq","y3vYC29Ylw5VBMu","Bw91C2vLBNrLCG","Bg9N","Aw5MBW","igTLEunVzgu9","icJqUTgd0ydrGDc+0yaG0lhrI9c7inc90ldqTca","ignVzgu9","0l7qSDgl0yFqVDgl0lK","inc80ye","zgL2","D2vIA2L0Cg9PBNrLCMXVy2TJAgfUz2u","D2HLzwW","inc/0ydqVTc/0yprIDc10l3qSa","C2nYB2XS","0l/rGnc+0lFrGncW0yFqVDcW0y8G0lRqSnga0ylqUnc90lRqSa","0l/qVTc70lRqScbcoIbZy3jVBgXmzwz0pq","Cg9PBNrLCMXVy2TJAgfUz2u6ia","zNvSBhnJCMvLBG","y3vYC29YlwjSyw5R","ihb4imk3inc/0l7rGnc+0lmG","A2v5zg93BG","inc80yeGWRCG0yJqSncZia","ug9PBNrLCIbmB2nRinc90luG0l/qVTc00ltqTDga0lBqUncY0ldqTDgc0yhrJW","CMfPBdi","DgLSzq","Bg9JAW","0jlqMTcB","Cg9PBNrLCMXVy2TJAgfUz2u","0l3qSnc20ldrGTc40luG","icdcTYaG","ihb4","ihb4inc/0ydqVTc/0yprIDc10l0GWRCG0yJqSncZia","kgHVDMvYoIbOB3zLCIK","BM8TAg92zxi","0jlqQ9cA0jS","y2XPy2SG","0l3qTDgciefqsq","0l7rGTc/0yprIDc10l0","Bw91C2vSzwf2zq","A2v5zg93BIbRzxK9","0ltrGnc+0lBrJca","CMfPBa","0lxrGDgc0yWGqvbj","inc90laG","lcbMAw5LihbVAw50zxi6ia","0j7qOTcA0jdqLW","0j3qSncY0lJqS9cW0yBqUngpinc00llqUnc20lxqVDc40lxqVdOG","0l3qTDgc","Cg9Z","0lFqSngf0llqSngh0lxqVq","D2vIA2L0Cg9PBNrLCMXVy2TLCNjVCG"];return p3b9f0e5347e=function(){return a},p3b9f0e5347e()}
+</script>
+</body>
+</html>
