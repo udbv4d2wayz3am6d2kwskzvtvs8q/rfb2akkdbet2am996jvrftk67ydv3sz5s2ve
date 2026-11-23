@@ -1,0 +1,16 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-PLAYLIST-TYPE:VOD
+#EXT-X-TARGETDURATION:6
+#EXT-X-MEDIA-SEQUENCE:233
+#EXTINF:4.000000,
+https://hls.cdn.tvoe.live/videos/6863f66304e096fb7080143f/hls/3/720p/seg-233.ts
+#EXTINF:6.000000,
+https://hls.cdn.tvoe.live/videos/6863f66304e096fb7080143f/hls/3/720p/seg-234.ts
+#EXTINF:4.000000,
+https://hls.cdn.tvoe.live/videos/6863f66304e096fb7080143f/hls/3/720p/seg-235.ts
+#EXTINF:6.000000,
+https://hls.cdn.tvoe.live/videos/6863f66304e096fb7080143f/hls/3/720p/seg-236.ts
+#EXTINF:4.000000,
+https://hls.cdn.tvoe.live/videos/6863f66304e096fb7080143f/hls/3/720p/seg-237.ts
+#EXT-X-ENDLIST
