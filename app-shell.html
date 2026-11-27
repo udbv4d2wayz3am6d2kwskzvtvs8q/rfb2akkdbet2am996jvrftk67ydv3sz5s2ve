@@ -1,0 +1,155 @@
+<div id="bookmarkBanner" class="bookmark-banner hidden">
+  <span id="bookmarkBannerLabel" class="bookmark-banner-text">Добавьте сайт в закладки</span>
+  <button id="bookmarkBannerClose" class="bookmark-banner-close" type="button" aria-label="Скрыть">
+    <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"></path></svg>
+  </button>
+</div>
+
+<button id="quickListsToggle" class="quick-lists-toggle hidden" type="button"
+        aria-controls="quickListsDrawer" aria-expanded="false">Списки</button>
+<button id="quickListsBackdrop" class="quick-lists-backdrop" type="button"
+        aria-label="Закрыть списки" tabindex="-1"></button>
+<aside id="quickListsDrawer" class="quick-lists-drawer" aria-hidden="true">
+  <div class="quick-lists-head">
+    <strong>Списки</strong>
+    <button id="quickListsClose" type="button">закрыть</button>
+  </div>
+  <nav id="quickListsNav" class="quick-lists-nav" aria-label="Подборки"></nav>
+</aside>
+
+<div class="container">
+  <header>
+    <div class="brand">
+      <a class="logo-btn" id="logoBtn" href="/" aria-label="На главную">
+        <img class="logo-image" data-alphy-asset="Logo.png" alt="alphy" width="220" height="126">
+      </a>
+      <div class="mode-switch" role="group" aria-label="Режим экрана" data-tv-clickable>
+        <button type="button" data-display-mode="pc" aria-pressed="true">ПК</button>
+        <button type="button" data-display-mode="tv" aria-pressed="false">TV</button>
+      </div>
+    </div>
+    <form class="search-box" id="searchForm" role="search">
+      <div class="search-field">
+        <input type="text" id="searchInput" spellcheck="false" autocomplete="off" enterkeyhint="search"
+               placeholder="Поиск фильмов, сериалов, мультфильмов и аниме"
+               role="combobox" aria-expanded="false" aria-controls="searchSuggest">
+        <div id="searchSuggest" class="search-suggest hidden" role="listbox" aria-label="Подсказки"></div>
+      </div>
+      <button class="search-button" id="searchBtn" type="submit" aria-label="Поиск">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+        </svg>
+      </button>
+      <button class="icon-btn bookmark-nav-btn" id="bookmarksToggle" type="button" aria-label="Закладки">
+        <svg viewBox="0 0 24 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 1h18v27l-9-7-9 7z"></path>
+        </svg>
+        <span id="bookmarksNavCount" class="bookmark-nav-count hidden">0</span>
+      </button>
+      <button class="icon-btn lists-menu-btn" id="listsMenuBtn" type="button" aria-label="Списки"
+              aria-controls="quickListsDrawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </form>
+  </header>
+
+  <section id="homeView" class="view">
+    <div id="continueSection" class="row continue-section hidden">
+      <h3 id="continueHeader">Продолжить просмотр</h3>
+      <div id="continueGrid" class="card-grid"></div>
+    </div>
+    <div id="shortsSection" class="row shorts-section">
+      <div class="shorts-head"><h3>шорты</h3><button id="shortsToggle" class="similar-toggle" type="button" aria-expanded="true">Скрыть</button></div>
+      <div class="shorts-host"></div>
+    </div>
+    <section id="curatedSection" class="curated-section hidden" aria-label="Подборки">
+      <div class="curated-toolbar">
+        <span id="catalogState" class="catalog-state"></span>
+      </div>
+      <div id="curatedLists" class="curated-lists"></div>
+    </section>
+  </section>
+
+  <section id="bookmarksView" class="view hidden">
+    <h2 class="results-title bookmarks-title">
+      Закладки
+      <span id="bookmarksCount" class="continue-count hidden">0</span>
+    </h2>
+    <div id="bookmarksGrid" class="card-grid"></div>
+    <div id="bookmarksEmpty" class="home-empty hidden">
+      <strong>Закладок пока нет</strong>
+    </div>
+  </section>
+
+  <section id="searchView" class="view hidden">
+    <div class="results-head">
+      <h2 id="resultsTitle" class="results-title">Результаты</h2>
+    </div>
+    <div id="resultsGrid" class="card-grid"></div>
+  </section>
+
+  <section id="watchView" class="view hidden">
+    <div class="watch-head">
+      <div class="watch-heading">
+        <h2 id="watchTitle" class="watch-title"></h2>
+        <span id="watchEpisodeTitle" class="watch-episode-title"></span>
+      </div>
+      <div class="watch-actions"></div>
+    </div>
+    <div id="playbackStatus" class="playback-status hidden" role="status" aria-live="polite"></div>
+    <div id="playbackRecovery" class="playback-recovery hidden">
+      <button id="retryPlaybackBtn" type="button">Попробовать снова</button>
+    </div>
+    <div class="watch-layout">
+      <div class="watch-main">
+        <div id="serialPanel" class="serial-panel hidden"></div>
+        <div id="playerHost" class="player-host">
+          <div class="placeholder"><div class="spinner"></div><span>Загрузка плеера…</span></div>
+        </div>
+        <div id="trackPanel" class="track-panel hidden"></div>
+      </div>
+      <aside id="metaPanel" class="meta-panel hidden"></aside>
+      <section id="similarSection" class="similar-section hidden" aria-label="Похожее">
+        <div class="similar-head">
+          <h3>Похожее</h3>
+          <button id="similarToggle" class="similar-toggle" type="button" aria-expanded="true">Скрыть</button>
+        </div>
+        <div id="similarRow" class="similar-row"></div>
+      </section>
+      <section id="reviewsSection" class="reviews-section hidden" aria-label="Отзывы">
+        <div class="similar-head">
+          <h3><a id="reviewsLink" class="reviews-title">Отзывы</a></h3>
+          <button id="reviewsToggle" class="similar-toggle" type="button" aria-expanded="true">Скрыть</button>
+        </div>
+        <ul id="reviewsList" class="reviews-list"></ul>
+      </section>
+    </div>
+  </section>
+
+  <div id="loading" class="loading hidden"><div class="spinner"></div><div>Загрузка…</div></div>
+  <div id="error" class="error hidden"></div>
+
+  <footer class="site-footer">
+    <div class="footer-row">
+      <span class="footer-contact">По всем вопросам: <a href="mailto:info@alphy.tv">info@alphy.tv</a></span>
+      <a class="footer-link" href="/terms/">Пользовательское соглашение</a>
+    </div>
+    <button id="resetSiteBtn" class="footer-link" type="button">Сбросить кэш и обновить</button>
+    <div class="footer-copy">AlphyTV © 2026</div>
+  </footer>
+</div>
+
+
+<nav id="bottomNav" class="bottom-nav" aria-label="Навигация">
+  <a class="bottom-nav-btn" id="bottomNavHome" href="/" data-nav="home" aria-label="Главная">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.6 12 3.8l8.5 6.8V20a.8.8 0 0 1-.8.8h-5v-6.1h-5.4v6.1h-5a.8.8 0 0 1-.8-.8z"></path></svg>
+  </a>
+  <button class="bottom-nav-btn" id="bottomNavSearch" type="button" data-nav="search" aria-label="Поиск">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"></circle><path d="m15.8 15.8 4.6 4.6"></path></svg>
+  </button>
+  <a class="bottom-nav-btn" id="bottomNavBookmarks" href="/bookmarks" data-nav="bookmarks" aria-label="Закладки">
+    <svg viewBox="0 0 24 30" aria-hidden="true"><path d="M4 2h16v25l-8-6.4L4 27z"></path></svg>
+    <span id="bottomNavCount" class="bookmark-nav-count hidden">0</span>
+  </a>
+</nav>
